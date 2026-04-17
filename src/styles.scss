@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+@use "../public/assets/styles/all-styles.scss" as all;
+
+body {
+    margin: 0;
+}
+
+.container {
+    max-width: 1300px;
+    margin: auto;
+}
