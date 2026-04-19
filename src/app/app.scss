@@ -1,6 +1,10 @@
-@use "../../public/assets/styles/all-styles.scss" as all;
+@use '../../public/assets/styles/all-styles.scss' as all;
 
-h1 {
-    font-family: "Inter-regular";
-    color: all.$color-red;;
+div {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+
+  background-color: all.$color-light-green;
 }

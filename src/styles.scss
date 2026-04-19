@@ -1,12 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@use '../public/assets/styles/all-styles.scss' as all;
 
-@use "../public/assets/styles/all-styles.scss" as all;
-
-body {
-    margin: 0;
+* {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  scroll-behavior: smooth;
+  border: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: inherit;
+  
 }
 
-.container {
-    max-width: 1300px;
-    margin: auto;
+a {
+  text-decoration: none;
+  transition: 125ms;
+  cursor: pointer;
+}
+
+ul, ol {
+  list-style-type: none;
+}
+
+button {
+  transform: 125ms;
+  cursor: pointer;
 }
