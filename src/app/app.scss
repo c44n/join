@@ -1,10 +1,57 @@
 @use '../../public/assets/styles/all-styles.scss' as all;
 
-div {
-  display: flex;
-  justify-content: center;
-
+:host {
+  display: block;
   width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
 
+.app-shell {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
   background-color: all.$color-light-green;
+}
+
+.app-shell__sidebar {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.app-shell__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: all.$color-gray;
+}
+
+.app-shell__outlet {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Routed view fills the outlet; inner pages (e.g. contact list) own their scroll areas */
+.app-shell__outlet > router-outlet {
+  flex: 0 0 0;
+}
+
+.app-shell__outlet > router-outlet + * {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }

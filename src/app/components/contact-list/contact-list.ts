@@ -18,10 +18,16 @@ export class ContactList implements OnInit {
   isLoading = signal(true);
   errorMessage = signal('');
 
-  selectedContactId: string | number | null = null;
+  selectedContactId = signal<string | null>(null);
+
+  selectedContact = computed<Contact | null>(() => {
+    const id = this.selectedContactId();
+    if (id == null) return null;
+    return this.contacts().find((c) => c.id === id) ?? null;
+  });
 
   selectContact(id: string | number) {
-    this.selectedContactId = id;
+    this.selectedContactId.set(String(id));
   }
 
   groupedContacts = computed<ContactGroup[]>(() => {

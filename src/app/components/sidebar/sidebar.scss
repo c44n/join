@@ -1,16 +1,17 @@
 @use '../../../../public/assets/styles/all-styles.scss' as all;
 
-.fake-div-1 {
+:host {
   display: flex;
-  width: 100%;
-  max-width: 1440px;
-  background-color: all.$color-gray;
+  flex-shrink: 0;
+  align-self: stretch;
+  height: 100%;
 }
 
-.fake-div {
+.sidebar-root {
   display: flex;
-  flex-grow: 1;
-  padding: 20px;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100dvh;
 }
 
 .sidebar {
@@ -19,7 +20,7 @@
   justify-content: space-between;
   align-items: center;
   min-width: 210px;
-  height: 100dvh;
+  height: 100%;
   padding: 70px 0;
   font-family: 'Inter-regular';
   font-size: 16px;
