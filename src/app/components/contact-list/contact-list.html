@@ -1,0 +1,39 @@
+<div class="contact-list">
+  <div class="contact-list__toolbar">
+    <button type="button" class="add-contact-button" (click)="onAddContact()">
+      Add new contact
+    </button>
+  </div>
+
+  <div class="contact-list__body">
+    @if (isLoading()) {
+      <p>Loading contacts...</p>
+    } @else if (errorMessage()) {
+      <p>{{ errorMessage() }}</p>
+    } @else {
+      @for (group of groupedContacts(); track group.letter) {
+        <section class="contact-group">
+          <h3 class="group-letter">{{ group.letter }}</h3>
+          <div class="group-divider" aria-hidden="true"></div>
+
+          @for (contact of group.contacts; track contact.id) {
+            <div
+              class="contact-card"
+              [class.selected]="selectedContactId === contact.id"
+              (click)="selectContact(contact.id)"
+            >
+              <div class="avatar" [style.background]="contact.color">
+                {{ contact.first_name?.[0] ?? '' }}{{ contact.last_name?.[0] ?? '' }}
+              </div>
+
+              <div class="contact-info">
+                <h3>{{ contact.first_name }} {{ contact.last_name }}</h3>
+                <p>{{ contact.email }}</p>
+              </div>
+            </div>
+          }
+        </section>
+      }
+    }
+  </div>
+</div>
