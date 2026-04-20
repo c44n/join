@@ -1,5 +1,6 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { Contact } from '../../models/contact';
+import { ContactsService } from '../../services/contacts';
 
 export interface ContactGroup {
   letter: string;
