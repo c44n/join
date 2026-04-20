@@ -1,0 +1,31 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+section {
+  display: flex;
+  flex-direction: column;
+  padding: 80px 50px 0;
+  height: 100%;
+  width: 100%;
+
+  font-family: 'Inter-regular';
+  background-color: all.$color-light-gray;
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    h2 {
+      font-family: 'Inter-bold';
+      font-size: 48px;
+    }
+
+    p {
+      border-left: 3px solid all.$color-light-blue;
+      padding: 10px 0 10px 30px;
+      font-size: 23px;
+    }
+  }
+}
+
+.details {
+}

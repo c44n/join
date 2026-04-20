@@ -1,6 +1,7 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { Contact } from '../../models/contact';
 import { ContactsService } from '../../services/contacts';
+import { ContactDetail } from '../contact-detail/contact-detail';
 
 export interface ContactGroup {
   letter: string;
@@ -9,7 +10,7 @@ export interface ContactGroup {
 
 @Component({
   selector: 'app-contact-list',
-  imports: [],
+  imports: [ContactDetail],
   templateUrl: './contact-list.html',
   styleUrl: './contact-list.scss',
 })
