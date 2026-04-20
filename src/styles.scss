@@ -1,5 +1,11 @@
 @use '../public/assets/styles/all-styles.scss' as all;
 
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
 * {
   position: relative;
   box-sizing: border-box;
