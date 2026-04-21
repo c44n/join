@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -8,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class Header {
   dropdownOpen = false;
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.avatarmenu')) {
+      this.dropdownOpen = false;
+    } else {
+      this.dropdownOpen = !this.dropdownOpen;
+    }
+  }
 }
