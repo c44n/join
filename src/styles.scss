@@ -2,11 +2,22 @@
 
 html,
 body {
+  margin: 0;
   height: 100%;
   overflow: hidden;
+  font-family: 'Inter-regular', sans-serif;
 }
 
-* {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+/* * {
   position: relative;
   box-sizing: border-box;
   margin: 0;
@@ -18,7 +29,7 @@ body {
   color: inherit;
   background: inherit;
   
-}
+} */
 
 a {
   text-decoration: none;
@@ -26,7 +37,8 @@ a {
   cursor: pointer;
 }
 
-ul, ol {
+ul,
+ol {
   list-style-type: none;
 }
 

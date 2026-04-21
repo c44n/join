@@ -1,7 +1,9 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Contact } from '../../models/contact';
 import { ContactsService } from '../../services/contacts';
 import { ContactDetail } from '../contact-detail/contact-detail';
+import { Dialog } from '@angular/cdk/dialog';
+import { ContactCreateModal } from '../contact-create-modal/contact-create-modal';
 
 export interface ContactGroup {
   letter: string;
@@ -15,6 +17,11 @@ export interface ContactGroup {
   styleUrl: './contact-list.scss',
 })
 export class ContactList implements OnInit {
+  private dialog = inject(Dialog);
+  protected openContactCreateModal() {
+    this.dialog.open(ContactCreateModal);
+  }
+
   contacts = signal<Contact[]>([]);
   isLoading = signal(true);
   errorMessage = signal('');
@@ -37,10 +44,6 @@ export class ContactList implements OnInit {
   });
 
   constructor(private contactsService: ContactsService) {}
-
-  onAddContact(): void {
-    // Wire to router / dialog / form when add-contact flow exists
-  }
 
   async ngOnInit(): Promise<void> {
     try {
