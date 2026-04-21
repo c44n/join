@@ -6,6 +6,11 @@
     background-color: white;
     filter: drop-shadow(0 0 2em rgba(0, 0, 0, 0.209));
     overflow: hidden;
+
+    @include all.mobile {
+        width: 310px;
+        margin: 10px auto;
+    }
 }
 
 .cdk-overlay-backdrop {
@@ -18,24 +23,50 @@
     .inner {
         display: flex;
 
+        @include all.mobile {
+            flex-direction: column;
+        }
+
         .left {
             display: flex;
             flex-direction: column;
             justify-content: center;
             gap: 10px;
-            
+
             padding: 66px 46px;
             background-color: all.$primary-color;
             color: white;
 
+            @include all.mobile {
+                gap: 12px;
+                padding: 96px 24px;
+            }
+
+            .cc_logo {
+                height: auto;
+                width: 55px;
+
+                @include all.mobile {
+                    display: none;
+                }
+            }
+
             h2 {
                 font-size: 60px;
                 margin: 0;
+
+                @include all.mobile {
+                    font-size: 37px;
+                }
             }
 
             h3 {
                 font-size: 20px;
                 font-weight: 300;
+
+                @include all.mobile {
+                    font-size: 16px;
+                }
             }
 
             .cc_blue_line {
@@ -51,6 +82,11 @@
             align-items: center;
             padding: 66px 46px;
 
+            @include all.mobile {
+                padding: 0 16px 26px 16px;
+                flex-direction: column;
+            }
+
             .cc_avatar {
                 display: flex;
                 justify-content: center;
@@ -62,6 +98,10 @@
                 border: 2px solid white;
                 border-radius: 50%;
                 box-shadow: 0px 0px 4px 0px #0000001A;
+
+                @include all.mobile {
+                    margin-top: -50px;
+                }
             }
 
 
@@ -71,50 +111,64 @@
                 gap: 32px;
                 margin-left: 30px;
 
+                @include all.mobile {
+                    gap: 15px;
+                    margin: 20px 0 0 0;
+                }
+
+                .cc_input {
+                    border: 1px solid #D1D1D1;
+                    border-radius: 10px;
+                    padding: 13px 21px;
+                    width: 380px;
+                    font-size: 16px;
+                    background-position: 97% 10px;
+                    background-repeat: no-repeat;
+
+                    @include all.mobile {
+                        width: 100%;
+                        padding: 13px 21px;
+                        box-sizing: border-box;
+                    }
+
+                    &::placeholder {
+                        color: #D1D1D1;
+                    }
+
+                    &:focus-visible {
+                        outline: none;
+                        border: 1px solid #29ABE2;
+                    }
+
+                    &#cc_name {
+                        background-image: url('../../../../public/assets/icons/person.png');
+                    }
+
+                    &#cc_email {
+                        background-image: url('../../../../public/assets/icons/mail.png');
+                    }
+
+                    &#cc_phone {
+                        background-image: url('../../../../public/assets/icons/call.png');
+                    }
+                }
+
                 .cc_button_wrapper {
                     margin-top: 15px;
                     display: flex;
                     gap: 10px;
+
+                    .secondary-button {
+                        @include all.mobile {
+                            display: none;
+                        }
+                    }
                 }
 
             }
         }
     }
 }
-
-.cc_input {
-    border: 1px solid #D1D1D1;
-    border-radius: 10px;
-    padding: 13px 21px;
-    width: 380px;
-    font-size: 16px;
-    background-position: 97% 10px;
-    background-repeat: no-repeat;
-
-    &::placeholder {
-        color: #D1D1D1;
-    }
-
-    &:focus-visible {
-        outline: none;
-        border: 1px solid #29ABE2;
-    }
-
-    &#cc_name {
-        background-image: url('../../../../public/assets/icons/person.png');
-    }
-
-    &#cc_email {
-        background-image: url('../../../../public/assets/icons/mail.png');
-    }
-
-    &#cc_phone {
-        background-image: url('../../../../public/assets/icons/call.png');
-    }
-}
-
-
-
 
 // #region avatar
 .avatar {
