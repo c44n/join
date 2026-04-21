@@ -3,34 +3,35 @@
     <h2>Contacts</h2>
     <p>Better with a team</p>
   </div>
-  <div class="details">
-    <div class="details__head">
-      <span>
-        <h2>AM</h2>
-      </span>
-      <div class="name-options">
-        <h3>Anton Mayer</h3>
-        <div class="options">
-          <button>
-            <img src="assets/icons/edit.png" alt="edit">
-            <img src="assets/icons/edit-hover.png" alt="edit-hover" class="option-hover">
-            Edit
-          </button>
-          <button>
-            <img src="assets/icons/delete.png" alt="delete">
-            <img src="assets/icons/delete-hover.png" alt="delete-hover" class="option-hover">
-            Delete
-          </button>
+  @if (contact()) {
+    <div class="details">
+      <div class="details__head">
+        <span [style.background]="contact()?.color">
+          <h2>{{ contact()?.first_name?.[0] }}{{ contact()?.last_name?.[0] }}</h2>
+        </span>
+        <div class="name-options">
+          <h3>{{ contact()?.first_name }} {{ contact()?.last_name }}</h3>
+          <div class="options">
+            <button (click)="editeContact()">
+              <img src="assets/icons/edit.png" alt="edit" />
+              <img src="assets/icons/edit-hover.png" alt="edit-hover" class="option-hover" />
+              Edit
+            </button>
+            <button (click)="deleteContact()">
+              <img src="assets/icons/delete.png" alt="delete" />
+              <img src="assets/icons/delete-hover.png" alt="delete-hover" class="option-hover" />
+              Delete
+            </button>
+          </div>
         </div>
       </div>
+      <div class="details__info">
+        <h4>Contact Information</h4>
+        <h5>Email</h5>
+        <p class="email">{{ contact()?.email }}</p>
+        <h5>Phone</h5>
+        <p>{{ contact()?.phone }}</p>
+      </div>
     </div>
-    <div class="details__info">
-      <h4>Contact Information</h4>
-      <h5>Email</h5>
-      <p class="email">antom@gmail.com</p>
-      <h5>Phone</h5>
-      <p>+49 111 111 111</p>
-    </div>
-  </div>
+  }
 </section>
-
