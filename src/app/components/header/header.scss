@@ -1,18 +1,23 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+
 .app-header {
+ font-family: 'Inter-regular' , sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  height: 52px;
-  background: #ffffff;
+  padding: 35px 40px;
+  background: all.$color-white;
   border-bottom: 5px solid #e0e0e0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   width: 100%;
+  height: 64px;
 }
 
 .app-title {
-  font-size: 20px;
-  color: black;
+  font-size: 18px;
+  color: all.$color-black;
+  margin-left: 200px;
 }
 
 .header-actions {
@@ -45,9 +50,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 2px solid #5b9bd5;
+  border: 2px solid all.$color-black;
+  color: all.$color-light-blue;
   background: transparent;
-  color: black;
   font-size: 16px;
   display: flex;
   align-items: center;
@@ -56,5 +61,41 @@
 
   &:hover {
     background: #eef4fb;
+  }
+}
+
+.avatar-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #2d3748;
+  border-radius: 8px;
+  min-width: 125px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+
+  &.open {
+    display: block;
+  }
+
+  ul {
+    border-radius: 8px;
+  }
+
+  li {
+    padding: 14px 20px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      background: #3d4f66;
+    }
   }
 }
