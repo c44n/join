@@ -13,6 +13,7 @@ export interface ContactGroup {
   imports: [ContactDetail],
   templateUrl: './contact-list.html',
   styleUrl: './contact-list.scss',
+ 
 })
 export class ContactList implements OnInit {
   contacts = signal<Contact[]>([]);

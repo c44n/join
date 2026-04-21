@@ -47,7 +47,7 @@
                 [attr.aria-pressed]="selectedContactId() === contact.id"
               >
                 <div class="avatar" [style.background]="contact.color">
-                  {{ contact.first_name?.[0] ?? '' }}{{ contact.last_name?.[0] ?? '' }}
+                  {{ contact.first_name[0] }}{{ contact.last_name[0] }}
                 </div>
 
                 <div class="contact-info">
@@ -63,6 +63,6 @@
   </div>
 
   <aside class="contacts-layout__detail" aria-label="Contact details">
-    <app-contact-detail></app-contact-detail>
+    <app-contact-detail [contact]="selectedContact()"></app-contact-detail>
   </aside>
 </div>
