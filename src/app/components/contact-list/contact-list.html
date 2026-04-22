@@ -63,6 +63,6 @@
   </div>
 
   <aside class="contacts-layout__detail" aria-label="Contact details">
-    <app-contact-detail [contact]="selectedContact()"></app-contact-detail>
+    <app-contact-detail [contact]="selectedContact()" (contactChanged)="reloadContacts($event)"></app-contact-detail>
   </aside>
 </div>

@@ -59,9 +59,34 @@
         </div>
 
         <div class="cc_form">
-          <input class="cc_input" type="text" name="name" id="cc_name" placeholder="Name" />
-          <input class="cc_input" type="email" name="email" id="cc_email" placeholder="Email" />
-          <input class="cc_input" type="text" name="phone" id="cc_phone" placeholder="Phone" />
+          <input
+            class="cc_input"
+            type="text"
+            name="name"
+            id="cc_name"
+            placeholder="Name"
+            [(ngModel)]="name"
+          />
+          <input
+            class="cc_input"
+            type="email"
+            name="email"
+            id="cc_email"
+            placeholder="Email"
+            [(ngModel)]="email"
+          />
+          <input
+            class="cc_input"
+            type="text"
+            name="phone"
+            id="cc_phone"
+            placeholder="Phone"
+            [(ngModel)]="phone"
+          />
+
+          @if (errorMessage()) {
+            <p>{{ errorMessage() }}</p>
+          }
 
           <div class="cc_button_wrapper">
             <button (click)="closeModal()" type="button" class="secondary-button">
@@ -85,8 +110,8 @@
               </span>
             </button>
 
-            <button type="button" class="primary-button">
-              <span class="primary-button__label">Create contact</span>
+            <button type="button" class="primary-button" (click)="createContact()" [disabled]="saving()">
+              <span class="primary-button__label">{{ saving() ? 'Saving...' : 'Create contact' }}</span>
               <span class="primary-button__icon" aria-hidden="true">
                 <svg
                   width="16"
