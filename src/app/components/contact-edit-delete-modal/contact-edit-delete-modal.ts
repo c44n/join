@@ -3,6 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Contact } from '../../models/contact';
 import { ContactsService } from '../../services/contacts';
+import { ToastService } from '../../services/toast';
 
 @Component({
   selector: 'app-contact-edit-delete-modal',
@@ -13,6 +14,7 @@ import { ContactsService } from '../../services/contacts';
 export class ContactEditDeleteModal {
   private dialogRef = inject(DialogRef);
   private contactsService = inject(ContactsService);
+  private toastService = inject(ToastService);
   private data = inject<Contact>(DIALOG_DATA);
   protected name = `${this.data.first_name} ${this.data.last_name}`.trim();
   protected email = this.data.email;
@@ -49,6 +51,7 @@ export class ContactEditDeleteModal {
         phone: this.phone,
         color: this.data.color,
       });
+      this.toastService.show('Contact successfully updated', 2500);
       this.closeModal('updated');
     } catch (error) {
       const message =
@@ -64,6 +67,7 @@ export class ContactEditDeleteModal {
     this.saving.set(true);
     try {
       await this.contactsService.deleteContact(this.data.id);
+      this.toastService.show('Contact successfully deleted', 2500);
       this.closeModal('deleted');
     } catch (error) {
       const message =

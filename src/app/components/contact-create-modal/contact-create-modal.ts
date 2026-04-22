@@ -2,6 +2,7 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ContactsService } from '../../services/contacts';
+import { ToastService } from '../../services/toast';
 
 @Component({
   selector: 'app-contact-create-modal',
@@ -12,6 +13,7 @@ import { ContactsService } from '../../services/contacts';
 export class ContactCreateModal {
   private dialogRef = inject(DialogRef);
   private contactsService = inject(ContactsService);
+  private toastService = inject(ToastService);
   protected name = '';
   protected email = '';
   protected phone = '';
@@ -36,6 +38,7 @@ export class ContactCreateModal {
         email: this.email,
         phone: this.phone,
       });
+      this.toastService.show('Contact created successfully', 2500);
       this.closeModal(true);
     } catch (error) {
       const message =
