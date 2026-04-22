@@ -1,5 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Contact } from '../../models/contact';
+import { Dialog } from '@angular/cdk/dialog';
+import { ContactEditDeleteModal } from '../contact-edit-delete-modal/contact-edit-delete-modal';
 
 @Component({
   selector: 'app-contact-detail',
@@ -16,5 +18,11 @@ export class ContactDetail {
 
   deleteContact() {
     console.log(this.contact()?.first_name, ' deleted !');
+  }
+
+  private dialog = inject(Dialog);
+
+  protected openContactEditDeleteModal() {
+    this.dialog.open(ContactEditDeleteModal);
   }
 }
