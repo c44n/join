@@ -16,7 +16,7 @@
   min-height: 0;
   width: 100%;
   overflow: hidden;
-  background-color: all.$color-light-green;
+  background-color: all.$color-light-gray;
 }
 
 .app-shell__sidebar {
@@ -30,6 +30,10 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 1440px;
+  margin-left: 0;
+  margin-right: auto;
   overflow: hidden;
   background-color: all.$color-gray;
 }
