@@ -41,48 +41,6 @@
   border-bottom: 1px solid #e5e5e5;
 }
 
-.add-contact-button {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 10px;
-  background: #2a3647;
-  color: #ffffff;
-
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 1.125rem;
-  line-height: 1.2;
-  letter-spacing: 0;
-
-  cursor: pointer;
-}
-
-.add-contact-button__label {
-  flex: 0 1 auto;
-}
-
-.add-contact-button:hover {
-  background: #1f2836;
-}
-
-.add-contact-button:focus-visible {
-  outline: 2px solid #007cee;
-  outline-offset: 2px;
-}
-
-.add-contact-button__icon {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-}
-
 /* Scrolls with the column; toolbar above uses position: sticky */
 .contact-list__body {
   flex: 0 0 auto;

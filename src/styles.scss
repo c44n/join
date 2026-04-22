@@ -2,35 +2,30 @@
 
 html,
 body {
-  height: 100%;
-  overflow: hidden;
+  font-family: 'Inter-regular', sans-serif;
 }
 
 * {
-  position: relative;
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: inherit;
   scroll-behavior: smooth;
-  // border: inherit;
+  box-sizing: border-box;
+  text-decoration: none;
+  position: relative;
+  list-style: none;
   font-size: inherit;
   color: inherit;
-  // background: inherit;
-  
+  font-family: inherit;
+  background: initial;
+  border: initial;
 }
 
 a {
-  text-decoration: none;
-  transition: 125ms;
+  transition: .125s;
   cursor: pointer;
 }
 
-ul, ol {
-  list-style-type: none;
-}
-
 button {
-  transform: 125ms;
+  transition: .125s;
   cursor: pointer;
 }
