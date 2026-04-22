@@ -1,246 +1,242 @@
 @use '../../../../public/assets/styles/all-styles.scss' as all;
 
 :host-context(cdk-dialog-container) {
-    display: block;
-    border-radius: 20px;
-    background-color: white;
-    filter: drop-shadow(0 0 2em rgba(0, 0, 0, 0.209));
-    overflow: hidden;
+  display: block;
+  border-radius: 20px;
+  background-color: white;
+  filter: drop-shadow(0 0 2em rgba(0, 0, 0, 0.209));
+  overflow: hidden;
 
-    @include all.mobile {
-        width: 310px;
-        margin: 10px auto;
-    }
+  @include all.mobile {
+    width: 310px;
+    margin: 10px auto;
+  }
 }
 
 .cdk-overlay-backdrop {
-    background-color: rgba(5, 5, 5, 0.397) !important;
+  background-color: rgba(5, 5, 5, 0.397) !important;
 }
 
 .contact_create_modal {
+  .inner {
+    display: flex;
 
-    .inner {
-        display: flex;
+    @include all.mobile {
+      flex-direction: column;
+    }
+
+    .left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+
+      padding: 66px 46px;
+      background-color: all.$primary-color;
+      color: white;
+
+      @include all.mobile {
+        gap: 12px;
+        padding: 96px 24px;
+      }
+
+      .cc_close_btn_wrapper {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: none;
+        justify-content: flex-end;
+
+        .cc_close_btn {
+          display: flex;
+          align-items: center;
+          height: 20px;
+          width: 20px;
+          background: none;
+          border: none;
+          border-radius: 50%;
+
+          &:hover {
+            background-color: #cdcdcd;
+          }
+        }
 
         @include all.mobile {
-            flex-direction: column;
+          display: flex;
         }
+      }
 
-        .left {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 10px;
+      .cc_logo {
+        height: auto;
+        width: 55px;
 
-            padding: 66px 46px;
-            background-color: all.$primary-color;
-            color: white;
-
-            @include all.mobile {
-                gap: 12px;
-                padding: 96px 24px;
-            }
-
-            .cc_close_btn_wrapper {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                display: none;
-                justify-content: flex-end;
-
-                .cc_close_btn {
-                    display: flex;
-                    align-items: center;
-                    height: 20px;
-                    width: 20px;
-                    background: none;
-                    border: none;
-                    border-radius: 50%;
-
-                    &:hover {
-                        background-color: #CDCDCD;
-                    }
-                }
-
-                @include all.mobile {
-                    display: flex;
-                }
-            }
-
-            .cc_logo {
-                height: auto;
-                width: 55px;
-
-                @include all.mobile {
-                    display: none;
-                }
-            }
-
-            h2 {
-                font-size: 60px;
-                margin: 0;
-
-                @include all.mobile {
-                    font-size: 37px;
-                }
-            }
-
-            h3 {
-                font-size: 20px;
-                font-weight: 300;
-
-                @include all.mobile {
-                    font-size: 16px;
-                }
-            }
-
-            .cc_blue_line {
-                height: 3px;
-                width: 60px;
-                background-color: rgb(132, 166, 239);
-            }
-
+        @include all.mobile {
+          display: none;
         }
+      }
 
-        .right {
-            padding: 66px 46px;
+      h2 {
+        font-size: 60px;
+        margin: 0;
 
-            @include all.mobile {
-                padding: 16px;
-            }
-
-            .cc_close_btn_wrapper {
-                display: flex;
-                justify-content: flex-end;
-                margin-bottom: 40px;
-
-                .cc_close_btn {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 24px;
-                    width: 24px;
-                    background: none;
-                    border: none;
-                    border-radius: 50%;
-
-                    &:hover {
-                        background-color: #CDCDCD;
-                    }
-                }
-
-                @include all.mobile {
-                    display: none;
-                }
-            }
-
-            .inner {
-                display: flex;
-                align-items: center;
-
-                @include all.mobile {
-                    padding: 0 0 10px 0;
-                    flex-direction: column;
-                }
-            }
-
-            .cc_avatar {
-                margin-top: -100px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 120px;
-                width: 120px;
-                border: 2px solid white;
-                border-radius: 50%;
-                box-shadow: 0px 0px 4px 0px #0000001A;
-
-                @include all.mobile {
-                    margin-top: -75px;
-                }
-            }
-
-
-            .cc_form {
-                display: flex;
-                flex-direction: column;
-                gap: 32px;
-                margin-left: 30px;
-
-                @include all.mobile {
-                    width: 100%;
-                    gap: 15px;
-                    margin: 20px 0 0 0;
-                }
-
-                .cc_input {
-                    border: 1px solid #D1D1D1;
-                    border-radius: 10px;
-                    padding: 13px 21px;
-                    width: 380px;
-                    font-size: 16px;
-                    background-position: 97% 10px;
-                    background-repeat: no-repeat;
-
-                    @include all.mobile {
-                        width: 100%;
-                        padding: 13px 21px;
-                        box-sizing: border-box;
-                    }
-
-                    &::placeholder {
-                        color: #D1D1D1;
-                    }
-
-                    &:focus-visible {
-                        outline: none;
-                        border: 1px solid #29ABE2;
-                    }
-
-                    &#cc_name {
-                        background-image: url('../../../../public/assets/icons/person.png');
-                    }
-
-                    &#cc_email {
-                        background-image: url('../../../../public/assets/icons/mail.png');
-                    }
-
-                    &#cc_phone {
-                        background-image: url('../../../../public/assets/icons/call.png');
-                    }
-                }
-
-                .cc_button_wrapper {
-                    margin-top: 15px;
-                    display: flex;
-                    gap: 10px;
-
-                    @include all.mobile {
-                        margin: 25px auto 0 auto;
-                    }
-
-                    .secondary-button {
-                        @include all.mobile {
-                            display: none;
-                        }
-                    }
-                }
-
-            }
+        @include all.mobile {
+          font-size: 37px;
         }
+      }
+
+      h3 {
+        font-size: 20px;
+        font-weight: 300;
+
+        @include all.mobile {
+          font-size: 16px;
+        }
+      }
+
+      .cc_blue_line {
+        height: 3px;
+        width: 60px;
+        background-color: rgb(132, 166, 239);
+      }
     }
+
+    .right {
+      padding: 66px 46px;
+
+      @include all.mobile {
+        padding: 16px;
+      }
+
+      .cc_close_btn_wrapper {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 40px;
+
+        .cc_close_btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 24px;
+          width: 24px;
+          background: none;
+          border: none;
+          border-radius: 50%;
+
+          &:hover {
+            background-color: #cdcdcd;
+          }
+        }
+
+        @include all.mobile {
+          display: none;
+        }
+      }
+
+      .inner {
+        display: flex;
+        align-items: center;
+
+        @include all.mobile {
+          padding: 0 0 10px 0;
+          flex-direction: column;
+        }
+      }
+
+      .cc_avatar {
+        margin-top: -100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 120px;
+        width: 120px;
+        border: 2px solid white;
+        border-radius: 50%;
+        box-shadow: 0px 0px 4px 0px #0000001a;
+
+        @include all.mobile {
+          margin-top: -75px;
+        }
+      }
+
+      .cc_form {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        margin-left: 30px;
+
+        @include all.mobile {
+          width: 100%;
+          gap: 15px;
+          margin: 20px 0 0 0;
+        }
+
+        .cc_input {
+          border: 1px solid #d1d1d1;
+          border-radius: 10px;
+          padding: 13px 21px;
+          width: 380px;
+          font-size: 16px;
+          background-position: 97% 10px;
+          background-repeat: no-repeat;
+
+          @include all.mobile {
+            width: 100%;
+            padding: 13px 21px;
+            box-sizing: border-box;
+          }
+
+          &::placeholder {
+            color: #d1d1d1;
+          }
+
+          &:focus-visible {
+            outline: none;
+            border: 1px solid #29abe2;
+          }
+
+          &#cc_name {
+            background-image: url('../../../../public/assets/icons/person.png');
+          }
+
+          &#cc_email {
+            background-image: url('../../../../public/assets/icons/mail.png');
+          }
+
+          &#cc_phone {
+            background-image: url('../../../../public/assets/icons/call.png');
+          }
+        }
+
+        .cc_button_wrapper {
+          margin-top: 15px;
+          display: flex;
+          gap: 10px;
+
+          @include all.mobile {
+            margin: 25px auto 0 auto;
+          }
+
+          .secondary-button {
+            @include all.mobile {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 // #region avatar
 .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
 }
 
 // #endregion
