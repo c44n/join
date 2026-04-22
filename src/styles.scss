@@ -2,7 +2,6 @@
 
 html,
 body {
-  height: 100%;
   font-family: 'Inter-regular', sans-serif;
 }
 
@@ -22,11 +21,11 @@ body {
 }
 
 a {
-  transition: .255s ease-in-out;
+  transition: .125s;
   cursor: pointer;
 }
 
 button {
-  transition: .255s ease-in-out;
+  transition: .125s;
   cursor: pointer;
 }
