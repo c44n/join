@@ -33,13 +33,44 @@
 				</div>
 
 				<form class="cc_form">
-					<input class="cc_input" type="text" name="name" id="cc_name" placeholder="Name" [(ngModel)]="name" />
-					<input class="cc_input" type="email" name="email" id="cc_email" placeholder="Email" [(ngModel)]="email" />
-					<input class="cc_input" type="text" name="phone" id="cc_phone" placeholder="Phone" [(ngModel)]="phone" />
+					<div class="input_wrapper">
+						<input class="cc_input" type="text" name="name" id="cc_name" placeholder="Name"
+							[formControl]="name" />
 
-					@if (errorMessage()) {
-						<p>{{ errorMessage() }}</p>
-					}
+						@if (name.invalid && (name.touched || name.dirty)) {
+							@if (name.hasError('required')) {
+								<div class="error_message">Name is required.</div>
+							} @else if (name.hasError('minlength')) {
+								<div class="error_message">Name must be at least 3 characters long.</div>
+							} @else if (name.hasError('pattern')) {
+								<div class="error_message">Please enter first and last name (no numbers allowed).</div>
+							}
+						}
+					</div>
+
+					<div class="input_wrapper">
+						<input class="cc_input" type="email" name="email" id="cc_email" placeholder="Email"
+							[formControl]="email" />
+						@if (email.invalid && (email.touched || email.dirty)) {
+							@if (email.hasError('required')) {
+								<div class="error_message">Email is required.</div>
+							} @else if (email.hasError('pattern')) {
+								<div class="error_message">Please enter a valid email address (e.g., name@example.com).</div>
+							}
+						}
+					</div>
+
+					<div class="input_wrapper">
+						<input class="cc_input" type="text" name="phone" id="cc_phone" placeholder="Phone"
+							[formControl]="phone" />
+						@if (phone.invalid && (phone.touched || phone.dirty)) {
+							@if (phone.hasError('required')) {
+								<div class="error_message">Phone number is required.</div>
+							} @else if (phone.hasError('pattern')) {
+								<div class="error_message">Invalid format (11-13 digits required, starting with + or numbers).</div>
+							}
+						}
+					</div>
 
 					<div class="cc_button_wrapper">
 						<button (click)="removeContact()" type="button" class="secondary-button" [disabled]="saving()">

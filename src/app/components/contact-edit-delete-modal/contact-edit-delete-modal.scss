@@ -177,42 +177,52 @@
                     margin: 20px 0 0 0;
                 }
 
-                .cc_input {
-                    border: 1px solid #D1D1D1;
-                    border-radius: 10px;
-                    padding: 13px 21px;
-                    width: 380px;
-                    font-size: 16px;
-                    background-position: 97% 10px;
-                    background-repeat: no-repeat;
+                .input_wrapper {
+                    max-width: 380px;
 
-                    @include all.mobile {
-                        width: 100%;
+                    .cc_input {
+                        border: 1px solid #D1D1D1;
+                        border-radius: 10px;
                         padding: 13px 21px;
-                        box-sizing: border-box;
-                    }
+                        width: 380px;
+                        font-size: 16px;
+                        background-position: 97% 10px;
+                        background-repeat: no-repeat;
 
-                    &::placeholder {
-                        color: #D1D1D1;
-                    }
+                        @include all.mobile {
+                            width: 100%;
+                            padding: 13px 21px;
+                            box-sizing: border-box;
+                        }
 
-                    &:focus-visible {
-                        outline: none;
-                        border: 1px solid #29ABE2;
-                    }
+                        &::placeholder {
+                            color: #D1D1D1;
+                        }
 
-                    &#cc_name {
-                        background-image: url('../../../../public/assets/icons/person.png');
-                    }
+                        &:focus-visible {
+                            outline: none;
+                            border: 1px solid #29ABE2;
+                        }
 
-                    &#cc_email {
-                        background-image: url('../../../../public/assets/icons/mail.png');
-                    }
+                        &#cc_name {
+                            background-image: url('../../../../public/assets/icons/person.png');
+                        }
 
-                    &#cc_phone {
-                        background-image: url('../../../../public/assets/icons/call.png');
+                        &#cc_email {
+                            background-image: url('../../../../public/assets/icons/mail.png');
+                        }
+
+                        &#cc_phone {
+                            background-image: url('../../../../public/assets/icons/call.png');
+                        }
                     }
                 }
+
+                .error_message {
+                    color: all.$color-red;
+                }
+
+
 
                 .cc_button_wrapper {
                     margin-top: 15px;
