@@ -20,7 +20,11 @@ export interface ContactGroup {
 export class ContactList implements OnInit {
   private dialog = inject(Dialog);
   protected openContactCreateModal() {
-    this.dialog.open(ContactCreateModal);
+    const dialogRef = this.dialog.open<boolean>(ContactCreateModal);
+    dialogRef.closed.subscribe(async (wasCreated) => {
+      if (!wasCreated) return;
+      await this.reloadContacts();
+    });
   }
 
   contacts = signal<Contact[]>([]);
@@ -54,6 +58,23 @@ export class ContactList implements OnInit {
       this.handleLoadError(error);
     } finally {
       this.isLoading.set(false);
+    }
+  }
+
+  async reloadContacts(changeType?: 'updated' | 'deleted'): Promise<void> {
+    const currentSelectedId = this.selectedContactId();
+    try {
+      const contacts = await this.contactsService.getContacts();
+      this.contacts.set(contacts);
+      if (changeType === 'deleted') {
+        this.selectedContactId.set(null);
+        return;
+      }
+      if (!currentSelectedId) return;
+      const stillExists = contacts.some((contact) => contact.id === currentSelectedId);
+      this.selectedContactId.set(stillExists ? currentSelectedId : null);
+    } catch (error) {
+      this.handleLoadError(error);
     }
   }
 

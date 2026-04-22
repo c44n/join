@@ -28,21 +28,25 @@
 			</div>
 
 			<div class="inner">
-				<div class="cc_avatar" style="background-color: rgb(255, 172, 19)">
-					SP
+				<div class="cc_avatar" [style.background-color]="avatarColor">
+					{{ avatarLabel }}
 				</div>
 
 				<form class="cc_form">
-					<input class="cc_input" type="text" name="name" id="cc_name" placeholder="Name" />
-					<input class="cc_input" type="email" name="email" id="cc_email" placeholder="Email" />
-					<input class="cc_input" type="text" name="phone" id="cc_phone" placeholder="Phone" />
+					<input class="cc_input" type="text" name="name" id="cc_name" placeholder="Name" [(ngModel)]="name" />
+					<input class="cc_input" type="email" name="email" id="cc_email" placeholder="Email" [(ngModel)]="email" />
+					<input class="cc_input" type="text" name="phone" id="cc_phone" placeholder="Phone" [(ngModel)]="phone" />
+
+					@if (errorMessage()) {
+						<p>{{ errorMessage() }}</p>
+					}
 
 					<div class="cc_button_wrapper">
-						<button (click)="closeModal()" type="button" class="secondary-button">
+						<button (click)="removeContact()" type="button" class="secondary-button" [disabled]="saving()">
 							<span class="secondary-button__label">Delete</span>
 						</button>
 
-						<button type="button" class="primary-button">
+						<button type="button" class="primary-button" (click)="saveContact()" [disabled]="saving()">
 							<span class="primary-button__label">Save</span>
 							<span class="primary-button__icon" aria-hidden="true">
 								<svg width="16" height="12" viewBox="0 0 16 12" fill="none"
