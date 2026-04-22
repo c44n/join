@@ -24,21 +24,19 @@
 
     font-family: 'Inter', sans-serif;
     font-weight: 700;
-    font-size: 1.125rem;
+    font-size: 21px;
     line-height: 1.2;
     letter-spacing: 0;
 
-    transition: .2s ease-in-out;
-
-    cursor: pointer;
-
     @include mq.mobile {
+        width: auto;
         padding: 10px 10px;
     }
 }
 
 .primary-button__label {
     flex: 0 1 auto;
+    text-wrap-mode: nowrap;
 }
 
 .primary-button:hover {
@@ -79,9 +77,9 @@
     line-height: 1.2;
     letter-spacing: 0;
 
-    transition: .2s ease-in-out;
-
-    cursor: pointer;
+    @include mq.mobile {
+        width: auto;
+    }
 
     &:hover {
         border: 1px solid #29ABE2;
@@ -105,6 +103,7 @@
 
     .secondary-button__label {
         flex: 0 1 auto;
+        text-wrap-mode: nowrap;
     }
 
     .secondary-button__icon {
@@ -114,6 +113,14 @@
         justify-content: center;
         color: #2c2727;
     }
+}
+
+// #endregion
+
+
+// #region cdk
+.cdk-overlay-container {
+    background: #00000085;
 }
 
 // #endregion
