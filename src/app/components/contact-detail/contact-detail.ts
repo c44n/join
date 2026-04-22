@@ -2,6 +2,8 @@ import { Component, inject, input, output } from '@angular/core';
 import { Contact } from '../../models/contact';
 import { Dialog } from '@angular/cdk/dialog';
 import { ContactEditDeleteModal } from '../contact-edit-delete-modal/contact-edit-delete-modal';
+import { ContactsService } from '../../services/contacts';
+import { ToastService } from '../../services/toast';
 
 @Component({
   selector: 'app-contact-detail',
@@ -12,13 +14,25 @@ import { ContactEditDeleteModal } from '../contact-edit-delete-modal/contact-edi
 export class ContactDetail {
   contact = input<Contact | null>(null);
   contactChanged = output<'updated' | 'deleted'>();
+  private contactsService = inject(ContactsService);
+  private toastService = inject(ToastService);
 
   editeContact() {
     console.log(this.contact()?.first_name, ' edit !');
   }
 
-  deleteContact() {
-    this.openContactEditDeleteModal();
+  async deleteContact() {
+    const currentContact = this.contact();
+    if (!currentContact) return;
+    try {
+      await this.contactsService.deleteContact(currentContact.id);
+      this.toastService.show('Contact successfully deleted', 2500);
+      this.contactChanged.emit('deleted');
+    } catch (error) {
+      const message =
+        error instanceof Error && error.message ? error.message : 'Could not delete contact.';
+      this.toastService.show(message, 2500);
+    }
   }
 
   private dialog = inject(Dialog);
