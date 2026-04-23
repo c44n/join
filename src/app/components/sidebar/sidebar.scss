@@ -13,6 +13,11 @@
   background-color: all.$color-light-dark;
   color: all.$color-gray;
 
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
   &__header {
     display: flex;
     flex-direction: column;
@@ -55,7 +60,7 @@
   }
 
   @include all.tablet {
-    min-width: 120px;
+    min-width: 130px;
 
     &__header {
       gap: 80px;
@@ -79,7 +84,7 @@
 .navigation {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
   width: 100%;
 
   a {
@@ -100,7 +105,7 @@
 
     &:hover {
       color: all.$color-white;
-      background-color: all.$color-dark;
+      background-color: all.$color-dark-blue;
 
       .icon-normal {
         display: none;
@@ -109,6 +114,10 @@
       .icon-hover {
         display: block;
       }
+    }
+    
+    &:active {
+      background-color: all.$color-dark;
     }
   }
 
@@ -127,7 +136,7 @@
 
     a {
       gap: 6px;
-      padding-left: 12px;
+      padding-left: 15px;
     }
   }
 
