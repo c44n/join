@@ -1,3 +1,5 @@
+@use "../../../../public/assets/styles/all-styles.scss" as all;
+
 :host {
   display: flex;
   flex-direction: column;
@@ -17,16 +19,20 @@
 .contacts-layout__list {
   display: flex;
   flex-direction: column;
-  flex: 0 0 clamp(280px, 36vw, 440px);
+  // flex: 0 0 clamp(280px, 36vw, 440px);
   min-width: 0;
   min-height: 0;
-  max-width: 440px;
+  // max-width: 440px;
   padding: 0 20px 20px;
   box-sizing: border-box;
   background: #fff;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+
+  @include all.mobile {
+    width: 100%;
+  }
 }
 
 /* Stays at top of this column while the list scrolls underneath */
@@ -71,7 +77,7 @@
 }
 
 .contact-card.selected {
-  background: #2A3647;
+  background: #2a3647;
   border-radius: 10px;
 }
 
@@ -168,6 +174,10 @@
   flex-direction: column;
   background: #f5f5f5;
   overflow-y: auto;
+
+  @include all.mobile {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {

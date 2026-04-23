@@ -1,13 +1,17 @@
 @use '../../../../public/assets/styles/all-styles.scss' as all;
-
 .app-header {
+  width: 100%;
+  background: all.$color-white;
+  box-shadow: 0 5px 3px rgba(0, 0, 0, 0.06);
+}
+.content {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 35px 40px;
-  background: all.$color-white;
-  box-shadow: 0 5px 3px rgba(0, 0, 0, 0.06);
+  
   width: 100%;
+  max-width: 1440px;
   height: 96px;
 }
 
@@ -125,7 +129,6 @@
     font-size: 16px;
     cursor: pointer;
 
-
     &:hover {
       background: #3d4f66;
       border-radius: 20px;
@@ -137,15 +140,12 @@
   .dropdown-menu {
     top: calc(100% + 3px);
     transform: translateX(100%);
-    transition:  transform 0.15s ease;
-    visibility: hidden;
-    display: block;
-    
-    &.open{
+    transition: transform 0.15s ease;
+
+    &.open {
       transform: translateX(0);
       visibility: visible;
       pointer-events: none;
-
     }
   }
 }

@@ -1,34 +1,26 @@
 @use '../../public/assets/styles/all-styles.scss' as all;
 
-.app-shell {
+.content {
   display: flex;
   width: 100%;
   background-color: all.$color-gray;
 
-  &__content {
+  &__header-main {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    max-width: 1440px;
-    min-height: 100dvh;
+    padding-left: 210px;
+
+    @include all.notebook {
+      padding-left: 150px;
+    }
+
+    @include all.tablet {
+      padding-left: 130px;
+    }
+
+    @include all.mobile {
+      padding-left: 0;
+    }
   }
 }
-
-.main {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-
-  margin-left: 210px;
-
-  @include all.notebook{
-    margin-left: 150px;
-  }
-
-  @include all.tablet {
-    margin-left: 130px;
-  }
-
-  @include all.mobile {
-    margin-left: 0;
-  }
-} 
