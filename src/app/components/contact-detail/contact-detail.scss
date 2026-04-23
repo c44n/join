@@ -1,10 +1,10 @@
+
 @use '../../../../public/assets/styles/all-styles.scss' as all;
 
 .contact {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  width: 100%;
   margin: 100px 0 0 70px;
   font-family: 'Inter-regular';
   background-color: all.$color-light-gray;
