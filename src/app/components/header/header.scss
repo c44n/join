@@ -13,7 +13,7 @@
 
 .mobile-logo {
   display: none;
-  height: 32px;
+  height: 42px;
 }
 
 .app-title {
@@ -136,5 +136,16 @@
 @include all.mobile {
   .dropdown-menu {
     top: calc(100% + 3px);
+    transform: translateX(100%);
+    transition:  transform 0.15s ease;
+    visibility: hidden;
+    display: block;
+    
+    &.open{
+      transform: translateX(0);
+      visibility: visible;
+      pointer-events: none;
+
+    }
   }
 }
