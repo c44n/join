@@ -1,37 +1,50 @@
 <section class="contact">
-  <div class="contact__title">
-    <h2>Contacts</h2>
-    <p>Better with a team</p>
-  </div>
-  @if (contact()) {
-    <div class="details">
-      <div class="details__head">
-        <span [style.background]="contact()?.color">
-          <h2>{{ contact()?.first_name?.[0] }}{{ contact()?.last_name?.[0] }}</h2>
-        </span>
-        <div class="name-options">
-          <h3>{{ contact()?.first_name }} {{ contact()?.last_name }}</h3>
-          <div class="options">
-            <button (click)="openContactEditDeleteModal()">
-              <img src="assets/icons/edit.png" alt="edit" />
-              <img src="assets/icons/edit-hover.png" alt="edit-hover" class="option-hover" />
-              Edit
-            </button>
-            <button (click)="deleteContact()">
-              <img src="assets/icons/delete.png" alt="delete" />
-              <img src="assets/icons/delete-hover.png" alt="delete-hover" class="option-hover" />
-              Delete
-            </button>
+  <div class="content">
+    <div class="content__title">
+      <div class="title-link">
+        <h2>Contacts</h2>
+        <button>
+          <img src="assets/icons/arrow-left.png" alt="arrow-left" class="arrow-normale" />
+          <img src="assets/icons/arrow-left-hover.png" alt="arrow-left-hover" class="arrow-hover"/>
+        </button>
+      </div>
+      <div class="line"></div>
+      <p>Better with a team</p>
+    </div>
+    @if (contact()) {
+      <div class="details">
+        <div class="details__head">
+          <span [style.background]="contact()?.color">
+            <h2>{{ contact()?.first_name?.[0] }}{{ contact()?.last_name?.[0] }}</h2>
+          </span>
+          <div class="name-options">
+            <h3>{{ contact()?.first_name }} {{ contact()?.last_name }}</h3>
+            <div class="options">
+              <button (click)="openContactEditDeleteModal()">
+                <img src="assets/icons/edit.png" alt="edit" />
+                <img src="assets/icons/edit-hover.png" alt="edit-hover" class="option-hover" />
+                Edit
+              </button>
+              <button (click)="deleteContact()">
+                <img src="assets/icons/delete.png" alt="delete" />
+                <img src="assets/icons/delete-hover.png" alt="delete-hover" class="option-hover" />
+                Delete
+              </button>
+            </div>
           </div>
         </div>
+        <div class="details__info">
+          <h4>Contact Information</h4>
+          <h5>Email</h5>
+          <p class="email">{{ contact()?.email }}</p>
+          <h5>Phone</h5>
+          <p>{{ contact()?.phone }}</p>
+        </div>
       </div>
-      <div class="details__info">
-        <h4>Contact Information</h4>
-        <h5>Email</h5>
-        <p class="email">{{ contact()?.email }}</p>
-        <h5>Phone</h5>
-        <p>{{ contact()?.phone }}</p>
-      </div>
-    </div>
-  }
+    }
+  </div>
+
+  <button class="contact__options">
+    <img src="assets/icons/three-dote.png" alt="three-dots" />
+  </button>
 </section>

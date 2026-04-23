@@ -1,28 +1,104 @@
-
 @use '../../../../public/assets/styles/all-styles.scss' as all;
 
 .contact {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 85dvh;
+
+  &__options {
+    display: none;
+    align-self: flex-end;
+    padding: 0 20px 200px 0;
+
+    @include all.mobile {
+      display: flex;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
   gap: 30px;
-  margin: 100px 0 0 70px;
+  padding: 100px 0 0 70px;
   font-family: 'Inter-regular';
   background-color: all.$color-light-gray;
+  width: 100%;
 
   &__title {
     display: flex;
     align-items: center;
     gap: 30px;
 
-    h2 {
-      font-family: 'Inter-bold';
-      font-size: 48px;
+    .title-link {
+      display: flex;
+      justify-content: space-between;
+
+      h2 {
+        font-family: 'Inter-bold';
+        font-size: 48px;
+      }
+
+      img {
+        display: none;
+        height: 30px;
+        width: 31px;
+      }
+    }
+
+    .line {
+      height: 52px;
+      width: 3px;
+      background: all.$color-light-blue;
     }
 
     p {
-      border-left: 3px solid all.$color-light-blue;
-      padding: 10px 0 10px 30px;
       font-size: 23px;
+    }
+  }
+
+  @include all.mobile {
+    padding: 50px 0 0 10px;
+
+    &__title {
+      flex-direction: column;
+      align-items: start;
+      gap: 10px;
+
+      .title-link {
+        width: 100%;
+        padding-right: 20px;
+        h2 {
+          font-size: 36px;
+        }
+
+        .arrow-normale {
+          display: block;
+        }
+
+        button:hover {
+          .arrow-normale {
+            display: none;
+          }
+
+          .arrow-hover {
+            display: block;
+          }
+        }
+      }
+
+      .line {
+        order: 1;
+        height: 3px;
+        width: 62px;
+        margin-top: 8px;
+      }
+
+      p {
+        font-size: 16px;
+      }
     }
   }
 }
@@ -86,6 +162,27 @@
             display: block;
           }
         }
+      }
+    }
+  }
+
+  @include all.mobile {
+    &__head {
+      gap: 26px;
+      span {
+        height: 75px;
+        width: 75px;
+        font-size: 28px;
+      }
+    }
+
+    .name-options {
+      h3 {
+        font-size: 28px;
+      }
+
+      .options {
+        display: none;
       }
     }
   }
