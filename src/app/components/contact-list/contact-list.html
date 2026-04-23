@@ -4,7 +4,13 @@
       <button type="button" class="primary-button" (click)="openContactCreateModal()">
         <span class="primary-button__label">Add new contact</span>
         <span class="primary-button__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
               stroke="currentColor"
@@ -63,6 +69,9 @@
   </div>
 
   <aside class="contacts-layout__detail" aria-label="Contact details">
-    <app-contact-detail [contact]="selectedContact()" (contactChanged)="reloadContacts($event)"></app-contact-detail>
+    <app-contact-detail
+      [contact]="selectedContact()"
+      (contactChanged)="reloadContacts($event)"
+    ></app-contact-detail>
   </aside>
 </div>

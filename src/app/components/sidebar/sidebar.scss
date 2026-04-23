@@ -115,7 +115,7 @@
         display: block;
       }
     }
-    
+
     &:active {
       background-color: all.$color-dark;
     }
@@ -156,6 +156,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 1;
 
     ul {
       display: flex;
@@ -182,7 +183,7 @@
 
         &:hover {
           color: all.$color-white;
-          background-color: all.$color-dark;
+          background-color: all.$color-dark-blue;
 
           .icon-normal {
             display: none;
@@ -191,6 +192,10 @@
           .icon-hover {
             display: block;
           }
+        }
+
+        &:active {
+          background-color: all.$color-dark;
         }
       }
     }
