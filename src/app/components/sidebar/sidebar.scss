@@ -84,7 +84,7 @@
 .navigation {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
   width: 100%;
 
   a {
@@ -105,7 +105,7 @@
 
     &:hover {
       color: all.$color-white;
-      background-color: all.$color-dark;
+      background-color: all.$color-dark-blue;
 
       .icon-normal {
         display: none;
@@ -114,6 +114,10 @@
       .icon-hover {
         display: block;
       }
+    }
+    
+    &:active {
+      background-color: all.$color-dark;
     }
   }
 
