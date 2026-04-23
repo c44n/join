@@ -17,4 +17,18 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-}
+
+  margin-left: 210px;
+
+  @include all.notebook{
+    margin-left: 150px;
+  }
+
+  @include all.tablet {
+    margin-left: 130px;
+  }
+
+  @include all.mobile {
+    margin-left: 0;
+  }
+} 
