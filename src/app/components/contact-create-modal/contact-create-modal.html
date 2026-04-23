@@ -58,35 +58,72 @@
           </svg>
         </div>
 
-        <div class="cc_form">
-          <input
-            class="cc_input"
-            type="text"
-            name="name"
-            id="cc_name"
-            placeholder="Name"
-            [(ngModel)]="name"
-          />
-          <input
-            class="cc_input"
-            type="email"
-            name="email"
-            id="cc_email"
-            placeholder="Email"
-            [(ngModel)]="email"
-          />
-          <input
-            class="cc_input"
-            type="text"
-            name="phone"
-            id="cc_phone"
-            placeholder="Phone"
-            [(ngModel)]="phone"
-          />
+        <form class="cc_form" [formGroup]="contactForm" (ngSubmit)="createContact()">
+          <label for="cc_name">
+            <input
+              class="cc_input"
+              type="text"
+              name="name"
+              id="cc_name"
+              placeholder="Name"
+              formControlName="name"
+              [style.border]="!name?.valid && name?.touched ? '2px solid #ff3d00' : ''"
+            />
 
-          @if (errorMessage()) {
-            <p>{{ errorMessage() }}</p>
-          }
+            @if (!name?.valid && name?.touched) {
+              @if (name?.hasError('required')) {
+                <span>name is required</span>
+              }
+
+              @if (name?.hasError('pattern')) {
+                <span>firstname and lastname ist required</span>
+              }
+            }
+          </label>
+          <label for="cc_email">
+            <input
+              class="cc_input"
+              type="email"
+              name="email"
+              id="cc_email"
+              placeholder="Email"
+              formControlName="email"
+              [style.border]="!email?.valid && email?.touched ? '2px solid #ff3d00' : ''"
+            />
+
+            @if (!email?.valid && email?.touched) {
+              @if (email?.hasError('required')) {
+                <span>email is required</span>
+              }
+
+              @if (email?.hasError('pattern')) {
+                <span>email ist not correct</span>
+              }
+            }
+          </label>
+          <label for="cc_phone">
+            <input
+              class="cc_input"
+              type="text"
+              name="phone"
+              id="cc_phone"
+              placeholder="Phone"
+              formControlName="phone"
+              [style.border]="!phone?.valid && phone?.touched ? '2px solid #ff3d00' : ''"
+            />
+
+            @if (!phone?.valid && phone?.touched) {
+              @if (phone?.hasError('required')) {
+                <span>Phone is required</span>
+              }
+
+              @if (phone?.hasError('pattern')) {
+                <span>Phone number ist not correct</span>
+              }
+            }
+          </label>
+
+          <span class="cc_warning"> {{ errorMessage() }}</span>
 
           <div class="cc_button_wrapper">
             <button (click)="closeModal()" type="button" class="secondary-button">
@@ -110,8 +147,15 @@
               </span>
             </button>
 
-            <button type="button" class="primary-button" (click)="createContact()" [disabled]="saving()">
-              <span class="primary-button__label">{{ saving() ? 'Saving...' : 'Create contact' }}</span>
+            <button
+              type="button"
+              class="primary-button"
+              (click)="createContact()"
+              [disabled]="saving()"
+            >
+              <span class="primary-button__label">{{
+                saving() ? 'Saving...' : 'Create contact'
+              }}</span>
               <span class="primary-button__icon" aria-hidden="true">
                 <svg
                   width="16"
@@ -128,7 +172,7 @@
               </span>
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

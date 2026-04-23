@@ -1,12 +1,18 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormsModule,
+  Validators,
+  ReactiveFormsModule,
+  FormGroup,
+} from '@angular/forms';
 import { ContactsService } from '../../services/contacts';
 import { ToastService } from '../../services/toast';
 
 @Component({
   selector: 'app-contact-create-modal',
-  imports: [FormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './contact-create-modal.html',
   styleUrl: './contact-create-modal.scss',
 })
@@ -14,20 +20,50 @@ export class ContactCreateModal {
   private dialogRef = inject(DialogRef);
   private contactsService = inject(ContactsService);
   private toastService = inject(ToastService);
-  protected name = '';
-  protected email = '';
-  protected phone = '';
+  // protected name = '';
+  // protected email = '';
+  // protected phone = '';
   protected saving = signal(false);
   protected errorMessage = signal<string | null>(null);
 
+  contactForm = new FormGroup({
+    name: new FormControl('', {
+      validators: [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Zà-žÀ-Ž-]+ +[a-zA-Zà-žÀ-Ž-]+.*$/),
+      ],
+    }),
+
+    email: new FormControl('', {
+      validators: [
+        Validators.required,
+        Validators.pattern('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}'),
+      ],
+    }),
+    phone: new FormControl('', {
+      validators: [Validators.required, Validators.pattern('[+ 0-9 ]{11,13}')],
+    }),
+  });
+
   protected async createContact() {
-    this.errorMessage.set(null);
-    const full = this.name.trim();
-    const space = full.indexOf(' ');
-    const first_name = space === -1 ? full : full.slice(0, space);
-    const last_name = space === -1 ? '' : full.slice(space + 1).trim();
-    if (!first_name || !this.email.trim()) {
-      this.errorMessage.set('Name and email are required.');
+    this.errorMessage.set('');
+
+    let first_name;
+    let last_name;
+    if (this.contactForm.value.name) {
+      const full = this.contactForm.value.name.trim();
+      const space = full.indexOf(' ');
+      first_name = space === -1 ? full : full.slice(0, space);
+      last_name = space === -1 ? '' : full.slice(space + 1).trim();
+    }
+
+    if (
+      !first_name ||
+      !last_name ||
+      !this.contactForm.value.email?.trim() ||
+      !this.contactForm.value.phone
+    ) {
+      this.errorMessage.set('Name, email and phone are required.');
       return;
     }
     this.saving.set(true);
@@ -35,8 +71,8 @@ export class ContactCreateModal {
       await this.contactsService.createContact({
         first_name,
         last_name,
-        email: this.email,
-        phone: this.phone,
+        email: this.contactForm.value.email,
+        phone: this.contactForm.value.phone,
       });
       this.toastService.show('Contact created successfully', 2500);
       this.closeModal(true);
@@ -51,5 +87,17 @@ export class ContactCreateModal {
 
   protected closeModal(result: boolean = false) {
     this.dialogRef?.close(result);
+  }
+
+  get name() {
+    return this.contactForm.get('name');
+  }
+
+  get email() {
+    return this.contactForm.get('email');
+  }
+
+  get phone() {
+    return this.contactForm.get('phone');
   }
 }
