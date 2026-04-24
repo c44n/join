@@ -1,5 +1,7 @@
 @use '../../../../public/assets/styles/all-styles.scss' as all;
 .app-header {
+  position: relative;
+  z-index: 10;
   width: 100%;
   background: all.$color-white;
   box-shadow: 0 5px 3px rgba(0, 0, 0, 0.06);
@@ -26,6 +28,11 @@
 }
 
 @include all.mobile {
+
+  .content {
+    padding: 0;
+    height: 50px;
+  }
   .mobile-logo {
     display: block;
   }
