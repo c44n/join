@@ -26,6 +26,11 @@
 }
 
 @include all.mobile {
+
+  .content {
+    padding: 0;
+    height: 50px;
+  }
   .mobile-logo {
     display: block;
   }
