@@ -8,7 +8,7 @@
   overflow: hidden;
 
   @include all.mobile {
-    width: 310px;
+    width: 315px;
     margin: 10px auto;
   }
 }
@@ -37,7 +37,7 @@
 
       @include all.mobile {
         gap: 12px;
-        padding: 96px 24px;
+        padding: 56px 24px;
       }
 
       .cc_close_btn_wrapper {
@@ -161,7 +161,6 @@
       .cc_form {
         display: flex;
         flex-direction: column;
-
         margin-left: 30px;
 
         @include all.mobile {

@@ -38,7 +38,7 @@
 
             @include all.mobile {
                 gap: 12px;
-                padding: 96px 24px;
+                padding: 56px 24px;
             }
 
             .cc_close_btn_wrapper {
@@ -173,7 +173,7 @@
 
                 @include all.mobile {
                     width: 100%;
-                    gap: 15px;
+                    gap: 6px;
                     margin: 20px 0 0 0;
                 }
 
@@ -233,7 +233,7 @@
                     gap: 10px;
 
                     @include all.mobile {
-                        margin: 25px auto 0 auto;
+                        margin: 0 auto 0 auto;
                     }
                 }
             }
