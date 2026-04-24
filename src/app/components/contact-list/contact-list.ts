@@ -19,6 +19,8 @@ export interface ContactGroup {
 })
 export class ContactList implements OnInit {
   private dialog = inject(Dialog);
+  isMobileDetailView = signal(false);
+
   protected openContactCreateModal() {
     const dialogRef = this.dialog.open<boolean>(ContactCreateModal);
     dialogRef.closed.subscribe(async (wasCreated) => {
@@ -41,6 +43,15 @@ export class ContactList implements OnInit {
 
   selectContact(id: string | number) {
     this.selectedContactId.set(String(id));
+  }
+
+  openContactDetails(id: string | number) {
+    this.selectContact(id);
+    this.isMobileDetailView.set(true);
+  }
+
+  backToContactList() {
+    this.isMobileDetailView.set(false);
   }
 
   groupedContacts = computed<ContactGroup[]>(() => {
@@ -68,6 +79,7 @@ export class ContactList implements OnInit {
       this.contacts.set(contacts);
       if (changeType === 'deleted') {
         this.selectedContactId.set(null);
+        this.isMobileDetailView.set(false);
         return;
       }
       if (!currentSelectedId) return;

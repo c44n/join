@@ -35,6 +35,12 @@
   }
 }
 
+@media (max-width: 640px) {
+  .contacts-layout__list--hidden {
+    display: none;
+  }
+}
+
 /* Stays at top of this column while the list scrolls underneath */
 .contact-list__toolbar {
   position: sticky;
@@ -181,6 +187,12 @@
 
   @include all.mobile {
     display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .contacts-layout__detail--mobile-visible {
+    display: flex;
   }
 }
 
