@@ -14,6 +14,7 @@ import { ToastService } from '../../services/toast';
 export class ContactDetail {
   contact = input<Contact | null>(null);
   contactChanged = output<'updated' | 'deleted'>();
+  backRequested = output<void>();
   private contactsService = inject(ContactsService);
   private toastService = inject(ToastService);
 
@@ -48,5 +49,9 @@ export class ContactDetail {
         this.contactChanged.emit(result);
       }
     });
+  }
+
+  backToList() {
+    this.backRequested.emit();
   }
 }

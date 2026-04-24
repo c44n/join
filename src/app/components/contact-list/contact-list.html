@@ -1,5 +1,5 @@
 <div class="contacts-layout">
-  <div class="contacts-layout__list">
+  <div class="contacts-layout__list" [class.contacts-layout__list--hidden]="isMobileDetailView()">
     <div class="contact-list__toolbar">
       <button type="button" class="primary-button" (click)="openContactCreateModal()">
         <span class="primary-button__label">Add new contact</span>
@@ -29,6 +29,24 @@
         </span>
       </button>
     </div>
+    <button
+      type="button"
+      class="contact-list__fab"
+      aria-label="Add new contact"
+      (click)="openContactCreateModal()"
+    >
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" />
+        <path d="M19 8v6M16 11h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </button>
 
     <div class="contact-list__body">
       @if (isLoading()) {
@@ -45,9 +63,9 @@
               <div
                 class="contact-card"
                 [class.selected]="selectedContactId() === contact.id"
-                (click)="selectContact(contact.id)"
-                (keydown.enter)="selectContact(contact.id)"
-                (keydown.space)="selectContact(contact.id); $event.preventDefault()"
+                (click)="openContactDetails(contact.id)"
+                (keydown.enter)="openContactDetails(contact.id)"
+                (keydown.space)="openContactDetails(contact.id); $event.preventDefault()"
                 tabindex="0"
                 role="button"
                 [attr.aria-pressed]="selectedContactId() === contact.id"
@@ -68,10 +86,15 @@
     </div>
   </div>
 
-  <aside class="contacts-layout__detail" aria-label="Contact details">
+  <aside
+    class="contacts-layout__detail"
+    [class.contacts-layout__detail--mobile-visible]="isMobileDetailView()"
+    aria-label="Contact details"
+  >
     <app-contact-detail
       [contact]="selectedContact()"
       (contactChanged)="reloadContacts($event)"
+      (backRequested)="backToContactList()"
     ></app-contact-detail>
   </aside>
 </div>
