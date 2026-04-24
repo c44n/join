@@ -54,6 +54,10 @@
   padding-bottom: 8px;
 }
 
+.contact-list__fab {
+  display: none;
+}
+
 .contact-card {
   display: flex;
   align-items: center;
@@ -183,5 +187,29 @@
 @media (max-width: 768px) {
   :host {
     height: calc(100dvh - 66px);
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-list__toolbar .primary-button {
+    display: none;
+  }
+
+  .contact-list__fab {
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + 72px + env(safe-area-inset-bottom, 0px));
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    background: #2a3647;
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
   }
 }
