@@ -1,50 +1,80 @@
 <section class="contact">
-  <div class="content">
-    <div class="content__title">
-      <div class="title-link">
-        <h2>Contacts</h2>
-        <button type="button" (click)="backToList()" aria-label="Back to contact list">
-          <img src="assets/icons/arrow-left.png" alt="arrow-left" class="arrow-normale" />
-          <img src="assets/icons/arrow-left-hover.png" alt="arrow-left-hover" class="arrow-hover" />
-        </button>
-      </div>
-      <div class="line"></div>
-      <p>Better with a team</p>
-    </div>
-    @if (contact()) {
-      <div class="details">
-        <div class="details__head">
-          <span [style.background]="contact()?.color">
-            <h2>{{ contact()?.first_name?.[0] }}{{ contact()?.last_name?.[0] }}</h2>
-          </span>
-          <div class="name-options">
-            <h3>{{ contact()?.first_name }} {{ contact()?.last_name }}</h3>
-            <div class="options">
-              <button (click)="openContactEditDeleteModal()">
-                <img src="assets/icons/edit.png" alt="edit" />
-                <img src="assets/icons/edit-hover.png" alt="edit-hover" class="option-hover" />
-                Edit
-              </button>
-              <button (click)="deleteContact()">
-                <img src="assets/icons/delete.png" alt="delete" />
-                <img src="assets/icons/delete-hover.png" alt="delete-hover" class="option-hover" />
-                Delete
-              </button>
+    <div class="content">
+        <div class="content__title">
+            <div class="title-link">
+                <h2>Contacts</h2>
+                <button type="button" (click)="backToList()" aria-label="Back to contact list">
+                    <img src="assets/icons/arrow-left.png" alt="arrow-left" class="arrow-normale" />
+                    <img src="assets/icons/arrow-left-hover.png" alt="arrow-left-hover" class="arrow-hover" />
+                </button>
             </div>
-          </div>
+            <div class="line"></div>
+            <p>Better with a team</p>
         </div>
-        <div class="details__info">
-          <h4>Contact Information</h4>
-          <h5>Email</h5>
-          <p class="email">{{ contact()?.email }}</p>
-          <h5>Phone</h5>
-          <p>{{ contact()?.phone }}</p>
+        @if (contact()) {
+        <div class="details">
+            <div class="details__head">
+                <span [style.background]="contact()?.color">
+                    <h2>{{ contact()?.first_name?.[0] }}{{ contact()?.last_name?.[0] }}</h2>
+                </span>
+                <div class="name-options">
+                    <h3>{{ contact()?.first_name }} {{ contact()?.last_name }}</h3>
+                    <div class="options">
+                        <button (click)="openContactEditDeleteModal()">
+                            <img src="assets/icons/edit.png" alt="edit" />
+                            <img src="assets/icons/edit-hover.png" alt="edit-hover" class="option-hover" />
+                            Edit
+                        </button>
+                        <button (click)="deleteContact()">
+                            <img src="assets/icons/delete.png" alt="delete" />
+                            <img src="assets/icons/delete-hover.png" alt="delete-hover" class="option-hover" />
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="details__info">
+                <h4>Contact Information</h4>
+                <h5>Email</h5>
+                <p class="email">{{ contact()?.email }}</p>
+                <h5>Phone</h5>
+                <p>{{ contact()?.phone }}</p>
+            </div>
         </div>
-      </div>
-    }
-  </div>
 
-  <button class="contact__options">
-    <img src="assets/icons/three-dote.png" alt="three-dots" />
-  </button>
+        <button [cdkMenuTriggerFor]="menu" class="contact_options_btn">
+            <svg width="6" height="22" viewBox="0 0 6 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M2.66667 21.3333C1.93333 21.3333 1.30556 21.0722 0.783333 20.55C0.261111 20.0278 0 19.4 0 18.6667C0 17.9333 0.261111 17.3056 0.783333 16.7833C1.30556 16.2611 1.93333 16 2.66667 16C3.4 16 4.02778 16.2611 4.55 16.7833C5.07222 17.3056 5.33333 17.9333 5.33333 18.6667C5.33333 19.4 5.07222 20.0278 4.55 20.55C4.02778 21.0722 3.4 21.3333 2.66667 21.3333ZM2.66667 13.3333C1.93333 13.3333 1.30556 13.0722 0.783333 12.55C0.261111 12.0278 0 11.4 0 10.6667C0 9.93333 0.261111 9.30556 0.783333 8.78333C1.30556 8.26111 1.93333 8 2.66667 8C3.4 8 4.02778 8.26111 4.55 8.78333C5.07222 9.30556 5.33333 9.93333 5.33333 10.6667C5.33333 11.4 5.07222 12.0278 4.55 12.55C4.02778 13.0722 3.4 13.3333 2.66667 13.3333ZM2.66667 5.33333C1.93333 5.33333 1.30556 5.07222 0.783333 4.55C0.261111 4.02778 0 3.4 0 2.66667C0 1.93333 0.261111 1.30556 0.783333 0.783333C1.30556 0.261111 1.93333 0 2.66667 0C3.4 0 4.02778 0.261111 4.55 0.783333C5.07222 1.30556 5.33333 1.93333 5.33333 2.66667C5.33333 3.4 5.07222 4.02778 4.55 4.55C4.02778 5.07222 3.4 5.33333 2.66667 5.33333Z"
+                    fill="white" />
+            </svg>
+        </button>
+
+        <ng-template #menu>
+            <div class="contact__options_menu" cdkMenu>
+                <button (click)="openContactEditDeleteModal()" class="options_menu_item" cdkMenuItem>
+                    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M2 16.25H3.4L12.025 7.625L10.625 6.225L2 14.85V16.25ZM16.3 6.175L12.05 1.975L13.45 0.575C13.8333 0.191667 14.3042 0 14.8625 0C15.4208 0 15.8917 0.191667 16.275 0.575L17.675 1.975C18.0583 2.35833 18.2583 2.82083 18.275 3.3625C18.2917 3.90417 18.1083 4.36667 17.725 4.75L16.3 6.175ZM14.85 7.65L4.25 18.25H0V14L10.6 3.4L14.85 7.65Z"
+                            fill="#2A3647" />
+                    </svg>
+                    &nbsp;&nbsp;Edit
+                </button>
+
+                <button (click)="deleteContact()" class="options_menu_item" cdkMenuItem>
+                    <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M3 18C2.45 18 1.97917 17.8042 1.5875 17.4125C1.19583 17.0208 1 16.55 1 16V3C0.716667 3 0.479167 2.90417 0.2875 2.7125C0.0958333 2.52083 0 2.28333 0 2C0 1.71667 0.0958333 1.47917 0.2875 1.2875C0.479167 1.09583 0.716667 1 1 1H5C5 0.716667 5.09583 0.479167 5.2875 0.2875C5.47917 0.0958333 5.71667 0 6 0H10C10.2833 0 10.5208 0.0958333 10.7125 0.2875C10.9042 0.479167 11 0.716667 11 1H15C15.2833 1 15.5208 1.09583 15.7125 1.2875C15.9042 1.47917 16 1.71667 16 2C16 2.28333 15.9042 2.52083 15.7125 2.7125C15.5208 2.90417 15.2833 3 15 3V16C15 16.55 14.8042 17.0208 14.4125 17.4125C14.0208 17.8042 13.55 18 13 18H3ZM3 3V16H13V3H3ZM5 13C5 13.2833 5.09583 13.5208 5.2875 13.7125C5.47917 13.9042 5.71667 14 6 14C6.28333 14 6.52083 13.9042 6.7125 13.7125C6.90417 13.5208 7 13.2833 7 13V6C7 5.71667 6.90417 5.47917 6.7125 5.2875C6.52083 5.09583 6.28333 5 6 5C5.71667 5 5.47917 5.09583 5.2875 5.2875C5.09583 5.47917 5 5.71667 5 6V13ZM9 13C9 13.2833 9.09583 13.5208 9.2875 13.7125C9.47917 13.9042 9.71667 14 10 14C10.2833 14 10.5208 13.9042 10.7125 13.7125C10.9042 13.5208 11 13.2833 11 13V6C11 5.71667 10.9042 5.47917 10.7125 5.2875C10.5208 5.09583 10.2833 5 10 5C9.71667 5 9.47917 5.09583 9.2875 5.2875C9.09583 5.47917 9 5.71667 9 6V13Z"
+                            fill="#2A3647" />
+                    </svg>
+                    &nbsp;&nbsp;Delete
+                </button>
+            </div>
+        </ng-template>
+
+        }
+    </div>
+
+
+
 </section>
