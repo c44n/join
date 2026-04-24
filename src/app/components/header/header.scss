@@ -111,26 +111,24 @@
   cursor: pointer;
 }
 
+.cdk-overlay-backdrop {
+  display: none !important;
+}
+
 .dropdown-menu {
-  display: none;
-  position: absolute;
-  top: calc(100% + 23px);
-  right: -15px;
+  display: flex;
+  flex-direction: column;
   background: #2d3748;
   border-radius: 20px 0 20px 20px;
   min-width: 140px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+  overflow: hidden;
 
-  &.open {
-    display: block;
-  }
-
-  ul {
-    border-radius: 8px;
-  }
-
-  li {
+  button[cdkMenuItem] {
+    text-align: left;
+    border: none;
+    background: transparent;
     padding: 14px 15px 15px 14px;
     color: #ffffff;
     font-size: 16px;
@@ -145,14 +143,6 @@
 
 @include all.mobile {
   .dropdown-menu {
-    top: calc(100% + 3px);
-    transform: translateX(100%);
-    transition: transform 0.15s ease;
-
-    &.open {
-      transform: translateX(0);
-      visibility: visible;
-      pointer-events: none;
-    }
+    min-width: 132px;
   }
 }

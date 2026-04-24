@@ -1,20 +1,28 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
+import { CdkMenuModule } from '@angular/cdk/menu';
+import { ConnectedPosition } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [CdkMenuModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
-  dropdownOpen = false;
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.avatarmenu')) {
-      this.dropdownOpen = false;
-    } else {
-      this.dropdownOpen = !this.dropdownOpen;
-    }
-  }
+  readonly avatarMenuPositions: ConnectedPosition[] = [
+    {
+      originX: 'end',
+      originY: 'bottom',
+      overlayX: 'end',
+      overlayY: 'top',
+      offsetY: 8,
+    },
+    {
+      originX: 'end',
+      originY: 'top',
+      overlayX: 'end',
+      overlayY: 'bottom',
+      offsetY: -8,
+    },
+  ];
 }
