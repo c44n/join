@@ -231,6 +231,12 @@
 					@include all.mobile {
 						margin: 0 auto 0 auto;
 					}
+
+					.secondary-button {
+						@include all.mobile {
+							display: none;
+						}
+					}
 				}
 			}
 		}

@@ -30,7 +30,9 @@
 
     @include mq.mobile {
         width: auto;
+        height: 40px;
         padding: 10px 10px;
+        font-size: 16px;
     }
 }
 
@@ -79,6 +81,8 @@
 
     @include mq.mobile {
         width: auto;
+        height: 40px;
+        font-size: 16px;
     }
 
     &:hover {
