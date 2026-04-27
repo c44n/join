@@ -19,10 +19,6 @@ export class ContactDetail {
 	private contactsService = inject(ContactsService);
 	private toastService = inject(ToastService);
 
-	editeContact() {
-		console.log(this.contact()?.first_name, ' edit !');
-	}
-
 	async deleteContact() {
 		const currentContact = this.contact();
 		if (!currentContact) return;
