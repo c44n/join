@@ -38,7 +38,6 @@
 							[formControl]="name" />
 
 						<div class="error_message_wrapper">
-
 							@if (name.invalid && (name.touched || name.dirty)) {
 								@if (name.hasError('required')) {
 									<div class="error_message">Name is required.</div>
