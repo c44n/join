@@ -19,7 +19,7 @@ export class ContactEditDeleteModal {
     private data = inject<Contact>(DIALOG_DATA);
 
     name = new FormControl(`${this.data.first_name} ${this.data.last_name}`.trim(), {
-        validators: [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Zà-žÀ-Ž-]+ +[a-zA-Zà-žÀ-Ž-]+.*$/)],
+        validators: [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Zà-žÀ-Ž]{2,} +[a-zA-Zà-žÀ-Ž]{2,}$/)],
         nonNullable: true
     });
 
@@ -29,7 +29,7 @@ export class ContactEditDeleteModal {
     })
 
     phone = new FormControl(this.data.phone, {
-        validators: [Validators.required, Validators.pattern("[+ 0-9 ]{11,13}")],
+        validators: [Validators.required, Validators.pattern(/^\+?[0-9 ]{10,12}$/)],
         nonNullable: true
     })
 
