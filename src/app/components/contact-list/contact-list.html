@@ -1,100 +1,109 @@
-<div class="contacts-layout">
-  <div class="contacts-layout__list" [class.contacts-layout__list--hidden]="isMobileDetailView()">
-    <div class="contact-list__toolbar">
-      <button type="button" class="primary-button" (click)="openContactCreateModal()">
-        <span class="primary-button__label">Add new contact</span>
-        <span class="primary-button__icon" aria-hidden="true">
-          <svg
-            viewBox="0 0 24 24"
-            width="22"
-            height="22"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" />
-            <path
-              d="M19 8v6M16 11h6"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
-          </svg>
-        </span>
+<section>
+  <div class="contacts-layout">
+    <div class="contacts-layout__list" [class.contacts-layout__list--hidden]="isMobileDetailView()">
+      <div class="contact-list__toolbar">
+        <button type="button" class="primary-button" (click)="openContactCreateModal()">
+          <span class="primary-button__label">Add new contact</span>
+          <span class="primary-button__icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="22"
+              height="22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" />
+              <path
+                d="M19 8v6M16 11h6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <button
+        type="button"
+        class="contact-list__fab"
+        aria-label="Add new contact"
+        (click)="openContactCreateModal()"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" />
+          <path d="M19 8v6M16 11h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
       </button>
-    </div>
-    <button
-      type="button"
-      class="contact-list__fab"
-      aria-label="Add new contact"
-      (click)="openContactCreateModal()"
-    >
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" />
-        <path d="M19 8v6M16 11h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-      </svg>
-    </button>
 
-    <div class="contact-list__body">
-      @if (isLoading()) {
-        <p>Loading contacts...</p>
-      } @else if (errorMessage()) {
-        <p>{{ errorMessage() }}</p>
-      } @else {
-        @for (group of groupedContacts(); track group.letter) {
-          <section class="contact-group">
-            <h3 class="group-letter">{{ group.letter }}</h3>
-            <div class="group-divider" aria-hidden="true"></div>
+      <div class="contact-list__body">
+        @if (isLoading()) {
+          <p>Loading contacts...</p>
+        } @else if (errorMessage()) {
+          <p>{{ errorMessage() }}</p>
+        } @else {
+          @for (group of groupedContacts(); track group.letter) {
+            <section class="contact-group">
+              <h3 class="group-letter">{{ group.letter }}</h3>
+              <div class="group-divider" aria-hidden="true"></div>
 
-            @for (contact of group.contacts; track contact.id) {
-              <div
-                class="contact-card"
-                [class.selected]="selectedContactId() === contact.id"
-                (click)="openContactDetails(contact.id)"
-                (keydown.enter)="openContactDetails(contact.id)"
-                (keydown.space)="openContactDetails(contact.id); $event.preventDefault()"
-                tabindex="0"
-                role="button"
-                [attr.aria-pressed]="selectedContactId() === contact.id"
-              >
-                <div class="avatar" [style.background]="contact.color">
-                  {{ contact.first_name[0] }}{{ contact.last_name[0] }}
+              @for (contact of group.contacts; track contact.id) {
+                <div
+                  class="contact-card"
+                  [class.selected]="selectedContactId() === contact.id"
+                  (click)="openContactDetails(contact.id)"
+                  (keydown.enter)="openContactDetails(contact.id)"
+                  (keydown.space)="openContactDetails(contact.id); $event.preventDefault()"
+                  tabindex="0"
+                  role="button"
+                  [attr.aria-pressed]="selectedContactId() === contact.id"
+                >
+                  <div class="avatar" [style.background]="contact.color">
+                    {{ contact.first_name[0] }}{{ contact.last_name[0] }}
+                  </div>
+
+                  <div class="contact-info">
+                    <h3>{{ contact.first_name }} {{ contact.last_name }}</h3>
+                    <p>{{ contact.email }}</p>
+                  </div>
                 </div>
-
-                <div class="contact-info">
-                  <h3>{{ contact.first_name }} {{ contact.last_name }}</h3>
-                  <p>{{ contact.email }}</p>
-                </div>
-              </div>
-            }
-          </section>
+              }
+            </section>
+          }
         }
-      }
+      </div>
     </div>
-  </div>
 
-  <aside
-    class="contacts-layout__detail"
-    [class.contacts-layout__detail--mobile-visible]="isMobileDetailView()"
-    aria-label="Contact details"
-  >
-    <app-contact-detail
-      [contact]="selectedContact()"
-      (contactChanged)="reloadContacts($event)"
-      (backRequested)="backToContactList()"
-    ></app-contact-detail>
-  </aside>
-</div>
+    <aside
+      class="contacts-layout__detail"
+      [class.contacts-layout__detail--mobile-visible]="isMobileDetailView()"
+      aria-label="Contact details"
+    >
+      <app-contact-detail
+        class="app-contact-detail"
+        [contact]="selectedContact()"
+        (contactChanged)="reloadContacts($event)"
+        (backRequested)="backToContactList()"
+      ></app-contact-detail>
+    </aside>
+  </div>
+</section>
