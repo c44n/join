@@ -10,13 +10,18 @@ import { ToastService } from '../../services/toast';
   imports: [ReactiveFormsModule],
   templateUrl: './contact-create-modal.html',
   styleUrl: './contact-create-modal.scss',
+  host: {
+    '[class.dialog-closing]': 'closing()',
+  },
 })
 export class ContactCreateModal {
+  private static readonly CLOSE_ANIMATION_MS = 300;
   private dialogRef = inject(DialogRef<Contact | null>);
   private contactsService = inject(ContactsService);
   private toastService = inject(ToastService);
 
   protected saving = signal(false);
+  protected closing = signal(false);
   protected errorMessage = signal<string | null>(null);
 
   name = new FormControl(''.trim(), {
@@ -103,6 +108,10 @@ export class ContactCreateModal {
   }
 
   protected closeModal(result: Contact | null = null) {
-    this.dialogRef?.close(result);
+    if (this.closing()) return;
+    this.closing.set(true);
+    window.setTimeout(() => {
+      this.dialogRef?.close(result);
+    }, ContactCreateModal.CLOSE_ANIMATION_MS);
   }
 }

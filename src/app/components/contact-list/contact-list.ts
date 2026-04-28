@@ -24,6 +24,7 @@ export class ContactList implements OnInit {
   protected openContactCreateModal() {
     const dialogRef = this.dialog.open<Contact | null>(ContactCreateModal, {
       backdropClass: 'contact-dialog-backdrop',
+      disableClose: true,
     });
     dialogRef.closed.subscribe(async (createdContact) => {
       if (!createdContact) return;
@@ -140,4 +141,3 @@ export class ContactList implements OnInit {
     console.error('ContactListComponent load error:', error);
   }
 }
-
