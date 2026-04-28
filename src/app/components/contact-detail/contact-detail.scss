@@ -120,6 +120,7 @@
 }
 
 .cdk-menu {
+	@extend %slide-from-right;
 	width: 116px;
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;

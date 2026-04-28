@@ -7,12 +7,12 @@
   filter: drop-shadow(0 0 2em rgba(0, 0, 0, 0.209));
   overflow: hidden;
   .slide-in {
-  animation: slideInFromRight 0.3s ease forwards;
-}
+    animation: slideInFromRight 0.3s ease forwards;
+  }
 
-.slide-out {
-  animation: slideOutToRight 0.3s ease forwards;
-}
+  .slide-out {
+    animation: slideOutToRight 0.3s ease forwards;
+  }
 
   @include all.mobile {
     width: 315px;
