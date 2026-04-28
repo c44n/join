@@ -11,8 +11,12 @@ import { minLength } from '@angular/forms/signals';
   imports: [ReactiveFormsModule],
   templateUrl: './contact-edit-delete-modal.html',
   styleUrl: './contact-edit-delete-modal.scss',
+  host: {
+    '[class.dialog-closing]': 'closing()',
+  },
 })
 export class ContactEditDeleteModal {
+  private static readonly CLOSE_ANIMATION_MS = 300;
   private dialogRef = inject(DialogRef);
   private contactsService = inject(ContactsService);
   private toastService = inject(ToastService);
@@ -47,6 +51,7 @@ export class ContactEditDeleteModal {
   phoneValue!: string;
 
   protected saving = signal(false);
+  protected closing = signal(false);
   protected errorMessage = signal<string | null>(null);
 
   protected get avatarLabel(): string {
@@ -131,6 +136,10 @@ export class ContactEditDeleteModal {
   }
 
   protected closeModal(result: 'updated' | 'deleted' | null = null) {
-    this.dialogRef?.close(result);
+    if (this.closing()) return;
+    this.closing.set(true);
+    window.setTimeout(() => {
+      this.dialogRef?.close(result);
+    }, ContactEditDeleteModal.CLOSE_ANIMATION_MS);
   }
 }
