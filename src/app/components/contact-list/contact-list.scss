@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   height: calc(100dvh - 96px);
+  width: 100%;
   overflow: hidden;
 }
 
@@ -26,10 +27,9 @@ section {
 .contacts-layout__list {
   display: flex;
   flex-direction: column;
-  // flex: 0 0 clamp(280px, 36vw, 440px);
+  flex: 0 0 clamp(300px, 34vw, 410px);
   min-width: 0;
   min-height: 0;
-  max-width: 410px;
   padding: 0 20px 20px;
   box-sizing: border-box;
   background: #fff;
@@ -37,13 +37,24 @@ section {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 
+  @include all.notebook {
+    flex-basis: clamp(280px, 38vw, 360px);
+  }
+
+  @include all.tablet {
+    flex-basis: clamp(260px, 42vw, 340px);
+    padding-inline: 14px;
+  }
+
   @include all.mobile {
+    flex: 1 1 auto;
     width: 100%;
+    padding-inline: 10px;
   }
 }
 
-@media (max-width: 640px) {
-  .contacts-layout__list--hidden {
+.contacts-layout__list--hidden {
+  @include all.mobile {
     display: none;
   }
 }
@@ -57,6 +68,16 @@ section {
   margin: 0 -20px;
   padding: 20px 20px 16px;
   background: #fff;
+
+  @include all.tablet {
+    margin-inline: -14px;
+    padding-inline: 14px;
+  }
+
+  @include all.mobile {
+    margin-inline: -10px;
+    padding: 12px 10px;
+  }
 }
 
 /* Scrolls with the column; toolbar above uses position: sticky */
@@ -64,6 +85,10 @@ section {
   flex: 0 0 auto;
   padding-top: 4px;
   padding-bottom: 8px;
+
+  @include all.mobile {
+    padding-bottom: calc(88px + 72px + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 .contact-list__fab {
@@ -81,6 +106,12 @@ section {
   cursor: pointer;
   transition: background-color 0.15s ease;
   outline: none;
+
+  @include all.mobile {
+    gap: 12px;
+    padding: 12px 8px;
+    margin: 0;
+  }
 }
 
 .contact-card:focus-visible {
@@ -148,6 +179,9 @@ section {
   line-height: 1.25;
   letter-spacing: 0;
   color: #111111;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .contact-info p {
@@ -158,12 +192,19 @@ section {
   line-height: 1.25;
   letter-spacing: 0;
   color: #29abe2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .contact-group {
   height: fit-content;
   margin: 20px 0 8px;
-   background: #fff;
+  background: #fff;
+
+  @include all.mobile {
+    margin-top: 14px;
+  }
 }
 
 .group-letter {
@@ -198,24 +239,23 @@ section {
   }
 }
 
-.app-contact-detail{
+.app-contact-detail {
   height: 100%;
-
 }
 
-@media (max-width: 640px) {
-  .contacts-layout__detail--mobile-visible {
+.contacts-layout__detail--mobile-visible {
+  @include all.mobile {
     display: flex;
   }
 }
 
-@media (max-width: 768px) {
+@include all.tablet {
   :host {
     height: calc(100dvh - 66px);
   }
 }
 
-@media (max-width: 640px) {
+@include all.mobile {
   .contact-list__toolbar .primary-button {
     display: none;
   }

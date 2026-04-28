@@ -22,12 +22,12 @@ export class ContactList implements OnInit {
   isMobileDetailView = signal(false);
 
   protected openContactCreateModal() {
-    const dialogRef = this.dialog.open<boolean>(ContactCreateModal, {
+    const dialogRef = this.dialog.open<Contact | null>(ContactCreateModal, {
       backdropClass: 'contact-dialog-backdrop',
     });
-    dialogRef.closed.subscribe(async (wasCreated) => {
-      if (!wasCreated) return;
-      await this.reloadContacts();
+    dialogRef.closed.subscribe(async (createdContact) => {
+      if (!createdContact) return;
+      await this.reloadContacts(undefined, createdContact.id);
     });
   }
 
@@ -74,7 +74,10 @@ export class ContactList implements OnInit {
     }
   }
 
-  async reloadContacts(changeType?: 'updated' | 'deleted'): Promise<void> {
+  async reloadContacts(
+    changeType?: 'updated' | 'deleted',
+    preferredSelectedContactId?: string
+  ): Promise<void> {
     const currentSelectedId = this.selectedContactId();
     try {
       const contacts = await this.contactsService.getContacts();
@@ -82,6 +85,12 @@ export class ContactList implements OnInit {
       if (changeType === 'deleted') {
         this.selectedContactId.set(null);
         this.isMobileDetailView.set(false);
+        return;
+      }
+      if (preferredSelectedContactId) {
+        const createdContactExists = contacts.some((contact) => contact.id === preferredSelectedContactId);
+        this.selectedContactId.set(createdContactExists ? preferredSelectedContactId : null);
+        this.isMobileDetailView.set(createdContactExists);
         return;
       }
       if (!currentSelectedId) return;
