@@ -26,9 +26,7 @@ export class ContactsService {
 
   async getContacts(): Promise<Contact[]> {
     const { data, error } = await this.supabaseService.supabase.from('contacts').select('*');
-
-    console.log('data size == ', data?.length);
-
+    
     if (error) {
       console.error('Error fetching contacts:', error);
       throw error;
@@ -37,7 +35,7 @@ export class ContactsService {
     return (data ?? []) as Contact[];
   }
 
-  async createContact(input: NewContactInput): Promise<void> {
+  async createContact(input: NewContactInput): Promise<Contact> {
     const row = {
       first_name: input.first_name.trim(),
       last_name: input.last_name.trim(),
@@ -45,11 +43,16 @@ export class ContactsService {
       phone: input.phone.trim(),
       color: input.color ?? '#29abe2',
     };
-    const { error } = await this.supabaseService.supabase.from('contacts').insert(row);
+    const { data, error } = await this.supabaseService.supabase
+      .from('contacts')
+      .insert(row)
+      .select('*')
+      .single();
     if (error) {
       console.error('Error creating contact:', error);
       throw new Error(error.message || 'Unknown Supabase error');
     }
+    return data as Contact;
   }
 
   async updateContact(id: string, input: UpdateContactInput): Promise<void> {

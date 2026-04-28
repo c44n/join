@@ -1,10 +1,9 @@
-import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
+import { DialogRef } from '@angular/cdk/dialog';
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Contact } from '../../models/contact';
 import { ContactsService } from '../../services/contacts';
 import { ToastService } from '../../services/toast';
-import { elementAt } from 'rxjs';
 
 @Component({
   selector: 'app-contact-create-modal',
@@ -13,7 +12,7 @@ import { elementAt } from 'rxjs';
   styleUrl: './contact-create-modal.scss',
 })
 export class ContactCreateModal {
-  private dialogRef = inject(DialogRef);
+  private dialogRef = inject(DialogRef<Contact | null>);
   private contactsService = inject(ContactsService);
   private toastService = inject(ToastService);
 
@@ -85,7 +84,7 @@ export class ContactCreateModal {
 
   protected async createNewContact() {
     try {
-      await this.contactsService.createContact({
+      const createdContact = await this.contactsService.createContact({
         first_name: this.first_name,
         last_name: this.last_name,
         email: this.emailValue,
@@ -93,7 +92,7 @@ export class ContactCreateModal {
       });
 
       this.toastService.show('Contact created successfully', 2500);
-      this.closeModal(true);
+      this.closeModal(createdContact);
     } catch (error) {
       const message =
         error instanceof Error && error.message ? error.message : 'Could not save contact.';
@@ -103,7 +102,7 @@ export class ContactCreateModal {
     }
   }
 
-  protected closeModal(result: boolean = false) {
+  protected closeModal(result: Contact | null = null) {
     this.dialogRef?.close(result);
   }
 }
