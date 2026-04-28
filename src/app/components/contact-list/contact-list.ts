@@ -22,7 +22,9 @@ export class ContactList implements OnInit {
   isMobileDetailView = signal(false);
 
   protected openContactCreateModal() {
-    const dialogRef = this.dialog.open<boolean>(ContactCreateModal);
+    const dialogRef = this.dialog.open<boolean>(ContactCreateModal, {
+      backdropClass: 'contact-dialog-backdrop',
+    });
     dialogRef.closed.subscribe(async (wasCreated) => {
       if (!wasCreated) return;
       await this.reloadContacts();

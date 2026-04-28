@@ -1,0 +1,5 @@
+// Global styles for CDK Dialog overlays. Class is applied via `backdropClass` in `Dialog.open(...)`.
+
+.cdk-overlay-backdrop.contact-dialog-backdrop {
+  background: #00000085;
+}
