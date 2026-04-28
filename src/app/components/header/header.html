@@ -8,16 +8,24 @@
         <img src="assets/icons/help.png" />
       </button>
       <div class="avatarmenu">
-        <div class="user-avatar">VL</div>
-        <div class="dropdown-menu" [class.open]="dropdownOpen">
-          <ul>
-            <li class="help-mobile">Help</li>
-            <li>Legal Notice</li>
-            <li>Privacy Policy</li>
-            <li>Log out</li>
-          </ul>
-        </div>
+        <button
+          type="button"
+          class="user-avatar"
+          [cdkMenuTriggerFor]="avatarMenu"
+          [cdkMenuPosition]="avatarMenuPositions"
+        >
+          VL
+        </button>
       </div>
     </div>
   </div>
 </header>
+
+<ng-template #avatarMenu>
+  <div class="dropdown-menu" cdkMenu>
+    <button class="help-mobile" cdkMenuItem>Help</button>
+    <button cdkMenuItem>Legal Notice</button>
+    <button cdkMenuItem>Privacy Policy</button>
+    <button cdkMenuItem>Log out</button>
+  </div>
+</ng-template>

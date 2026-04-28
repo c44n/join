@@ -40,6 +40,7 @@ export class ContactDetail {
 		if (!currentContact) return;
 		const dialogRef = this.dialog.open<'updated' | 'deleted' | null>(ContactEditDeleteModal, {
 			data: currentContact,
+      backdropClass: 'contact-dialog-backdrop',
 		});
 		dialogRef.closed.subscribe((result) => {
 			if (result === 'updated' || result === 'deleted') {
