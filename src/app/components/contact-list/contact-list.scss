@@ -38,12 +38,16 @@ section {
   -webkit-overflow-scrolling: touch;
 
   @include all.notebook {
-    flex-basis: clamp(280px, 38vw, 360px);
+    // flex-basis: clamp(280px, 38vw, 360px);
+    flex: 1 1 auto;
+    width: 100%;
+    padding-inline: 10px;
   }
 
   @include all.tablet {
-    flex-basis: clamp(260px, 42vw, 340px);
-    padding-inline: 14px;
+    // flex-basis: clamp(260px, 42vw, 340px);
+    // padding-inline: 14px;
+   
   }
 
   @include all.mobile {
@@ -234,7 +238,7 @@ section {
 
   overflow-y: auto;
 
-  @include all.mobile {
+  @include all.notebook {
     display: none;
   }
 }
@@ -244,8 +248,8 @@ section {
 }
 
 .contacts-layout__detail--mobile-visible {
-  @include all.mobile {
-    display: flex;
+  @include all.notebook {
+    display: none;
   }
 }
 
