@@ -1,4 +1,4 @@
-@use "../../../../public/assets/styles/all-styles.scss" as all;
+@use '../../../../public/assets/styles/all-styles.scss' as all;
 
 :host {
   display: flex;
@@ -7,11 +7,18 @@
   overflow: hidden;
 }
 
+section {
+  height: 100%;
+  width: 100%;
+  background-color: all.$color-light-gray;
+}
+
 .contacts-layout {
   display: flex;
   flex-direction: row;
   height: 100%;
   width: 100%;
+  max-width: 1440px;
   align-items: stretch;
   overflow: hidden;
 }
@@ -22,7 +29,7 @@
   // flex: 0 0 clamp(280px, 36vw, 440px);
   min-width: 0;
   min-height: 0;
-  // max-width: 440px;
+  max-width: 410px;
   padding: 0 20px 20px;
   box-sizing: border-box;
   background: #fff;
@@ -154,7 +161,9 @@
 }
 
 .contact-group {
+  height: fit-content;
   margin: 20px 0 8px;
+   background: #fff;
 }
 
 .group-letter {
@@ -181,12 +190,17 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  background: #f5f5f5;
+
   overflow-y: auto;
 
   @include all.mobile {
     display: none;
   }
+}
+
+.app-contact-detail{
+  height: 100%;
+
 }
 
 @media (max-width: 640px) {

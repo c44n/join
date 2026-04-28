@@ -34,7 +34,7 @@
 
             @include all.mobile {
                 gap: 12px;
-                padding: 56px 24px;
+                padding: 70px 24px;
             }
 
             .cc_close_btn_wrapper {
@@ -179,7 +179,7 @@
                     .cc_input {
                         border: 1px solid #D1D1D1;
                         border-radius: 10px;
-                        padding: 13px 21px;
+                        padding: 13px 40px 13px 21px;
                         width: 380px;
                         font-size: 16px;
                         background-position: 97% 10px;
@@ -187,7 +187,6 @@
 
                         @include all.mobile {
                             width: 100%;
-                            padding: 13px 21px;
                             box-sizing: border-box;
                         }
 
@@ -217,11 +216,15 @@
                 .error_message_wrapper {
                     height: 25px;
                     padding: 0 5px;
-                    
+
                     .error_message {
                         color: all.$color-red;
                     }
                 }
+
+                input.ng-invalid.ng-touched {
+					border: 1px solid red !important;
+				}
 
                 .cc_button_wrapper {
                     margin-top: 15px;

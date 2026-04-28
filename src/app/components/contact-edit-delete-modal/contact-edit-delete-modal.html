@@ -38,14 +38,13 @@
 							[formControl]="name" />
 
 						<div class="error_message_wrapper">
-
 							@if (name.invalid && (name.touched || name.dirty)) {
 								@if (name.hasError('required')) {
 									<div class="error_message">Name is required.</div>
 								} @else if (name.hasError('minlength')) {
 									<div class="error_message">Name is too short.</div>
 								} @else if (name.hasError('pattern')) {
-									<div class="error_message">Please enter first and last name.</div>
+									<div class="error_message">Enter first and last name. Only letters.</div>
 								}
 							}
 						</div>
