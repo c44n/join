@@ -25,6 +25,7 @@ export class ContactCreateModal {
   // protected phone = '';
   protected saving = signal(false);
   protected errorMessage = signal<string | null>(null);
+  protected isClosing = false;
 
   contactForm = new FormGroup({
     name: new FormControl('', {
@@ -86,7 +87,10 @@ export class ContactCreateModal {
   }
 
   protected closeModal(result: boolean = false) {
-    this.dialogRef?.close(result);
+    this.isClosing = true;
+    setTimeout(() => {
+      this.dialogRef?.close(result);
+    }, 300);
   }
 
   get name() {
