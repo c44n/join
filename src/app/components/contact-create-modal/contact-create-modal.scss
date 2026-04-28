@@ -2,6 +2,7 @@
 
 :host-context(cdk-dialog-container) {
 	display: block;
+	@extend %slide-from-right;
 	border-radius: 20px;
 	background-color: white;
 	filter: drop-shadow(0 0 2em rgba(0, 0, 0, 0.209));
