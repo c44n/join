@@ -38,27 +38,28 @@ section {
   -webkit-overflow-scrolling: touch;
 
   @include all.notebook {
-    // flex-basis: clamp(280px, 38vw, 360px);
     flex: 1 1 auto;
     width: 100%;
-    padding-inline: 10px;
+    padding-inline: 14px;
   }
 
   @include all.tablet {
-    // flex-basis: clamp(260px, 42vw, 340px);
-    // padding-inline: 14px;
-   
+    padding-inline: 14px;
   }
 
   @include all.mobile {
     flex: 1 1 auto;
     width: 100%;
     padding-inline: 10px;
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+    padding-right: 40px;
   }
 }
 
 .contacts-layout__list--hidden {
-  @include all.mobile {
+  @include all.notebook {
     display: none;
   }
 }
@@ -249,7 +250,7 @@ section {
 
 .contacts-layout__detail--mobile-visible {
   @include all.notebook {
-    display: none;
+    display: flex;
   }
 }
 
