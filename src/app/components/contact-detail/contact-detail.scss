@@ -1,5 +1,25 @@
 @use '../../../../public/assets/styles/all-styles.scss' as all;
 
+@keyframes detailSlideInFromScreen {
+  from {
+    opacity: 0;
+    transform: translateX(100vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.detail-slide-in {
+  animation: detailSlideInFromScreen 0.32s ease forwards;
+  will-change: transform, opacity;
+}
+
+.detail-slide-in--delay {
+  animation-delay: 0.05s;
+}
+
 .contact {
   display: flex;
   flex-direction: column;
