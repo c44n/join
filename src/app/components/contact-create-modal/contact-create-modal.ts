@@ -28,7 +28,7 @@ export class ContactCreateModal {
     validators: [
       Validators.required,
       Validators.minLength(3),
-      Validators.pattern(/^[a-zA-Zà-žÀ-Ž]{2,} +[a-zA-Zà-žÀ-Ž]{2,}$/),
+      Validators.pattern(/^[a-zA-Zà-žÀ-Ž]{2,}(?: +[a-zA-Zà-žÀ-Ž]{2,})+ *$/),
     ],
     nonNullable: true,
   });
