@@ -12,6 +12,16 @@
         width: 310px;
         margin: 10px auto;
     }
+
+    @include all.tablet {
+        width: 310px;
+        margin: 10px auto;
+    }
+
+    @include all.notebook {
+        width: 310px;
+        margin: 10px auto;
+    }
 }
 
 :host.dialog-closing {
@@ -27,6 +37,14 @@
             flex-direction: column;
         }
 
+        @include all.tablet {
+            flex-direction: column;
+        }
+
+        @include all.notebook {
+            flex-direction: column;
+        }
+
         .left {
             display: flex;
             flex-direction: column;
@@ -38,6 +56,16 @@
             color: white;
 
             @include all.mobile {
+                gap: 12px;
+                padding: 70px 24px;
+            }
+
+            @include all.tablet {
+                gap: 12px;
+                padding: 70px 24px;
+            }
+
+            @include all.notebook {
                 gap: 12px;
                 padding: 70px 24px;
             }
@@ -66,6 +94,14 @@
                 @include all.mobile {
                     display: flex;
                 }
+
+                @include all.tablet {
+                    display: flex;
+                }
+
+                @include all.notebook {
+                    display: flex;
+                }
             }
 
             .cc_logo {
@@ -73,6 +109,14 @@
                 width: 55px;
 
                 @include all.mobile {
+                    display: none;
+                }
+
+                @include all.tablet {
+                    display: none;
+                }
+
+                @include all.notebook {
                     display: none;
                 }
             }
@@ -84,6 +128,14 @@
                 @include all.mobile {
                     font-size: 37px;
                 }
+
+                @include all.tablet {
+                    font-size: 37px;
+                }
+
+                @include all.notebook {
+                    font-size: 37px;
+                }
             }
 
             h3 {
@@ -93,6 +145,14 @@
                 @include all.mobile {
                     font-size: 16px;
                 }
+
+                @include all.tablet {
+                    font-size: 16px;
+                }
+
+                @include all.notebook {
+                    font-size: 16px;
+                }
             }
 
             .cc_blue_line {
@@ -100,13 +160,20 @@
                 width: 60px;
                 background-color: rgb(132, 166, 239);
             }
-
         }
 
         .right {
             padding: 66px 46px;
 
             @include all.mobile {
+                padding: 16px;
+            }
+
+            @include all.tablet {
+                padding: 16px;
+            }
+
+            @include all.notebook {
                 padding: 16px;
             }
 
@@ -133,6 +200,14 @@
                 @include all.mobile {
                     display: none;
                 }
+
+                @include all.tablet {
+                    display: none;
+                }
+
+                @include all.notebook {
+                    display: none;
+                }
             }
 
             .inner {
@@ -140,6 +215,16 @@
                 align-items: center;
 
                 @include all.mobile {
+                    padding: 0 0 10px 0;
+                    flex-direction: column;
+                }
+
+                @include all.tablet {
+                    padding: 0 0 10px 0;
+                    flex-direction: column;
+                }
+
+                @include all.notebook {
                     padding: 0 0 10px 0;
                     flex-direction: column;
                 }
@@ -163,8 +248,15 @@
                 @include all.mobile {
                     margin-top: -75px;
                 }
-            }
 
+                @include all.tablet {
+                    margin-top: -75px;
+                }
+
+                @include all.notebook {
+                    margin-top: -75px;
+                }
+            }
 
             .cc_form {
                 display: flex;
@@ -173,6 +265,18 @@
                 margin-left: 30px;
 
                 @include all.mobile {
+                    width: 100%;
+                    gap: 6px;
+                    margin: 20px 0 0 0;
+                }
+
+                @include all.tablet {
+                    width: 100%;
+                    gap: 6px;
+                    margin: 20px 0 0 0;
+                }
+
+                @include all.notebook {
                     width: 100%;
                     gap: 6px;
                     margin: 20px 0 0 0;
@@ -191,6 +295,16 @@
                         background-repeat: no-repeat;
 
                         @include all.mobile {
+                            width: 100%;
+                            box-sizing: border-box;
+                        }
+
+                        @include all.tablet {
+                            width: 100%;
+                            box-sizing: border-box;
+                        }
+
+                        @include all.notebook {
                             width: 100%;
                             box-sizing: border-box;
                         }
@@ -228,8 +342,8 @@
                 }
 
                 input.ng-invalid.ng-touched {
-					border: 1px solid red !important;
-				}
+                    border: 1px solid red !important;
+                }
 
                 .cc_button_wrapper {
                     margin-top: 15px;
@@ -237,6 +351,14 @@
                     gap: 10px;
 
                     @include all.mobile {
+                        margin: 0 auto 0 auto;
+                    }
+
+                    @include all.tablet {
+                        margin: 0 auto 0 auto;
+                    }
+
+                    @include all.notebook {
                         margin: 0 auto 0 auto;
                     }
                 }
