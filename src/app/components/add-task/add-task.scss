@@ -71,7 +71,7 @@
   gap: 32px 48px;
   align-items: start;
 
-  @include all.tablet {
+  @include all.notebook {
     grid-template-columns: 1fr;
     gap: 24px;
   }
@@ -86,7 +86,7 @@
   min-height: 424px;
   background: #d1d1d1;
 
-  @include all.tablet {
+  @include all.notebook {
     display: none;
   }
 }
