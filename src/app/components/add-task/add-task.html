@@ -1,0 +1,231 @@
+<section class="add-task-page">
+  <div class="add-task-shell">
+    <header class="add-task-header">
+      <h1>Add Task</h1>
+    </header>
+
+    <form class="add-task-form" novalidate (ngSubmit)="createTask()">
+      <div class="form-grid">
+        <div class="form-column">
+          <label class="field">
+            <span class="field__label">Title<span class="required">*</span></span>
+            <input
+              type="text"
+              name="title"
+              [(ngModel)]="title"
+              [class.input-error]="inputClass('title')"
+              placeholder="Enter a title"
+              (blur)="onBlurField('title')"
+            />
+            @if (errors().title) {
+              <span class="field-error">{{ errors().title }}</span>
+            }
+          </label>
+
+          <label class="field">
+            <span class="field__label">Description</span>
+            <textarea
+              name="description"
+              [(ngModel)]="description"
+              placeholder="Enter a Description"
+              rows="5"
+            ></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Due date<span class="required">*</span></span>
+            <div class="input-with-icon">
+              <input
+                type="date"
+                name="dueDate"
+                [(ngModel)]="dueDate"
+                [min]="todayIso()"
+                [class.input-error]="inputClass('dueDate')"
+                (blur)="onBlurField('dueDate')"
+              />
+              <span class="field-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                  <path
+                    d="M7 2v3M17 2v3M3 9h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
+            @if (errors().dueDate) {
+              <span class="field-error">{{ errors().dueDate }}</span>
+            }
+          </label>
+        </div>
+
+        <div class="form-divider" aria-hidden="true"></div>
+
+        <div class="form-column">
+          <div class="field">
+            <span class="field__label">Priority</span>
+            <div class="priority-group">
+              @for (priority of priorities; track priority) {
+                <button
+                  type="button"
+                  class="priority-chip"
+                  [class.priority-chip--active]="selectedPriority() === priority"
+                  [class.priority-chip--urgent]="priority === 'Urgent'"
+                  [class.priority-chip--medium]="priority === 'Medium'"
+                  [class.priority-chip--low]="priority === 'Low'"
+                  (click)="setPriority(priority)"
+                >
+                  <span>{{ priority }}</span>
+                  <span class="priority-icon" aria-hidden="true">
+                    @if (priority === 'Urgent') {
+                      <svg viewBox="0 0 20 20" width="16" height="16" fill="none">
+                        <path d="M5 12l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        <path d="M5 16l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      </svg>
+                    } @else if (priority === 'Medium') {
+                      <svg viewBox="0 0 20 20" width="16" height="16" fill="none">
+                        <path d="M4 7h12M4 13h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      </svg>
+                    } @else {
+                      <svg viewBox="0 0 20 20" width="16" height="16" fill="none">
+                        <path d="m4 9 4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    }
+                  </span>
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field__label">Assigned to</span>
+            <div class="assigned-to" (click)="stopDropdownClick($event)">
+              <button type="button" class="assigned-to__trigger" (click)="toggleAssignedTo($event)">
+                <span class="assigned-to__label">{{ formatAssignedTo() }}</span>
+                <span class="assigned-to__arrow" [class.assigned-to__arrow--open]="isAssignedToOpen()"></span>
+              </button>
+
+              @if (isAssignedToOpen()) {
+                <div class="assigned-to__menu">
+                  @for (contact of contacts(); track contact.id) {
+                    <button
+                      type="button"
+                      class="assigned-to__option"
+                      [class.assigned-to__option--selected]="isSelected(contact.id)"
+                      (click)="toggleContact(contact)"
+                    >
+                      <span class="assigned-to__person">
+                        <span class="assigned-to__avatar" [style.background]="contact.color">
+                          {{ initials(contact) }}
+                        </span>
+                        <span>{{ contact.first_name }} {{ contact.last_name }}</span>
+                      </span>
+                      <span class="assigned-to__checkbox" [class.assigned-to__checkbox--checked]="isSelected(contact.id)"></span>
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+
+            @if (selectedContacts().length) {
+              <div class="selected-contacts">
+                @for (contact of selectedContacts(); track contact.id) {
+                  <span class="selected-contacts__avatar" [style.background]="contact.color">
+                    {{ initials(contact) }}
+                  </span>
+                }
+              </div>
+            }
+          </div>
+
+          <label class="field">
+            <span class="field__label">Category<span class="required">*</span></span>
+            <div class="select-wrap">
+              <select
+                name="category"
+                [(ngModel)]="category"
+                [class.input-error]="inputClass('category')"
+                (blur)="onBlurField('category')"
+              >
+                <option value="">Select task category</option>
+                @for (categoryOption of categories; track categoryOption) {
+                  <option [value]="categoryOption">{{ categoryOption }}</option>
+                }
+              </select>
+            </div>
+            @if (errors().category) {
+              <span class="field-error">{{ errors().category }}</span>
+            }
+          </label>
+
+          <div class="field">
+            <span class="field__label">Subtasks</span>
+            <div class="subtask-entry">
+              <input
+                type="text"
+                name="subtask"
+                [(ngModel)]="subtaskInput"
+                placeholder="Add new subtask"
+                (keydown.enter)="handleSubtaskEnter($event)"
+              />
+
+              @if (subtaskInput.trim()) {
+                <div class="subtask-entry__actions">
+                  <button type="button" aria-label="Clear subtask" (click)="resetSubtaskInput($event)">×</button>
+                  <span class="subtask-entry__divider"></span>
+                  <button type="button" aria-label="Add subtask" (click)="handleSubtaskEnter($event)">✓</button>
+                </div>
+              }
+            </div>
+
+            @if (subtasks().length) {
+              <ul class="subtask-list">
+                @for (subtask of subtasks(); track subtask.id) {
+                  <li class="subtask-item">
+                    @if (subtask.isEditing) {
+                      <input
+                        class="subtask-item__input"
+                        [ngModel]="subtask.title"
+                        [ngModelOptions]="{ standalone: true }"
+                        (ngModelChange)="updateSubtaskTitle(subtask.id, $event)"
+                        (keydown.enter)="saveEditedSubtask(subtask.id, $event)"
+                      />
+                      <div class="subtask-item__actions subtask-item__actions--visible">
+                        <button type="button" aria-label="Save subtask" (click)="saveEditedSubtask(subtask.id)">✓</button>
+                        <button type="button" aria-label="Delete subtask" (click)="deleteSubtask(subtask.id)">🗑</button>
+                      </div>
+                    } @else {
+                      <span class="subtask-item__title">• {{ subtask.title }}</span>
+                      <div class="subtask-item__actions">
+                        <button type="button" aria-label="Edit subtask" (click)="startEditingSubtask(subtask.id)">✎</button>
+                        <button type="button" aria-label="Delete subtask" (click)="deleteSubtask(subtask.id)">🗑</button>
+                      </div>
+                    }
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <p class="required-note"><span class="required">*</span> This field is required</p>
+
+        <div class="footer-actions">
+          <button type="button" class="secondary-button" (click)="clearForm()">
+            Clear
+            <span aria-hidden="true" class="button-icon">×</span>
+          </button>
+
+          <button type="submit" class="primary-button">
+            Create Task
+            <span aria-hidden="true" class="button-icon">✓</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
