@@ -26,10 +26,11 @@ export class AddTask implements OnInit {
   private readonly contactsService = inject(ContactsService);
   private readonly toastService = inject(ToastService);
 
-  protected readonly categories = ['Technical Tasks', 'User Story'];
+  protected readonly categories = ['Technical Task', 'User Story'];
   protected readonly contacts = signal<Contact[]>([]);
   protected readonly errors = signal<FormErrors>(this.emptyErrors());
   protected readonly isAssignedToOpen = signal(false);
+  protected readonly isCategoryOpen = signal(false);
   protected readonly priorities: Priority[] = ['Urgent', 'Medium', 'Low'];
   protected readonly selectedContacts = signal<Contact[]>([]);
   protected readonly selectedPriority = signal<Priority>('Medium');
@@ -48,12 +49,15 @@ export class AddTask implements OnInit {
   }
 
   @HostListener('document:click')
-  protected closeAssignedTo(): void {
+  protected closeDropdowns(): void {
     this.isAssignedToOpen.set(false);
+    this.isCategoryOpen.set(false);
   }
 
   protected clearForm(): void {
     this.attemptedSubmit = false;
+    this.isCategoryOpen.set(false);
+    this.isAssignedToOpen.set(false);
     this.category = '';
     this.description = '';
     this.dueDate = '';
@@ -137,7 +141,33 @@ export class AddTask implements OnInit {
 
   protected toggleAssignedTo(event: Event): void {
     event.stopPropagation();
-    this.isAssignedToOpen.update((isOpen) => !isOpen);
+    this.isAssignedToOpen.update((isOpen) => {
+      const next = !isOpen;
+      if (next) {
+        this.isCategoryOpen.set(false);
+      }
+      return next;
+    });
+  }
+
+  protected toggleCategory(event: Event): void {
+    event.stopPropagation();
+    this.isCategoryOpen.update((isOpen) => {
+      const next = !isOpen;
+      if (next) {
+        this.isAssignedToOpen.set(false);
+      }
+      return next;
+    });
+  }
+
+  protected selectCategory(option: string, event: Event): void {
+    event.stopPropagation();
+    this.category = option;
+    this.isCategoryOpen.set(false);
+    if (this.attemptedSubmit) {
+      this.setError('category', this.validateCategory());
+    }
   }
 
   protected toggleContact(contact: Contact): void {
