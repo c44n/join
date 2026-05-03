@@ -34,8 +34,9 @@
 
           <label class="field">
             <span class="field__label">Due date<span class="required">*</span></span>
-            <div class="input-with-icon">
+            <div class="input-with-icon input-with-icon--date" (click)="openDueDatePicker(dueDateInput)">
               <input
+                #dueDateInput
                 type="date"
                 name="dueDate"
                 [(ngModel)]="dueDate"
@@ -132,10 +133,13 @@
 
             @if (selectedContacts().length) {
               <div class="selected-contacts">
-                @for (contact of selectedContacts(); track contact.id) {
+                @for (contact of visibleSelectedContacts(); track contact.id) {
                   <span class="selected-contacts__avatar" [style.background]="contact.color">
                     {{ initials(contact) }}
                   </span>
+                }
+                @if (extraSelectedContactsCount() > 0) {
+                  <span class="selected-contacts__more">+{{ extraSelectedContactsCount() }}</span>
                 }
               </div>
             }
