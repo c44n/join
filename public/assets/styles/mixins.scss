@@ -30,9 +30,11 @@
 
     @include mq.mobile {
         width: auto;
-        height: 40px;
-        padding: 10px 10px;
+        min-height: 48px;
+        height: auto;
+        padding: 12px 16px;
         font-size: 16px;
+        line-height: 1.2;
     }
 }
 
@@ -81,8 +83,11 @@
 
     @include mq.mobile {
         width: auto;
-        height: 40px;
+        min-height: 48px;
+        height: auto;
+        padding: 12px 16px;
         font-size: 16px;
+        line-height: 1.2;
     }
 
     &:hover {
