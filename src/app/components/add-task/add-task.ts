@@ -33,6 +33,8 @@ export class AddTask implements OnInit {
   protected readonly isCategoryOpen = signal(false);
   protected readonly priorities: Priority[] = ['Urgent', 'Medium', 'Low'];
   protected readonly selectedContacts = signal<Contact[]>([]);
+  /** Max avatars shown under Assigned to; remainder shown as +N. */
+  protected readonly maxAssigneeAvatars = 3;
   protected readonly selectedPriority = signal<Priority>('Medium');
   protected readonly subtasks = signal<EditableSubtask[]>([]);
 
@@ -88,6 +90,14 @@ export class AddTask implements OnInit {
     return this.selectedContacts().map(this.fullName).join(', ') || 'Select contacts to assign';
   }
 
+  protected visibleSelectedContacts(): Contact[] {
+    return this.selectedContacts().slice(0, this.maxAssigneeAvatars);
+  }
+
+  protected extraSelectedContactsCount(): number {
+    return Math.max(0, this.selectedContacts().length - this.maxAssigneeAvatars);
+  }
+
   protected handleSubtaskEnter(event: Event): void {
     event.preventDefault();
     this.addSubtask();
@@ -99,6 +109,18 @@ export class AddTask implements OnInit {
 
   protected isSelected(contactId: string): boolean {
     return this.selectedContacts().some((contact) => contact.id === contactId);
+  }
+
+  protected openDueDatePicker(input: HTMLInputElement): void {
+    input.focus({ preventScroll: true });
+    if (typeof input.showPicker !== 'function') {
+      return;
+    }
+    try {
+      input.showPicker();
+    } catch {
+      // Some browsers/object models reject showPicker despite the feature probe.
+    }
   }
 
   protected onBlurField(field: keyof FormErrors): void {
