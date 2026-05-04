@@ -7,16 +7,24 @@
     >
       {{ taskCategoryLabel() }}
     </span>
-    <button type="button" class="task-card__menu-button" [cdkMenuTriggerFor]="menu">
+    <button
+      type="button"
+      class="task-card__menu-button"
+      [disabled]="isMoving"
+      [cdkMenuTriggerFor]="menu"
+    >
       <img src="assets/icons/move-option.png" alt="move-option" />
     </button>
     <ng-template #menu>
       <div class="move-menu" cdkMenu>
         <span>Move to</span>
-        <button cdkMenuItem>To-do</button>
-        <button cdkMenuItem>In progress</button>
-        <button cdkMenuItem>Await feedback</button>
-        <button cdkMenuItem>Done</button>
+        @for (status of moveTargets; track status) {
+          @if (showMoveTarget(status)) {
+            <button type="button" cdkMenuItem (click)="moveTask(status)">
+              {{ moveTargetLabel(status) }}
+            </button>
+          }
+        }
       </div>
     </ng-template>
   </div>

@@ -39,7 +39,11 @@
       <div class="column_tasks_card_wrapper">
         @if (todoTasks().length) {
           @for (task of todoTasks(); track task.id) {
-            <app-task [task]="task"></app-task>
+            <app-task
+              [task]="task"
+              [isMoving]="isMovingTask(task.id)"
+              (statusChange)="moveTask(task.id, $event)"
+            ></app-task>
           }
         } @else {
           <p class="empty-column">No tasks to do.</p>
@@ -61,7 +65,11 @@
       <div class="column_tasks_card_wrapper">
         @if (inProgressTasks().length) {
           @for (task of inProgressTasks(); track task.id) {
-            <app-task [task]="task"></app-task>
+            <app-task
+              [task]="task"
+              [isMoving]="isMovingTask(task.id)"
+              (statusChange)="moveTask(task.id, $event)"
+            ></app-task>
           }
         } @else {
           <p class="empty-column">No tasks in progress.</p>
@@ -83,7 +91,11 @@
       <div class="column_tasks_card_wrapper">
         @if (awaitingFeedbackTasks().length) {
           @for (task of awaitingFeedbackTasks(); track task.id) {
-            <app-task [task]="task"></app-task>
+            <app-task
+              [task]="task"
+              [isMoving]="isMovingTask(task.id)"
+              (statusChange)="moveTask(task.id, $event)"
+            ></app-task>
           }
         } @else {
           <p class="empty-column">No tasks awaiting feedback.</p>
@@ -99,7 +111,11 @@
       <div class="column_tasks_card_wrapper">
         @if (doneTasks().length) {
           @for (task of doneTasks(); track task.id) {
-            <app-task [task]="task"></app-task>
+            <app-task
+              [task]="task"
+              [isMoving]="isMovingTask(task.id)"
+              (statusChange)="moveTask(task.id, $event)"
+            ></app-task>
           }
         } @else {
           <p class="empty-column">No completed tasks.</p>

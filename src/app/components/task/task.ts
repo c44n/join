@@ -1,7 +1,7 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { BoardTask } from '../../models/task';
+import { BoardTask, TaskStatus } from '../../models/task';
 import { Contact } from '../../models/contact';
 
 @Component({
@@ -12,8 +12,11 @@ import { Contact } from '../../models/contact';
 })
 export class Task {
   @Input({ required: true }) task!: BoardTask;
+  @Input() isMoving = false;
+  @Output() statusChange = new EventEmitter<TaskStatus>();
 
   protected readonly maxAssigneeAvatars = 3;
+  protected readonly moveTargets: TaskStatus[] = ['todo', 'in_progress', 'awaiting_feedback', 'done'];
 
   protected completedSubtasks(): number {
     return this.task.subtasks.filter((subtask) => subtask.completed).length;
@@ -61,6 +64,34 @@ export class Task {
 
   protected showSubtaskProgress(): boolean {
     return this.task.subtasks.length > 0;
+  }
+
+  protected moveTask(status: TaskStatus): void {
+    if (status === this.task.status || this.isMoving) {
+      return;
+    }
+
+    this.statusChange.emit(status);
+  }
+
+  protected moveTargetLabel(status: TaskStatus): string {
+    if (status === 'todo') {
+      return 'To do';
+    }
+
+    if (status === 'in_progress') {
+      return 'In progress';
+    }
+
+    if (status === 'awaiting_feedback') {
+      return 'Await feedback';
+    }
+
+    return 'Done';
+  }
+
+  protected showMoveTarget(status: TaskStatus): boolean {
+    return status !== this.task.status;
   }
 
   protected taskCategoryLabel(): string {
