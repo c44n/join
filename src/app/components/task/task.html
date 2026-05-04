@@ -1,55 +1,56 @@
-<div class="fake">
-  <article>
-    <div class="category-option">
-      <span>Technical Task</span>
-      <button [cdkMenuTriggerFor]="menu">
-        <img src="assets/icons/move-option.png" alt="move-option" />
-      </button>
-      <ng-template #menu>
-        <div class="move-menu" cdkMenu>
-          <span>Move to</span>
-          <button cdkMenuItem>
-            <img src="assets/icons/arrow-upward.png" alt="downward" />
-            To-do
-          </button>
-          <button cdkMenuItem>
-            <img src="assets/icons/arrow-downward.png" alt="upward" />
-            Review
-          </button>
-        </div>
-      </ng-template>
-    </div>
+<article class="task-card">
+  <div class="task-card__header">
+    <span
+      class="task-card__category"
+      [class.task-card__category--story]="task.category === 'user_story'"
+      [class.task-card__category--technical]="task.category === 'technical_task'"
+    >
+      {{ taskCategoryLabel() }}
+    </span>
+    <button type="button" class="task-card__menu-button" [cdkMenuTriggerFor]="menu">
+      <img src="assets/icons/move-option.png" alt="move-option" />
+    </button>
+    <ng-template #menu>
+      <div class="move-menu" cdkMenu>
+        <span>Move to</span>
+        <button cdkMenuItem>To-do</button>
+        <button cdkMenuItem>In progress</button>
+        <button cdkMenuItem>Await feedback</button>
+        <button cdkMenuItem>Done</button>
+      </div>
+    </ng-template>
+  </div>
 
-    <h3 class="limit-two-lines">
-      HTML base Templateeation reate reusable Html base Templa reate reusable Html base Templa
-    </h3>
+  <h3 class="task-card__title limit-two-lines">{{ task.title }}</h3>
 
-    <p class="limit-two-lines">
-      Create reusable Html basereate reusable Html base Templareate reusable Html base Templa reate
-      reusable Html base Templa Templates
-    </p>
+  <p class="task-card__description limit-two-lines">
+    {{ task.description || 'No description provided.' }}
+  </p>
 
+  @if (showSubtaskProgress()) {
     <div class="subtasks">
       <mat-progress-bar
         mode="determinate"
-        value="50"
+        [value]="progressValue()"
         aria-label="subtasks-progress"
         class="subtasks__progress"
       ></mat-progress-bar>
 
-      1/2 Subtasks
+      {{ completedSubtasks() }}/{{ task.subtasks.length }} Subtasks
     </div>
+  }
 
-    <div class="members-priority">
-      <div class="members-content">
-        <span class="member">EL</span>
-        <span class="right-8 member">OG</span>
-        <span class="right-16 member">BZ</span>
-        <span class="right-12">+3</span>
-      </div>
-      <div class="priority">
-        <img src="assets/icons/priority-medium.png" alt="priority-medium" class="priority__img" />
-      </div>
+  <div class="members-priority">
+    <div class="members-content">
+      @for (contact of visibleAssignees(); track contact.id) {
+        <span class="member" [style.background]="contact.color">{{ initials(contact) }}</span>
+      }
+      @if (extraAssigneeCount() > 0) {
+        <span class="members-content__more">+{{ extraAssigneeCount() }}</span>
+      }
     </div>
-  </article>
-</div>
+    <div class="priority">
+      <img [src]="priorityIcon()" [alt]="priorityLabel()" class="priority__img" />
+    </div>
+  </div>
+</article>

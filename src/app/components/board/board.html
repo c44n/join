@@ -1,192 +1,114 @@
 <section class="section_task_board">
-    <div class="board-header">
-        <h1 class="board-title">Board</h1>
+  <div class="board-header">
+    <h1 class="board-title">Board</h1>
 
-        <div class="spacer"></div>
+    <div class="spacer"></div>
 
-        <div class="search-wrapper">
-            <input type="text" class="search-input" placeholder="Find Task" />
-            <span class="search-divider"></span>
-            <button class="search-btn" aria-label="Search">
-                <img src="assets/icons/search.png" class="search-icon" alt="search" />
-            </button>
-        </div>
-
-        <button class="add-btn" aria-label="Add task">
-            <span class="add-label">Add task</span>
-            <span class="plus">+</span>
-        </button>
+    <div class="search-wrapper">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Find Task"
+        #searchInput
+        (input)="onSearch(searchInput.value)"
+      />
+      <span class="search-divider"></span>
+      <button class="search-btn" aria-label="Search">
+        <img src="assets/icons/search.png" class="search-icon" alt="search" />
+      </button>
     </div>
 
-    <div class="column_wrapper">
+    <a class="add-btn" aria-label="Add task" routerLink="/add-task">
+      <span class="add-label">Add task</span>
+      <span class="plus">+</span>
+    </a>
+  </div>
 
-        <!-- To do -->
-        <div class="column_tasks">
-            <div class="column_title_wrapper">
-                <h2>To do</h2>
-                <button class="column_add_task_btn">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-                        <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-                    </svg>
+  <div class="column_wrapper">
+    <div class="column_tasks">
+      <div class="column_title_wrapper">
+        <h2>To do</h2>
+        <a class="column_add_task_btn" routerLink="/add-task">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+            <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </a>
+      </div>
 
-                </button>
-            </div>
-
-            <div class="column_tasks_card_wrapper">
-
-                <article>
-                    <div class="category-option">
-                        <span>Technical Task</span>
-                        <button [cdkMenuTriggerFor]="menu">
-                            <img src="assets/icons/move-option.png" alt="move-option" />
-                        </button>
-                        <ng-template #menu>
-                            <div class="move-menu" cdkMenu>
-                                <span>Move to</span>
-                                <button cdkMenuItem>
-                                    <img src="assets/icons/arrow-upward.png" alt="downward" />
-                                    To-do
-                                </button>
-                                <button cdkMenuItem>
-                                    <img src="assets/icons/arrow-downward.png" alt="upward" />
-                                    Review
-                                </button>
-                            </div>
-                        </ng-template>
-                    </div>
-
-                    <h3 class="limit-two-lines">
-                        HTML base Templateeation reate reusable Html base Templa reate reusable Html base Templa
-                    </h3>
-
-                    <p class="limit-two-lines">
-                        Create reusable Html basereate reusable Html base Templareate reusable Html base Templa
-                        reate
-                        reusable Html base Templa Templates
-                    </p>
-
-                    <div class="subtasks">
-                        <mat-progress-bar mode="determinate" value="50" aria-label="subtasks-progress"
-                            class="subtasks__progress"></mat-progress-bar>
-
-                        1/2 Subtasks
-                    </div>
-
-                    <div class="members-priority">
-                        <div class="members-content">
-                            <span class="member">EL</span>
-                            <span class="right-8 member">OG</span>
-                            <span class="right-16 member">BZ</span>
-                            <span class="right-12">+3</span>
-                        </div>
-                        <div class="priority">
-                            <img src="assets/icons/priority-medium.png" alt="priority-medium" class="priority__img" />
-                        </div>
-                    </div>
-                </article>
-
-
-            </div>
-        </div>
-
-        <!-- In progress -->
-        <div class="column_tasks">
-            <div class="column_title_wrapper">
-                <h2>In progress</h2>
-                <button class="column_add_task_btn">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-                        <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-
-                </button>
-            </div>
-
-            <div class="column_tasks_card_wrapper">
-                <article>
-                    <div class="category-option">
-                        <span>Technical Task</span>
-                        <button [cdkMenuTriggerFor]="menu">
-                            <img src="assets/icons/move-option.png" alt="move-option" />
-                        </button>
-                        <ng-template #menu>
-                            <div class="move-menu" cdkMenu>
-                                <span>Move to</span>
-                                <button cdkMenuItem>
-                                    <img src="assets/icons/arrow-upward.png" alt="downward" />
-                                    To-do
-                                </button>
-                                <button cdkMenuItem>
-                                    <img src="assets/icons/arrow-downward.png" alt="upward" />
-                                    Review
-                                </button>
-                            </div>
-                        </ng-template>
-                    </div>
-
-                    <h3 class="limit-two-lines">
-                        HTML base Templateeation reate reusable Html base Templa reate reusable Html base Templa
-                    </h3>
-
-                    <p class="limit-two-lines">
-                        Create reusable Html basereate reusable Html base Templareate reusable Html base Templa
-                        reate
-                        reusable Html base Templa Templates
-                    </p>
-
-                    <div class="subtasks">
-                        <mat-progress-bar mode="determinate" value="50" aria-label="subtasks-progress"
-                            class="subtasks__progress"></mat-progress-bar>
-
-                        1/2 Subtasks
-                    </div>
-
-                    <div class="members-priority">
-                        <div class="members-content">
-                            <span class="member">EL</span>
-                            <span class="right-8 member">OG</span>
-                            <span class="right-16 member">BZ</span>
-                            <span class="right-12">+3</span>
-                        </div>
-                        <div class="priority">
-                            <img src="assets/icons/priority-medium.png" alt="priority-medium" class="priority__img" />
-                        </div>
-                    </div>
-                </article>
-
-            </div>
-        </div>
-
-        <!-- Await feedback -->
-        <div class="column_tasks">
-            <div class="column_title_wrapper">
-                <h2>Await feedback</h2>
-                <button class="column_add_task_btn">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-                        <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-
-                </button>
-            </div>
-
-            <div class="column_tasks_card_wrapper">
-                
-
-            </div>
-        </div>
-
-        <!-- Done -->
-        <div class="column_tasks">
-            <div class="column_title_wrapper">
-                <h2>Done</h2>
-            </div>
-
-            <div class="column_tasks_card_wrapper">
-
-            </div>
-        </div>
+      <div class="column_tasks_card_wrapper">
+        @if (todoTasks().length) {
+          @for (task of todoTasks(); track task.id) {
+            <app-task [task]="task"></app-task>
+          }
+        } @else {
+          <p class="empty-column">No tasks to do.</p>
+        }
+      </div>
     </div>
 
+    <div class="column_tasks">
+      <div class="column_title_wrapper">
+        <h2>In progress</h2>
+        <a class="column_add_task_btn" routerLink="/add-task">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+            <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="column_tasks_card_wrapper">
+        @if (inProgressTasks().length) {
+          @for (task of inProgressTasks(); track task.id) {
+            <app-task [task]="task"></app-task>
+          }
+        } @else {
+          <p class="empty-column">No tasks in progress.</p>
+        }
+      </div>
+    </div>
+
+    <div class="column_tasks">
+      <div class="column_title_wrapper">
+        <h2>Await feedback</h2>
+        <a class="column_add_task_btn" routerLink="/add-task">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+            <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="column_tasks_card_wrapper">
+        @if (awaitingFeedbackTasks().length) {
+          @for (task of awaitingFeedbackTasks(); track task.id) {
+            <app-task [task]="task"></app-task>
+          }
+        } @else {
+          <p class="empty-column">No tasks awaiting feedback.</p>
+        }
+      </div>
+    </div>
+
+    <div class="column_tasks">
+      <div class="column_title_wrapper">
+        <h2>Done</h2>
+      </div>
+
+      <div class="column_tasks_card_wrapper">
+        @if (doneTasks().length) {
+          @for (task of doneTasks(); track task.id) {
+            <app-task [task]="task"></app-task>
+          }
+        } @else {
+          <p class="empty-column">No completed tasks.</p>
+        }
+      </div>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <p class="board-feedback">Loading tasks...</p>
+  }
 </section>
