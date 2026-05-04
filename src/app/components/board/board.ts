@@ -17,6 +17,7 @@ export class Board implements OnInit {
 
   protected readonly tasks = signal<BoardTask[]>([]);
   protected readonly isLoading = signal(false);
+  protected readonly movingTaskIds = signal<string[]>([]);
   protected readonly searchTerm = signal('');
 
   protected readonly todoTasks = computed(() => this.tasksByStatus('todo'));
@@ -30,6 +31,35 @@ export class Board implements OnInit {
 
   protected onSearch(term: string): void {
     this.searchTerm.set(term.trim().toLowerCase());
+  }
+
+  protected isMovingTask(taskId: string): boolean {
+    return this.movingTaskIds().includes(taskId);
+  }
+
+  protected async moveTask(taskId: string, status: TaskStatus): Promise<void> {
+    const previousTask = this.tasks().find((task) => task.id === taskId);
+
+    if (!previousTask || previousTask.status === status || this.isMovingTask(taskId)) {
+      return;
+    }
+
+    this.movingTaskIds.update((ids) => [...ids, taskId]);
+    this.tasks.update((tasks) =>
+      tasks.map((task) => (task.id === taskId ? { ...task, status } : task)),
+    );
+
+    try {
+      await this.tasksService.updateTask(taskId, { status });
+      this.toastService.show('Task moved successfully.');
+    } catch {
+      this.tasks.update((tasks) =>
+        tasks.map((task) => (task.id === taskId ? previousTask : task)),
+      );
+      this.toastService.show('Task could not be moved.');
+    } finally {
+      this.movingTaskIds.update((ids) => ids.filter((id) => id !== taskId));
+    }
   }
 
   private async loadTasks(): Promise<void> {

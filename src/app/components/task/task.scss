@@ -51,6 +51,14 @@
   &__menu-button {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
   }
 }
 
@@ -92,6 +100,7 @@
     align-items: center;
     padding: 2px 0 2px 12px;
     width: 128px;
+    cursor: pointer;
   }
 
   button:hover {
