@@ -1,0 +1,170 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+.section_task_board {
+    padding: 60px 70px;
+    max-width: 1440px;
+
+    @include all.mobile {
+        flex-direction: column;
+        padding: 12px;
+    }
+
+    @include all.tablet {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    @include all.notebook {
+        flex-direction: column;
+        padding: 30px;
+    }
+
+    .column_wrapper {
+        width: 100%;
+        display: flex;
+        gap: 26px;
+        overflow: scroll;
+        scrollbar-width: none;
+
+        @include all.mobile {
+            flex-direction: column;
+        }
+
+        @include all.tablet {
+            flex-direction: column;
+        }
+
+        @include all.notebook {
+            flex-direction: column;
+        }
+
+        .column_tasks {
+            min-width: 250px;
+            max-width: 250px;
+
+            @include all.mobile {
+                min-width: 100%;
+            }
+
+            @include all.tablet {
+                min-width: 100%;
+            }
+
+            @include all.notebook {
+                min-width: 100%;
+            }
+
+
+            .column_title_wrapper {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 6px;
+
+                @include all.mobile {
+                    margin-bottom: 14px;
+                }
+
+                @include all.tablet {
+                    margin-bottom: 14px;
+                }
+
+                @include all.notebook {
+                    margin-bottom: 14px;
+                }
+
+
+                h2 {
+                    font-weight: 700;
+                    font-style: Bold;
+                    font-size: 20px;
+                    line-height: 120%;
+                    letter-spacing: 0%;
+                    color: all.$primary-color;
+
+                    @include all.mobile {
+                        font-size: 27px;
+                    }
+                }
+
+                .column_add_task_btn {
+                    width: 24px;
+                    height: 24px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 2px solid all.$primary-color;
+                    border-radius: 8px;
+
+                    &:hover {
+                        border: 2px solid all.$secondary-color;
+
+                        path {
+                            stroke: all.$secondary-color;
+                        }
+                    }
+
+                    @include all.mobile {
+                        width: 30px;
+                        height: 30px;
+                    }
+                }
+            }
+
+            &_card_wrapper {
+                display: flex;
+                flex-direction: column;
+                padding: 10px 6px;
+                gap: 16px;
+
+                @include all.mobile {
+                    width: 100%;
+                    flex-direction: row;
+                    overflow: scroll;
+                    scrollbar-width: none;
+                }
+
+                @include all.tablet {
+                    width: 100%;
+                    flex-direction: row;
+                    overflow: scroll;
+                    scrollbar-width: none;
+                }
+
+                @include all.notebook {
+                    width: 100%;
+                    flex-direction: row;
+                    overflow: scroll;
+                    scrollbar-width: none;
+                }
+
+                .column_task_card {
+                    width: 100%;
+                    min-height: 250px;
+                    max-height: 300px;
+                    background-color: white;
+                    border-radius: 20px;
+                    padding: 18px;
+                    box-shadow: 0px 0px 10px 3px #00000014;
+
+                    @include all.mobile {
+                        min-width: 200px;
+                        max-width: 200px;
+                        max-height: 250px;
+                    }
+
+                    @include all.tablet {
+                        min-width: 250px;
+                        max-width: 250px;
+                        max-height: 250px;
+                    }
+
+                    @include all.notebook {
+                        min-width: 250px;
+                        max-width: 250px;
+                        max-height: 250px;
+                    }
+                }
+            }
+        }
+    }
+}
