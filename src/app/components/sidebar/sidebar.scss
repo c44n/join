@@ -1,5 +1,10 @@
 @use '../../../../public/assets/styles/all-styles.scss' as all;
 
+.sidebar-root {
+  position: relative;
+  z-index: 30;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -120,6 +125,19 @@
     &:active {
       background-color: all.$color-dark;
     }
+
+    &.active {
+      color: all.$color-white;
+      background-color: all.$color-dark-blue;
+
+      .icon-normal {
+        display: none;
+      }
+
+      .icon-hover {
+        display: block;
+      }
+    }
   }
 
   @include all.notebook {
@@ -157,7 +175,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 1;
+    z-index: 30;
 
     ul {
       display: flex;
@@ -197,6 +215,19 @@
 
         &:active {
           background-color: all.$color-dark;
+        }
+
+        &.active {
+          color: all.$color-white;
+          background-color: all.$color-dark-blue;
+
+          .icon-normal {
+            display: none;
+          }
+
+          .icon-hover {
+            display: block;
+          }
         }
       }
     }
