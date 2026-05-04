@@ -1,4 +1,5 @@
 import { NewSubtaskInput, Subtask } from './subtask';
+import { Contact } from './contact';
 
 export type TaskPriority = 'urgent' | 'medium' | 'low';
 export type TaskStatus = 'todo' | 'in_progress' | 'awaiting_feedback' | 'done';
@@ -18,6 +19,11 @@ export interface Task {
 
 export interface TaskDetails extends Task {
   assignee_ids: string[];
+  subtasks: Subtask[];
+}
+
+export interface BoardTask extends Task {
+  assignees: Contact[];
   subtasks: Subtask[];
 }
 

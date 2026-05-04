@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Task, TaskDetails, NewTaskInput, UpdateTaskInput } from '../models/task';
+import { Contact } from '../models/contact';
+import { BoardTask, Task, TaskDetails, NewTaskInput, UpdateTaskInput } from '../models/task';
 import { SupabaseService } from './supabase';
 import { SubtasksService } from './subtasks';
 import { TaskAssigneesService } from './task-assignees';
@@ -27,6 +28,27 @@ export class TasksService {
     }
 
     return (data ?? []) as Task[];
+  }
+
+  async getBoardTasks(): Promise<BoardTask[]> {
+    const tasks = await this.getTasks();
+
+    if (!tasks.length) {
+      return [];
+    }
+
+    const taskIds = tasks.map(({ id }) => id);
+    const [subtasks, assignments] = await Promise.all([
+      this.getSubtasksForTasks(taskIds),
+      this.getAssignmentsForTasks(taskIds),
+    ]);
+    const contacts = await this.getContactsForAssignments(assignments);
+
+    return tasks.map((task) => ({
+      ...task,
+      assignees: this.mapAssignees(task.id, assignments, contacts),
+      subtasks: subtasks.filter((subtask) => subtask.task_id === task.id),
+    }));
   }
 
   async getTaskById(id: string): Promise<TaskDetails> {
@@ -135,6 +157,67 @@ export class TasksService {
     }
 
     return row;
+  }
+
+  private async getAssignmentsForTasks(taskIds: string[]) {
+    const { data, error } = await this.supabaseService.supabase
+      .from('task_assignees')
+      .select('*')
+      .in('task_id', taskIds);
+
+    if (error) {
+      console.error('Error fetching board task assignees:', error);
+      throw new Error(error.message || 'Unknown Supabase error');
+    }
+
+    return data ?? [];
+  }
+
+  private async getContactsForAssignments(assignments: { contact_id: string }[]): Promise<Contact[]> {
+    const contactIds = [...new Set(assignments.map(({ contact_id }) => contact_id))];
+
+    if (!contactIds.length) {
+      return [];
+    }
+
+    const { data, error } = await this.supabaseService.supabase
+      .from('contacts')
+      .select('*')
+      .in('id', contactIds);
+
+    if (error) {
+      console.error('Error fetching board task contacts:', error);
+      throw new Error(error.message || 'Unknown Supabase error');
+    }
+
+    return (data ?? []) as Contact[];
+  }
+
+  private async getSubtasksForTasks(taskIds: string[]) {
+    const { data, error } = await this.supabaseService.supabase
+      .from('subtasks')
+      .select('*')
+      .in('task_id', taskIds)
+      .order('position', { ascending: true });
+
+    if (error) {
+      console.error('Error fetching board subtasks:', error);
+      throw new Error(error.message || 'Unknown Supabase error');
+    }
+
+    return data ?? [];
+  }
+
+  private mapAssignees(
+    taskId: string,
+    assignments: { task_id: string; contact_id: string }[],
+    contacts: Contact[],
+  ): Contact[] {
+    const contactIds = assignments
+      .filter((assignment) => assignment.task_id === taskId)
+      .map((assignment) => assignment.contact_id);
+
+    return contacts.filter((contact) => contactIds.includes(contact.id));
   }
 
   private async safeDelete(taskId: string): Promise<void> {
