@@ -1,7 +1,9 @@
 import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Contact } from '../../models/contact';
+import { NewTaskInput, TaskCategory, TaskPriority } from '../../models/task';
 import { ContactsService } from '../../services/contacts';
+import { TasksService } from '../../services/tasks';
 import { ToastService } from '../../services/toast';
 
 type Priority = 'Urgent' | 'Medium' | 'Low';
@@ -24,6 +26,7 @@ type EditableSubtask = {
 })
 export class AddTask implements OnInit {
   private readonly contactsService = inject(ContactsService);
+  private readonly tasksService = inject(TasksService);
   private readonly toastService = inject(ToastService);
 
   protected readonly categories = ['Technical Task', 'User Story'];
@@ -31,6 +34,7 @@ export class AddTask implements OnInit {
   protected readonly errors = signal<FormErrors>(this.emptyErrors());
   protected readonly isAssignedToOpen = signal(false);
   protected readonly isCategoryOpen = signal(false);
+  protected readonly isSaving = signal(false);
   protected readonly priorities: Priority[] = ['Urgent', 'Medium', 'Low'];
   protected readonly selectedContacts = signal<Contact[]>([]);
   /** Max avatars shown under Assigned to; remainder shown as +N. */
@@ -71,15 +75,25 @@ export class AddTask implements OnInit {
     this.subtasks.set([]);
   }
 
-  protected createTask(): void {
+  protected async createTask(): Promise<void> {
     this.attemptedSubmit = true;
     this.errors.set(this.validateForm());
     if (this.hasErrors()) {
       this.toastService.show('Please check the required fields.');
       return;
     }
-    this.toastService.show('Task created successfully.');
-    this.clearForm();
+
+    this.isSaving.set(true);
+
+    try {
+      await this.tasksService.createTask(this.buildTaskInput());
+      this.toastService.show('Task created successfully.');
+      this.clearForm();
+    } catch {
+      this.toastService.show('Task could not be created.');
+    } finally {
+      this.isSaving.set(false);
+    }
   }
 
   protected deleteSubtask(id: number): void {
@@ -235,6 +249,22 @@ export class AddTask implements OnInit {
     return `${contact.first_name} ${contact.last_name}`;
   }
 
+  private buildTaskInput(): NewTaskInput {
+    return {
+      title: this.title.trim(),
+      description: this.description.trim(),
+      dueDate: this.dueDate,
+      priority: this.mapPriority(this.selectedPriority()),
+      category: this.mapCategory(this.category),
+      status: 'todo',
+      assigneeIds: this.selectedContacts().map(({ id }) => id),
+      subtasks: this.subtasks().map((subtask, index) => ({
+        title: subtask.title.trim(),
+        position: index,
+      })),
+    };
+  }
+
   private hasErrors(): boolean {
     return Object.values(this.errors()).some(Boolean);
   }
@@ -271,6 +301,22 @@ export class AddTask implements OnInit {
 
   protected todayIso(): string {
     return new Date().toISOString().split('T')[0];
+  }
+
+  private mapCategory(category: string): TaskCategory {
+    return category === 'User Story' ? 'user_story' : 'technical_task';
+  }
+
+  private mapPriority(priority: Priority): TaskPriority {
+    if (priority === 'Urgent') {
+      return 'urgent';
+    }
+
+    if (priority === 'Low') {
+      return 'low';
+    }
+
+    return 'medium';
   }
 
   private validateCategory(): string {

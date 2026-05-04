@@ -304,13 +304,13 @@
         <p class="required-note"><span class="required">*</span> This field is required</p>
 
         <div class="footer-actions">
-          <button type="button" class="secondary-button" (click)="clearForm()">
+          <button type="button" class="secondary-button" [disabled]="isSaving()" (click)="clearForm()">
             Clear
             <span aria-hidden="true" class="button-icon">×</span>
           </button>
 
-          <button type="submit" class="primary-button">
-            Create Task
+          <button type="submit" class="primary-button" [disabled]="isSaving()">
+            {{ isSaving() ? 'Creating...' : 'Create Task' }}
             <span aria-hidden="true" class="button-icon">✓</span>
           </button>
         </div>
