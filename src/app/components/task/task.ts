@@ -14,6 +14,11 @@ export class Task {
   @Input({ required: true }) task!: BoardTask;
   @Input() isMoving = false;
   @Output() statusChange = new EventEmitter<TaskStatus>();
+  @Output() open = new EventEmitter<BoardTask>();
+
+   protected openDetails(): void {
+    this.open.emit(this.task);
+  }
 
   protected readonly maxAssigneeAvatars = 3;
   protected readonly moveTargets: TaskStatus[] = ['todo', 'in_progress', 'awaiting_feedback', 'done'];
@@ -32,11 +37,11 @@ export class Task {
 
   protected priorityIcon(): string {
     if (this.task.priority === 'urgent') {
-      return 'assets/icons/arrow-upward.png';
+      return 'assets/icons/priority-urgent.png';
     }
 
     if (this.task.priority === 'low') {
-      return 'assets/icons/arrow-downward.png';
+      return 'assets/icons/priority-low.png';
     }
 
     return 'assets/icons/priority-medium.png';
