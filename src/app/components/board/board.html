@@ -29,9 +29,20 @@
       <div class="column_title_wrapper">
         <h2>To do</h2>
         <a class="column_add_task_btn" routerLink="/add-task">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-            <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+            <path
+              d="M9 5.07544L1 5.07544"
+              stroke="#2A3647"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
           </svg>
         </a>
       </div>
@@ -43,6 +54,7 @@
               [task]="task"
               [isMoving]="isMovingTask(task.id)"
               (statusChange)="moveTask(task.id, $event)"
+              (open)="openTaskDetails($event)"
             ></app-task>
           }
         } @else {
@@ -55,9 +67,20 @@
       <div class="column_title_wrapper">
         <h2>In progress</h2>
         <a class="column_add_task_btn" routerLink="/add-task">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-            <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+            <path
+              d="M9 5.07544L1 5.07544"
+              stroke="#2A3647"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
           </svg>
         </a>
       </div>
@@ -69,6 +92,7 @@
               [task]="task"
               [isMoving]="isMovingTask(task.id)"
               (statusChange)="moveTask(task.id, $event)"
+              (open)="openTaskDetails($event)"
             ></app-task>
           }
         } @else {
@@ -81,9 +105,20 @@
       <div class="column_title_wrapper">
         <h2>Await feedback</h2>
         <a class="column_add_task_btn" routerLink="/add-task">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-            <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+            <path
+              d="M9 5.07544L1 5.07544"
+              stroke="#2A3647"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
           </svg>
         </a>
       </div>
@@ -95,6 +130,7 @@
               [task]="task"
               [isMoving]="isMovingTask(task.id)"
               (statusChange)="moveTask(task.id, $event)"
+              (open)="openTaskDetails($event)"
             ></app-task>
           }
         } @else {
@@ -115,6 +151,7 @@
               [task]="task"
               [isMoving]="isMovingTask(task.id)"
               (statusChange)="moveTask(task.id, $event)"
+              (open)="openTaskDetails($event)"
             ></app-task>
           }
         } @else {

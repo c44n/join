@@ -4,6 +4,8 @@ import { BoardTask, TaskStatus } from '../../models/task';
 import { TasksService } from '../../services/tasks';
 import { ToastService } from '../../services/toast';
 import { Task } from '../task/task';
+import { Dialog } from '@angular/cdk/dialog';
+import { TaskDetailsModal } from '../task-details-modal/task-details-modal';
 
 @Component({
   selector: 'app-board',
@@ -14,6 +16,7 @@ import { Task } from '../task/task';
 export class Board implements OnInit {
   private readonly tasksService = inject(TasksService);
   private readonly toastService = inject(ToastService);
+  private readonly dialog = inject(Dialog);
 
   protected readonly tasks = signal<BoardTask[]>([]);
   protected readonly isLoading = signal(false);
@@ -22,7 +25,9 @@ export class Board implements OnInit {
 
   protected readonly todoTasks = computed(() => this.tasksByStatus('todo'));
   protected readonly inProgressTasks = computed(() => this.tasksByStatus('in_progress'));
-  protected readonly awaitingFeedbackTasks = computed(() => this.tasksByStatus('awaiting_feedback'));
+  protected readonly awaitingFeedbackTasks = computed(() =>
+    this.tasksByStatus('awaiting_feedback'),
+  );
   protected readonly doneTasks = computed(() => this.tasksByStatus('done'));
 
   async ngOnInit(): Promise<void> {
@@ -31,6 +36,20 @@ export class Board implements OnInit {
 
   protected onSearch(term: string): void {
     this.searchTerm.set(term.trim().toLowerCase());
+  }
+  protected openTaskDetails(task: BoardTask) {
+    const ref = this.dialog.open<TaskDetailsModal>(TaskDetailsModal, {
+      hasBackdrop: true,
+      backdropClass: 'contact-dialog-backdrop',
+    }) as any;
+
+    (ref.componentInstance as TaskDetailsModal).task = task;
+
+    ref.closed.subscribe(async (result: string) => {
+      if (result === 'deleted') {
+        await this.deleteTask(task.id);
+      }
+    });
   }
 
   protected isMovingTask(taskId: string): boolean {
@@ -53,9 +72,7 @@ export class Board implements OnInit {
       await this.tasksService.updateTask(taskId, { status });
       this.toastService.show('Task moved successfully.');
     } catch {
-      this.tasks.update((tasks) =>
-        tasks.map((task) => (task.id === taskId ? previousTask : task)),
-      );
+      this.tasks.update((tasks) => tasks.map((task) => (task.id === taskId ? previousTask : task)));
       this.toastService.show('Task could not be moved.');
     } finally {
       this.movingTaskIds.update((ids) => ids.filter((id) => id !== taskId));
@@ -88,5 +105,16 @@ export class Board implements OnInit {
 
   private tasksByStatus(status: TaskStatus): BoardTask[] {
     return this.tasks().filter((task) => task.status === status && this.matchesSearch(task));
+  }
+    private async deleteTask(taskId: string): Promise<void> {
+    try {
+      await this.tasksService.deleteTask(taskId);
+
+      this.tasks.update((tasks) => tasks.filter((t) => t.id !== taskId));
+
+      this.toastService.show('Task deleted successfully.');
+    } catch {
+      this.toastService.show('Task could not be deleted.');
+    }
   }
 }

@@ -1,0 +1,60 @@
+<div class="modal-header fixed-header">
+  <span class="category-badge">
+    {{ task.category.replace('_', ' ') | titlecase }}
+  </span>
+  <button class="close-btn" (click)="closeModal()">✕</button>
+</div>
+
+<div class="modal-scroll">
+    <h1 class="modal-title">{{ task.title }}</h1>
+    <p class="modal-description">{{ task.description }}</p>
+
+    <div class="taskoptions">
+      <div class="option-row">
+        <span class="option-title">Due date:</span>
+        <span class="date">{{ task.due_date | date:'dd/MM/yyyy' }}</span>
+      </div>
+
+      <div class="option-row">
+        <span class="option-title">Priority:</span>
+        <div class="priority-wrapper">
+          <span class="priority-text">{{ task.priority | titlecase }}</span>
+          <img [src]="priorityIcon()" alt="priority" width="20" />
+
+        </div>
+      </div>
+    </div>
+
+    <div class="assigned-section">
+      <p class="option-title">Assigned To:</p>
+      @for (person of task.assignees; track person.id) {
+        <div class="assigned-person">
+          <span class="circle" [style.background]="person.color">
+            {{ person.first_name[0] }}{{ person.last_name[0] }}
+          </span>
+          <span>{{ person.first_name }} {{ person.last_name }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="subtasks-section">
+      <p class="option-title">Subtasks</p>
+      @for (sub of task.subtasks; track sub.title) {
+        <div class="subtask-item">
+          <input type="checkbox" [checked]="sub.completed" />
+          <span>{{ sub.title }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+<div class="modal-actions fixed-actions">
+  <button class="delete-btn" (click)="deleteTask()">
+    <img src="assets/icons/delete.png" alt="delete" width="16" />
+    Delete
+  </button>
+  <button class="edit-btn" (click)="editTask()">
+    <img src="assets/icons/edit.png" alt="edit" width="16" />
+    Edit
+  </button>
+</div>
