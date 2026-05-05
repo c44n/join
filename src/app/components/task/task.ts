@@ -37,11 +37,11 @@ export class Task {
 
   protected priorityIcon(): string {
     if (this.task.priority === 'urgent') {
-      return 'assets/icons/arrow-upward.png';
+      return 'assets/icons/priority-urgent.png';
     }
 
     if (this.task.priority === 'low') {
-      return 'assets/icons/arrow-downward.png';
+      return 'assets/icons/priority-low.png';
     }
 
     return 'assets/icons/priority-medium.png';
