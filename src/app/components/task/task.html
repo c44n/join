@@ -1,4 +1,4 @@
-<article class="task-card" (click)="openDetails()" cdkDrag>
+<article class="task-card" (click)="openDetails()">
     <div class="task-card__header">
         <span class="task-card__category" [class.task-card__category--story]="task.category === 'user_story'"
             [class.task-card__category--technical]="task.category === 'technical_task'">

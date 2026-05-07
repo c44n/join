@@ -1,94 +1,147 @@
 <section class="section_task_board">
-	<div class="board-header">
-		<h1 class="board-title">Board</h1>
+  <div class="board-header">
+    <h1 class="board-title">Board</h1>
 
-		<div class="spacer"></div>
+    <div class="spacer"></div>
 
-		<div class="search-wrapper">
-			<input type="text" class="search-input" placeholder="Find Task" #searchInput
-				(input)="onSearch(searchInput.value)" />
-			<span class="search-divider"></span>
-			<button class="search-btn" aria-label="Search">
-				<img src="assets/icons/search.png" class="search-icon" alt="search" />
-			</button>
-		</div>
+    <div class="search-wrapper">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Find Task"
+        #searchInput
+        (input)="onSearch(searchInput.value)"
+      />
+      <span class="search-divider"></span>
+      <button class="search-btn" aria-label="Search">
+        <img src="assets/icons/search.png" class="search-icon" alt="search" />
+      </button>
+    </div>
 
-		<a class="add-btn" aria-label="Add task" routerLink="/add-task">
-			<span class="add-label">Add task</span>
-			<span class="plus">+</span>
-		</a>
-	</div>
+    <a class="add-btn" aria-label="Add task" routerLink="/add-task">
+      <span class="add-label">Add task</span>
+      <span class="plus">+</span>
+    </a>
+  </div>
 
-	<div class="column_wrapper" cdkDropListGroup>
-    
+  <div class="column_wrapper" cdkDropListGroup>
     <!-- To Do -->
-    <div class="column_tasks" 
-		cdkDropList 
-		id="todo" 
-		[cdkDropListData]="todoTasks()" 
-		(cdkDropListDropped)="onTaskDropped($event)">
-		
-        <div class="column_title_wrapper">
-            <h2>To do</h2>
-            <a class="column_add_task_btn" routerLink="/add-task">
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1V9M9 5H1" stroke="#2A3647" stroke-width="2" stroke-linecap="round"/></svg>
-            </a>
-        </div>
-        <div class="column_tasks_card_wrapper">
-            @for (task of todoTasks(); track task.id) {
-                <app-task cdkDrag [task]="task" [isMoving]="isMovingTask(task.id)" (open)="openTaskDetails($event)">
-                    <div class="custom-placeholder" *cdkDragPlaceholder></div>
-                </app-task>
-            } @empty {
-                <p class="empty-column">No tasks to do.</p>
-            }
-        </div>
+    <div
+      class="column_tasks"
+      cdkDropList
+      id="todo"
+      [cdkDropListData]="todoTasks()"
+      (cdkDropListDropped)="onTaskDropped($event)"
+    >
+      <div class="column_title_wrapper">
+        <h2>To do</h2>
+        <a class="column_add_task_btn" routerLink="/add-task">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M5 1V9M9 5H1" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </a>
+      </div>
+      <div class="column_tasks_card_wrapper">
+        @for (task of todoTasks(); track task.id) {
+          <app-task
+            cdkDrag
+            [cdkDragData]="task"
+            [task]="task"
+            [isMoving]="isMovingTask(task.id)"
+            (open)="openTaskDetails($event)"
+            (statusChange)="moveTask(task.id, $event)"
+          >
+            <div class="custom-placeholder" *cdkDragPlaceholder></div>
+          </app-task>
+        } @empty {
+          <p class="empty-column">No tasks to do.</p>
+        }
+      </div>
     </div>
 
     <!-- In Progress -->
-    <div class="column_tasks" cdkDropList id="in_progress" [cdkDropListData]="inProgressTasks()" (cdkDropListDropped)="onTaskDropped($event)">
-        <div class="column_title_wrapper"><h2>In progress</h2></div>
-        <div class="column_tasks_card_wrapper">
-            @for (task of inProgressTasks(); track task.id) {
-                <app-task cdkDrag [task]="task" [isMoving]="isMovingTask(task.id)" (open)="openTaskDetails($event)">
-                    <div class="custom-placeholder" *cdkDragPlaceholder></div>
-                </app-task>
-            } @empty {
-                <p class="empty-column">No tasks in progress.</p>
-            }
-        </div>
+    <div
+      class="column_tasks"
+      cdkDropList
+      id="in_progress"
+      [cdkDropListData]="inProgressTasks()"
+      (cdkDropListDropped)="onTaskDropped($event)"
+    >
+      <div class="column_title_wrapper"><h2>In progress</h2></div>
+      <div class="column_tasks_card_wrapper">
+        @for (task of inProgressTasks(); track task.id) {
+          <app-task
+            cdkDrag
+            [cdkDragData]="task"
+            [task]="task"
+            [isMoving]="isMovingTask(task.id)"
+            (open)="openTaskDetails($event)"
+            (statusChange)="moveTask(task.id, $event)"
+          >
+            <div class="custom-placeholder" *cdkDragPlaceholder></div>
+          </app-task>
+        } @empty {
+          <p class="empty-column">No tasks in progress.</p>
+        }
+      </div>
     </div>
 
     <!-- Awaiting Feedback -->
-    <div class="column_tasks" cdkDropList id="awaiting_feedback" [cdkDropListData]="awaitingFeedbackTasks()" (cdkDropListDropped)="onTaskDropped($event)">
-        <div class="column_title_wrapper"><h2>Await feedback</h2></div>
-        <div class="column_tasks_card_wrapper">
-            @for (task of awaitingFeedbackTasks(); track task.id) {
-                <app-task cdkDrag [task]="task" [isMoving]="isMovingTask(task.id)" (open)="openTaskDetails($event)">
-                    <div class="custom-placeholder" *cdkDragPlaceholder></div>
-                </app-task>
-            } @empty {
-                <p class="empty-column">No tasks awaiting feedback.</p>
-            }
-        </div>
+    <div
+      class="column_tasks"
+      cdkDropList
+      id="awaiting_feedback"
+      [cdkDropListData]="awaitingFeedbackTasks()"
+      (cdkDropListDropped)="onTaskDropped($event)"
+    >
+      <div class="column_title_wrapper"><h2>Await feedback</h2></div>
+      <div class="column_tasks_card_wrapper">
+        @for (task of awaitingFeedbackTasks(); track task.id) {
+          <app-task
+            cdkDrag
+            [cdkDragData]="task"
+            [task]="task"
+            [isMoving]="isMovingTask(task.id)"
+            (open)="openTaskDetails($event)"
+            (statusChange)="moveTask(task.id, $event)"
+          >
+            <div class="custom-placeholder" *cdkDragPlaceholder></div>
+          </app-task>
+        } @empty {
+          <p class="empty-column">No tasks awaiting feedback.</p>
+        }
+      </div>
     </div>
 
     <!-- Done -->
-    <div class="column_tasks" cdkDropList id="done" [cdkDropListData]="doneTasks()" (cdkDropListDropped)="onTaskDropped($event)">
-        <div class="column_title_wrapper"><h2>Done</h2></div>
-        <div class="column_tasks_card_wrapper">
-            @for (task of doneTasks(); track task.id) {
-                <app-task cdkDrag [task]="task" [isMoving]="isMovingTask(task.id)" (open)="openTaskDetails($event)">
-                    <div class="custom-placeholder" *cdkDragPlaceholder></div>
-                </app-task>
-            } @empty {
-                <p class="empty-column">No completed tasks.</p>
-            }
-        </div>
+    <div
+      class="column_tasks"
+      cdkDropList
+      id="done"
+      [cdkDropListData]="doneTasks()"
+      (cdkDropListDropped)="onTaskDropped($event)"
+    >
+      <div class="column_title_wrapper"><h2>Done</h2></div>
+      <div class="column_tasks_card_wrapper">
+        @for (task of doneTasks(); track task.id) {
+          <app-task
+            cdkDrag
+            [task]="task"
+            [cdkDragData]="task"
+            [isMoving]="isMovingTask(task.id)"
+            (open)="openTaskDetails($event)"
+            (statusChange)="moveTask(task.id, $event)"
+          >
+            <div class="custom-placeholder" *cdkDragPlaceholder></div>
+          </app-task>
+        } @empty {
+          <p class="empty-column">No completed tasks.</p>
+        }
+      </div>
     </div>
-</div>
+  </div>
 
-	@if (isLoading()) {
-	<p class="board-feedback">Loading tasks...</p>
-	}
+  @if (isLoading()) {
+    <p class="board-feedback">Loading tasks...</p>
+  }
 </section>
