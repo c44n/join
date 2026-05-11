@@ -1,11 +1,12 @@
 import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Contact } from '../../models/contact';
-import { NewTaskInput, TaskCategory, TaskPriority } from '../../models/task';
+import { BoardTask, NewTaskInput, TaskCategory, TaskPriority } from '../../models/task';
 import { ContactsService } from '../../services/contacts';
 import { TasksService } from '../../services/tasks';
 import { ToastService } from '../../services/toast';
-import { DialogRef } from '@angular/cdk/dialog';
+import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
+import { Subtask } from '../../models/subtask';
 
 type Priority = 'Urgent' | 'Medium' | 'Low';
 type FormErrors = {
@@ -43,6 +44,10 @@ export class AddTaskDialog {
 	protected readonly selectedPriority = signal<Priority>('Medium');
 	protected readonly subtasks = signal<EditableSubtask[]>([]);
 
+	private dialogRef = inject(DialogRef);
+	private data = inject(DIALOG_DATA);
+
+	protected columnType = this.data?.status || 'todo';
 	protected category = '';
 	protected description = '';
 	protected dueDate = '';
@@ -54,8 +59,6 @@ export class AddTaskDialog {
 	async ngOnInit(): Promise<void> {
 		await this.loadContacts();
 	}
-
-	private dialogRef = inject(DialogRef);
 
 	closeModal() {
 		this.dialogRef.close();
@@ -93,11 +96,22 @@ export class AddTaskDialog {
 		this.isSaving.set(true);
 
 		try {
-			await this.tasksService.createTask(this.buildTaskInput());
+			const createdTask = await this.tasksService.createTask(this.buildTaskInput());
+
+			const enrichedTask: BoardTask = {
+				...createdTask,
+				assignees: this.selectedContacts(),
+				priority: this.selectedPriority().toLowerCase() as TaskPriority,
+				subtasks: this.subtasks().map(s => ({
+					...s,
+					completed: false,
+					task_id: createdTask.id
+				} as any as Subtask))
+			};
+
 			this.toastService.show('Task created successfully.');
-			this.clearForm();
-			this.dialogRef.close();
-		} catch {
+			this.dialogRef.close(enrichedTask);
+		} catch (error) {
 			this.toastService.show('Task could not be created.');
 		} finally {
 			this.isSaving.set(false);
@@ -264,7 +278,7 @@ export class AddTaskDialog {
 			dueDate: this.dueDate,
 			priority: this.mapPriority(this.selectedPriority()),
 			category: this.mapCategory(this.category),
-			status: 'todo',
+			status: this.columnType,
 			assigneeIds: this.selectedContacts().map(({ id }) => id),
 			subtasks: this.subtasks().map((subtask, index) => ({
 				title: subtask.title.trim(),

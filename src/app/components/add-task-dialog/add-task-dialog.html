@@ -8,6 +8,7 @@
         <form class="add-task-form" novalidate (ngSubmit)="createTask()">
             <div class="form-grid">
                 <div class="form-column">
+                    <input type="hidden" name="column_type">
                     <label class="field">
                         <span class="field__label">Title<span class="required">*</span></span>
                         <input type="text" name="title" [(ngModel)]="title" [class.input-error]="inputClass('title')"

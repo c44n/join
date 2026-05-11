@@ -53,10 +53,24 @@ export class Board implements OnInit {
         });
     }
 
-    protected openAddTaskDialog(){
-        this.dialog.open(AddTaskDialog)
+    protected openAddTaskDialog(columnType: string){
+        const ref = this.dialog.open<BoardTask>(AddTaskDialog, {
+            hasBackdrop: true,
+            backdropClass: 'contact-dialog-backdrop',
+            data: {
+                status: columnType 
+            }
+        });
+        
+        // closed-Event abonnieren
+        ref.closed.subscribe((newTask: BoardTask | undefined) => {
+            if(newTask) {
+                // signal aktualisieren
+                this.tasks.update(currentTasks => [...currentTasks, newTask]);
+            }
+        });
     }
-    
+
     protected isMovingTask(taskId: string): boolean {
         return this.movingTaskIds().includes(taskId);
     }
@@ -111,6 +125,7 @@ export class Board implements OnInit {
     private tasksByStatus(status: TaskStatus): BoardTask[] {
         return this.tasks().filter((task) => task.status === status && this.matchesSearch(task));
     }
+    
     private async deleteTask(taskId: string): Promise<void> {
         try {
             await this.tasksService.deleteTask(taskId);
