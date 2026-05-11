@@ -5,7 +5,7 @@ import { TasksService } from '../../services/tasks';
 import { ToastService } from '../../services/toast';
 import { Task } from '../task/task';
 import { Dialog } from '@angular/cdk/dialog';
-import { TaskDetailsModal } from '../task-details-modal/task-details-modal';
+import { TaskDetailsModal } from '../task-details-edit-modal/task-details-edit-modal';
 
 @Component({
   selector: 'app-board',

@@ -4,7 +4,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BoardTask, TaskDetails, TaskStatus } from '../../models/task';
 import { Contact } from '../../models/contact';
 import { Dialog } from '@angular/cdk/dialog';
-import { TaskDetailsModal } from '../task-details-modal/task-details-modal';
+import { TaskDetailsModal } from '../task-details-edit-modal/task-details-edit-modal';
 import { TasksService } from '../../services/tasks';
 
 @Component({
