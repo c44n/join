@@ -477,3 +477,29 @@ article {
         }
     }
 }
+
+
+
+/* 1. Die gestrichelte Box (Placeholder), wenn man einen Task über eine Spalte hält */
+.cdk-drop-list-dragging .cdk-drag-placeholder {
+    opacity: 0.3;
+    border: 2px dashed #2A3647;
+    border-radius: 24px;
+    background: rgba(0, 0, 0, 0.05);
+    margin-bottom: 16px;
+    min-height: 100px; /* Höhe deiner Task-Karte */
+}
+
+/* 2. Die Karte, die am Mauszeiger klebt (Vorschau) */
+.cdk-drag-preview {
+    //transform: rotate(3deg)!important;
+}
+
+/* 3. Animationen für flüssiges Verschieben */
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.column_tasks_card_wrapper.cdk-drop-list-dragging .app-task:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

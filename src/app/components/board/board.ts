@@ -6,15 +6,25 @@ import { ToastService } from '../../services/toast';
 import { Task } from '../task/task';
 import { Dialog } from '@angular/cdk/dialog';
 import { TaskDetailsModal } from '../task-details-modal/task-details-modal';
+import {
+    CdkDrag,
+    CdkDragDrop,
+    CdkDropList,
+    CdkDropListGroup,
+} from '@angular/cdk/drag-drop';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators'
+import { AsyncPipe } from '@angular/common';
 import { AddTaskDialog } from '../add-task-dialog/add-task-dialog';
 
 @Component({
     selector: 'app-board',
-    imports: [RouterLink, Task],
+    imports: [RouterLink, Task, CdkDropList, CdkDrag, CdkDropListGroup, AsyncPipe],
     templateUrl: './board.html',
     styleUrl: './board.scss',
 })
 export class Board implements OnInit {
+    private breakpointObserver = inject(BreakpointObserver);
     private readonly tasksService = inject(TasksService);
     private readonly toastService = inject(ToastService);
     private readonly dialog = inject(Dialog);
@@ -31,6 +41,8 @@ export class Board implements OnInit {
     );
     protected readonly doneTasks = computed(() => this.tasksByStatus('done'));
 
+    isMobile$ = this.breakpointObserver.observe(['(max-width: 1024px)']).pipe(map(result => result.matches));
+
     async ngOnInit(): Promise<void> {
         await this.loadTasks();
     }
@@ -38,6 +50,7 @@ export class Board implements OnInit {
     protected onSearch(term: string): void {
         this.searchTerm.set(term.trim().toLowerCase());
     }
+
     protected openTaskDetails(task: BoardTask) {
         const ref = this.dialog.open<TaskDetailsModal>(TaskDetailsModal, {
             hasBackdrop: true,
@@ -71,8 +84,20 @@ export class Board implements OnInit {
         });
     }
 
+
     protected isMovingTask(taskId: string): boolean {
         return this.movingTaskIds().includes(taskId);
+    }
+
+    protected async onTaskDropped(event: CdkDragDrop<BoardTask[]>) {
+        const task = event.item.data as BoardTask;
+        const newStatus = event.container.id as TaskStatus;
+
+        if (!task || !newStatus || event.previousContainer.id === newStatus) {
+            return;
+        }
+
+        await this.moveTask(task.id, newStatus);
     }
 
     protected async moveTask(taskId: string, status: TaskStatus): Promise<void> {
@@ -125,7 +150,7 @@ export class Board implements OnInit {
     private tasksByStatus(status: TaskStatus): BoardTask[] {
         return this.tasks().filter((task) => task.status === status && this.matchesSearch(task));
     }
-    
+
     private async deleteTask(taskId: string): Promise<void> {
         try {
             await this.tasksService.deleteTask(taskId);

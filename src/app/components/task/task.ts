@@ -4,6 +4,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BoardTask, TaskStatus } from '../../models/task';
 import { Contact } from '../../models/contact';
 
+
 @Component({
   selector: 'app-task',
   imports: [MatProgressBarModule, CdkMenuTrigger, CdkMenu, CdkMenuItem],
