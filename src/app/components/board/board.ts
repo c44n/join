@@ -16,7 +16,6 @@ import { TaskDetailsModal } from '../task-details-modal/task-details-modal';
 export class Board implements OnInit {
   private readonly tasksService = inject(TasksService);
   private readonly toastService = inject(ToastService);
-  private readonly dialog = inject(Dialog);
 
   protected readonly tasks = signal<BoardTask[]>([]);
   protected readonly isLoading = signal(false);
@@ -37,20 +36,23 @@ export class Board implements OnInit {
   protected onSearch(term: string): void {
     this.searchTerm.set(term.trim().toLowerCase());
   }
-  protected openTaskDetails(task: BoardTask) {
-    const ref = this.dialog.open<TaskDetailsModal>(TaskDetailsModal, {
-      hasBackdrop: true,
-      backdropClass: 'contact-dialog-backdrop',
-    }) as any;
 
-    (ref.componentInstance as TaskDetailsModal).task = task;
+  // protected openTaskDetails(task: BoardTask) {
+  //   const dialogRef = this.dialog.open<TaskDetailsModal>(TaskDetailsModal, {
+  //     hasBackdrop: true,
+  //     backdropClass: 'contact-dialog-backdrop',
+  //   });
 
-    ref.closed.subscribe(async (result: string) => {
-      if (result === 'deleted') {
-        await this.deleteTask(task.id);
-      }
-    });
-  }
+  //   dialogRef.componentRef?.setInput('task', task);
+
+    // (ref.componentInstance as TaskDetailsModal).task = task;
+
+    // ref.closed.subscribe(async (result: string) => {
+    //   if (result === 'deleted') {
+    //     await this.deleteTask(task.id);
+    //   }
+    // });
+  // }
 
   protected isMovingTask(taskId: string): boolean {
     return this.movingTaskIds().includes(taskId);

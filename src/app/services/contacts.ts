@@ -26,7 +26,7 @@ export class ContactsService {
 
   async getContacts(): Promise<Contact[]> {
     const { data, error } = await this.supabaseService.supabase.from('contacts').select('*');
-    
+
     if (error) {
       console.error('Error fetching contacts:', error);
       throw error;
@@ -77,4 +77,25 @@ export class ContactsService {
       throw new Error(error.message || 'Unknown Supabase error');
     }
   }
+
+//   async getContactByIds(contactIds: string[]): Promise<Contact[]> {
+//     const contacts: Contact[] = [];
+//     for (let index = 0; index < contactIds.length; index++) {
+//       const contactId = contactIds[index];
+//       const { data, error } = await this.supabaseService.supabase
+//         .from('contacts')
+//         .select('*')
+//         .eq('id', contactId)
+//         .single();
+
+//       if (error) {
+//         console.error('Error deleting contact:', error);
+//         throw new Error(error.message || 'Unknown Supabase error');
+//       }
+
+//       contacts.push(data);
+//     }
+
+//     return contacts as Contact[];
+//   }
 }

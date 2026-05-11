@@ -159,7 +159,7 @@ export class TasksService {
     return row;
   }
 
-  private async getAssignmentsForTasks(taskIds: string[]) {
+  protected async getAssignmentsForTasks(taskIds: string[]) {
     const { data, error } = await this.supabaseService.supabase
       .from('task_assignees')
       .select('*')
@@ -173,7 +173,7 @@ export class TasksService {
     return data ?? [];
   }
 
-  private async getContactsForAssignments(assignments: { contact_id: string }[]): Promise<Contact[]> {
+   async getContactsForAssignments(assignments: { contact_id: string }[]): Promise<Contact[]> {
     const contactIds = [...new Set(assignments.map(({ contact_id }) => contact_id))];
 
     if (!contactIds.length) {
