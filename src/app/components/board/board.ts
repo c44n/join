@@ -1,5 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { BoardTask, TaskStatus } from '../../models/task';
 import { TasksService } from '../../services/tasks';
 import { ToastService } from '../../services/toast';
@@ -25,6 +26,7 @@ import { AddTaskDialog } from '../add-task-dialog/add-task-dialog';
 })
 export class Board implements OnInit {
     private breakpointObserver = inject(BreakpointObserver);
+    private readonly router = inject(Router);
     private readonly tasksService = inject(TasksService);
     private readonly toastService = inject(ToastService);
     private readonly dialog = inject(Dialog);
@@ -67,6 +69,11 @@ export class Board implements OnInit {
     }
 
     protected openAddTaskDialog(columnType: string){
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            void this.router.navigate(['/add-task']);
+            return;
+        }
+
         const ref = this.dialog.open<BoardTask>(AddTaskDialog, {
             hasBackdrop: true,
             backdropClass: 'contact-dialog-backdrop',
