@@ -492,11 +492,7 @@ article {
 
 /* 2. Die Karte, die am Mauszeiger klebt (Vorschau) */
 .cdk-drag-preview {
-    box-sizing: border-box;
-    border-radius: 24px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    transform: rotate(3deg); /* Die leichte Drehung */
-    cursor: grabbing;
+    //transform: rotate(3deg)!important;
 }
 
 /* 3. Animationen für flüssiges Verschieben */
@@ -506,10 +502,4 @@ article {
 
 .column_tasks_card_wrapper.cdk-drop-list-dragging .app-task:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-/* Highlight der Zielspalte (Optional) */
-.cdk-drop-list-receiving {
-    background-color: rgba(0, 0, 0, 0.123);
-    border-radius: 12px;
 }

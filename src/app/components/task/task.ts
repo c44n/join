@@ -3,12 +3,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BoardTask, TaskStatus } from '../../models/task';
 import { Contact } from '../../models/contact';
-import {CdkDrag} from '@angular/cdk/drag-drop';
 
 
 @Component({
   selector: 'app-task',
-  imports: [MatProgressBarModule, CdkMenuTrigger, CdkMenu, CdkMenuItem, CdkDrag],
+  imports: [MatProgressBarModule, CdkMenuTrigger, CdkMenu, CdkMenuItem],
   templateUrl: './task.html',
   styleUrl: './task.scss',
 })

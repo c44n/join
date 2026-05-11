@@ -10,18 +10,20 @@ import {
     CdkDrag,
     CdkDragDrop,
     CdkDropList,
-    moveItemInArray,
-    transferArrayItem,
     CdkDropListGroup,
 } from '@angular/cdk/drag-drop';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators'
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-board',
-    imports: [RouterLink, Task, CdkDropList, CdkDrag, CdkDropListGroup],
+    imports: [RouterLink, Task, CdkDropList, CdkDrag, CdkDropListGroup, AsyncPipe],
     templateUrl: './board.html',
     styleUrl: './board.scss',
 })
 export class Board implements OnInit {
+    private breakpointObserver = inject(BreakpointObserver);
     private readonly tasksService = inject(TasksService);
     private readonly toastService = inject(ToastService);
     private readonly dialog = inject(Dialog);
@@ -37,6 +39,8 @@ export class Board implements OnInit {
         this.tasksByStatus('awaiting_feedback'),
     );
     protected readonly doneTasks = computed(() => this.tasksByStatus('done'));
+
+    isMobile$ = this.breakpointObserver.observe(['(max-width: 1024px)']).pipe(map(result => result.matches));
 
     async ngOnInit(): Promise<void> {
         await this.loadTasks();
