@@ -25,8 +25,12 @@ type EditableSubtask = {
 	imports: [FormsModule],
 	templateUrl: './add-task-dialog.html',
 	styleUrl: './add-task-dialog.scss',
+	host: {
+		'[class.dialog-closing]': 'closing()',
+	},
 })
 export class AddTaskDialog {
+	private static readonly CLOSE_ANIMATION_MS = 300;
 	private readonly contactsService = inject(ContactsService);
 	private readonly tasksService = inject(TasksService);
 	private readonly toastService = inject(ToastService);
@@ -46,6 +50,7 @@ export class AddTaskDialog {
 
 	private dialogRef = inject(DialogRef);
 	private data = inject(DIALOG_DATA);
+	protected closing = signal(false);
 
 	protected columnType = this.data?.status || 'todo';
 	protected category = '';
@@ -60,8 +65,14 @@ export class AddTaskDialog {
 		await this.loadContacts();
 	}
 
-	closeModal() {
-		this.dialogRef.close();
+	protected closeModal() {
+		if (this.closing()) return;
+
+		this.closing.set(true);
+
+		window.setTimeout(() => {
+			this.dialogRef?.close();
+		}, AddTaskDialog.CLOSE_ANIMATION_MS);
 	}
 
 	@HostListener('document:click')

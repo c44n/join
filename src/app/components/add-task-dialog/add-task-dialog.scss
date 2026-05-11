@@ -33,6 +33,10 @@
     }
 }
 
+:host.dialog-closing {
+	@extend %slide-to-right;
+}
+
 .add-task-page {
     padding: 56px 72px 40px 48px;
 
@@ -70,6 +74,10 @@
 
         &:hover {
             color: black;
+        }
+
+        &:focus-visible {
+            border: none;
         }
     }
 
