@@ -6,7 +6,6 @@ import { TasksService } from '../../services/tasks';
 import { ToastService } from '../../services/toast';
 import { Task } from '../task/task';
 import { Dialog } from '@angular/cdk/dialog';
-import { TaskDetailsModal } from '../task-details-modal/task-details-modal';
 import {
     CdkDrag,
     CdkDragDrop,
@@ -51,21 +50,6 @@ export class Board implements OnInit {
 
     protected onSearch(term: string): void {
         this.searchTerm.set(term.trim().toLowerCase());
-    }
-
-    protected openTaskDetails(task: BoardTask) {
-        const ref = this.dialog.open<TaskDetailsModal>(TaskDetailsModal, {
-            hasBackdrop: true,
-            backdropClass: 'contact-dialog-backdrop',
-        }) as any;
-
-        (ref.componentInstance as TaskDetailsModal).task = task;
-
-        ref.closed.subscribe(async (result: string) => {
-            if (result === 'deleted') {
-                await this.deleteTask(task.id);
-            }
-        });
     }
 
     protected openAddTaskDialog(columnType: string){

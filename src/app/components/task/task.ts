@@ -1,9 +1,11 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { BoardTask, TaskStatus } from '../../models/task';
+import { BoardTask, TaskDetails, TaskStatus } from '../../models/task';
 import { Contact } from '../../models/contact';
-
+import { TasksService } from '../../services/tasks';
+import { Dialog } from '@angular/cdk/dialog';
+import { TaskDetailsModal } from '../task-details-modal/task-details-modal';
 
 @Component({
   selector: 'app-task',
@@ -15,14 +17,36 @@ export class Task {
   @Input({ required: true }) task!: BoardTask;
   @Input() isMoving = false;
   @Output() statusChange = new EventEmitter<TaskStatus>();
-  @Output() open = new EventEmitter<BoardTask>();
-
-   protected openDetails(): void {
-    this.open.emit(this.task);
-  }
 
   protected readonly maxAssigneeAvatars = 3;
-  protected readonly moveTargets: TaskStatus[] = ['todo', 'in_progress', 'awaiting_feedback', 'done'];
+  protected readonly moveTargets: TaskStatus[] = [
+    'todo',
+    'in_progress',
+    'awaiting_feedback',
+    'done',
+  ];
+
+  dialog = inject(Dialog);
+  tasksService = inject(TasksService);
+
+  taskDetails!: TaskDetails;
+
+  async ngOnInit(): Promise<void> {
+    // for task Edit we need task in modal TaskDetails
+    await this.getTaskDetails();
+  }
+
+  protected async getTaskDetails() {
+    this.taskDetails = await this.tasksService.getTaskById(this.task.id);
+  }
+
+  protected openDetailDialog(): void {
+    const dialogRef = this.dialog.open<TaskDetailsModal>(TaskDetailsModal, {
+      hasBackdrop: true,
+      backdropClass: 'contact-dialog-backdrop',
+      data: { taskDetails: this.taskDetails, asignedContacts: this.task.assignees },
+    });
+  }
 
   protected completedSubtasks(): number {
     return this.task.subtasks.filter((subtask) => subtask.completed).length;
