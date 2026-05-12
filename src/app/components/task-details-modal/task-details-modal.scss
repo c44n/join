@@ -129,36 +129,63 @@
 .assigned-section {
   color: #42526e;
   margin-bottom: 24px;
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-  .assigned-person {
+  .option-title {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding-bottom: 4px;
+    z-index: 1;
+  }
+}
+
+.assigned-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 15px 0 15px 0;
+  padding-left: 15px;
+
+  .circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #fff;
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 15px 0 15px 0;
-    padding-left: 15px;
-
-    .circle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    justify-content: center;
+    flex-shrink: 0;
   }
 }
 
 .subtasks-section {
   color: #42526e;
   margin-bottom: 24px;
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-  .option-title{
+  .option-title {
     font-size: 20px;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding-bottom: 4px;
+    z-index: 1;
   }
 
   .subtask-item {
-
     font-size: 16px;
     display: flex;
     align-items: center;
@@ -167,6 +194,7 @@
 
     input {
       cursor: pointer;
+      flex-shrink: 0;
     }
   }
 }
