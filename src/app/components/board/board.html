@@ -13,7 +13,7 @@
             </button>
         </div>
 
-        <a class="add-btn" aria-label="Add task" (click)="openAddTaskDialog('todo')">
+        <a class="add-btn" aria-label="Add task">
             <span class="add-label">Add task</span>
             <span class="plus">+</span>
         </a>
@@ -34,7 +34,7 @@
             <div class="column_tasks_card_wrapper">
                 @for (task of todoTasks(); track task.id) {
                 <app-task [cdkDragDisabled]="isMobile$ | async" cdkDrag [cdkDragData]="task" [task]="task" [isMoving]="isMovingTask(task.id)"
-                    (open)="openTaskDetails($event)" (statusChange)="moveTask(task.id, $event)">
+                     (statusChange)="moveTask(task.id, $event)">
                 </app-task>
                 } @empty {
                 <p class="empty-column">No tasks to do.</p>
@@ -56,7 +56,7 @@
             <div class="column_tasks_card_wrapper">
                 @for (task of inProgressTasks(); track task.id) {
                 <app-task [cdkDragDisabled]="isMobile$ | async" cdkDrag [cdkDragData]="task" [task]="task" [isMoving]="isMovingTask(task.id)"
-                    (open)="openTaskDetails($event)" (statusChange)="moveTask(task.id, $event)">
+                     (statusChange)="moveTask(task.id, $event)">
                 </app-task>
                 } @empty {
                 <p class="empty-column">No tasks in progress.</p>
@@ -78,7 +78,7 @@
             <div class="column_tasks_card_wrapper">
                 @for (task of awaitingFeedbackTasks(); track task.id) {
                 <app-task [cdkDragDisabled]="isMobile$ | async" cdkDrag [cdkDragData]="task" [task]="task" [isMoving]="isMovingTask(task.id)"
-                    (open)="openTaskDetails($event)" (statusChange)="moveTask(task.id, $event)">
+                     (statusChange)="moveTask(task.id, $event)">
                 </app-task>
                 } @empty {
                 <p class="empty-column">No tasks awaiting feedback.</p>
@@ -95,7 +95,7 @@
             <div class="column_tasks_card_wrapper">
                 @for (task of doneTasks(); track task.id) {
                 <app-task [cdkDragDisabled]="isMobile$ | async" cdkDrag [task]="task" [cdkDragData]="task" [isMoving]="isMovingTask(task.id)"
-                    (open)="openTaskDetails($event)" (statusChange)="moveTask(task.id, $event)">
+                     (statusChange)="moveTask(task.id, $event)">
                 </app-task>
                 } @empty {
                 <p class="empty-column">No completed tasks.</p>
