@@ -1,12 +1,11 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { TaskCategory, TaskDetails, TaskPriority, TaskStatus } from '../../models/task';
+import { TaskDetails, TaskPriority } from '../../models/task';
 import { TitleCasePipe, DatePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TasksService } from '../../services/tasks';
 import { Contact } from '../../models/contact';
 import { ContactsService } from '../../services/contacts';
-import { Task } from '../task/task';
 import { Subtask } from '../../models/subtask';
 import { SubtasksService } from '../../services/subtasks';
 
@@ -34,7 +33,28 @@ export class TaskDetailsModal implements OnInit {
 	contactList: boolean = false;
 
 	subtasks = signal<Subtask[]>([]);
+
 	newSubtask = new FormControl('');
+	editSubtask = new FormControl<string | null>(null);
+
+	editSubtaskSignal = signal<string>('');
+
+	async updateSubtask(taskId: string, subtaskId: string) {
+		if (this.editSubtask.value) {
+			await this.subtasksService.updateSubtask(subtaskId, this.editSubtask.value);
+			const subtasks: Subtask[] = await this.subtasksService.getSubtasks(taskId);
+			this.subtasks.set(subtasks);
+
+			this.editSubtask.setValue(null);
+			this.editSubtaskSignal.set('');
+		}
+
+	}
+
+	editeSubtask(subtaskId: string, title: string) {
+		this.editSubtaskSignal.set(subtaskId);
+		this.editSubtask.setValue(title);
+	}
 
 	async deleteSubtask(taskId: string, subtaskId: string) {
 		await this.subtasksService.deleteSubtask(subtaskId);

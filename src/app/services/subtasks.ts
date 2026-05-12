@@ -59,11 +59,31 @@ export class SubtasksService {
 		return (data ?? []) as Subtask[];
 	}
 
+	async updateSubtask(subtaskId: string, title: string) {
+
+		const { error } = await this.supabaseService.supabase
+			.from('subtasks')
+			.update({ title: title })
+			.eq('id', subtaskId)
+			.select()
+
+		if (error) {
+			console.error('Error fetching subtasks:', error);
+			throw new Error(error.message || 'Unknown Supabase error');
+		}
+
+	}
+
 	async deleteSubtask(subtaskId: string): Promise<void> {
 		const { error } = await this.supabaseService.supabase
 			.from('subtasks')
 			.delete()
 			.eq('id', subtaskId);
+
+		if (error) {
+			console.error('Error fetching subtasks:', error);
+			throw new Error(error.message || 'Unknown Supabase error');
+		}
 	}
 
 	private async deleteSubtasks(taskId: string): Promise<void> {

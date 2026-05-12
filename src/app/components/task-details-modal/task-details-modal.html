@@ -197,15 +197,6 @@
         </div>
       </div>
 
-      <div class="category">
-        <h3>Category</h3>
-        <!-- <select name="category" id="category">
-          <option value="user_story">User Story</option>
-          <option value="technical_task">Technical Task</option>
-        </select> -->
-        {{ task.category }}
-      </div>
-
       <div class="subtask">
         <h3>Subtasks</h3>
         <div class="input-content">
@@ -229,12 +220,44 @@
 
         <ul>
           @for (subtask of subtasks(); track subtask.id) {
-            <div class="item">
-              <li>• {{ subtask.title }}</li>
+            <div [class]="editSubtaskSignal() == subtask.id ? 'item item--active' : 'item'">
+              <li [class.d-none]="editSubtaskSignal() == subtask.id">• {{ subtask.title }}</li>
+              <input
+                type="text"
+                [formControl]="editSubtask"
+                [class.d-none]="editSubtaskSignal() !== subtask.id && editSubtask != null"
+              />
               <div class="item__options">
-                <button class="edit">
-                  <img src="assets/icons/edit.png" alt="edit" />
-                  <img src="assets/icons/edit-hover.png" alt="edit" class="edit__hover" />
+                <button
+                  [class]="editSubtaskSignal() == subtask.id ? 'save' : 'd-none'"
+                  (click)="updateSubtask(task.id, subtask.id)"
+                >
+                  <img
+                    src="assets/icons/check.png"
+                    alt="save"
+                    [class]="editSubtaskSignal() == subtask.id ? '' : 'd-none'"
+                  />
+                  <img
+                    src="assets/icons/check-blue.png"
+                    alt="edit"
+                    [class]="editSubtaskSignal() == subtask.id ? 'save__hover' : 'd-none'"
+                  />
+                </button>
+
+                <button
+                  [class]="editSubtaskSignal() == subtask.id ? 'd-none' : 'edit'"
+                  (click)="editeSubtask(subtask.id, subtask.title)"
+                >
+                  <img
+                    src="assets/icons/edit.png"
+                    alt="edit"
+                    [class]="editSubtaskSignal() == subtask.id ? 'd-none' : ''"
+                  />
+                  <img
+                    src="assets/icons/edit-hover.png"
+                    alt="edit"
+                    [class]="editSubtaskSignal() == subtask.id ? 'd-none' : 'edit__hover'"
+                  />
                 </button>
                 <button class="delete" (click)="deleteSubtask(subtask.task_id, subtask.id)">
                   <img src="assets/icons/delete.png" alt="delete" />

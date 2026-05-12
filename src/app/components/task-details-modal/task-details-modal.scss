@@ -216,6 +216,7 @@
       border: 1px solid all.$color-dark-gray;
       border-radius: 6px;
       padding: 8px 12px;
+
       &:focus {
         outline: 1px solid all.$color-dark-blue;
       }
@@ -242,6 +243,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+
     div {
       display: flex;
       justify-content: space-around;
@@ -290,9 +292,11 @@
         &--urgent {
           background-color: all.$color-red;
         }
+
         &--medium {
           background-color: all.$color-orange;
         }
+
         &--low {
           background-color: all.$color-green;
         }
@@ -326,11 +330,13 @@
         align-items: center;
         padding: 0 12px;
         cursor: pointer;
+
         &__profile-name {
           display: flex;
           align-items: center;
           gap: 12px;
           margin: 4px 6px;
+
           .profile {
             display: flex;
             justify-content: center;
@@ -342,9 +348,11 @@
             border: 2px solid all.$color-white;
           }
         }
+
         .checkbox {
           height: 24px;
           width: 24px;
+
           &--cheched {
             display: none;
           }
@@ -363,6 +371,7 @@
 
     .assigned-contacts {
       display: flex;
+
       span {
         display: flex;
         justify-content: center;
@@ -433,6 +442,12 @@
         border-radius: 6px;
         height: 26px;
 
+        input {
+          width: 60%;
+          outline: none;
+          border: none;
+        }
+
         &__options {
           display: none;
           align-items: center;
@@ -441,6 +456,24 @@
           button {
             display: flex;
             align-items: center;
+          }
+
+          .save {
+            left: 8px;
+
+            &__hover {
+              display: none;
+            }
+
+            &:hover {
+              img {
+                display: none;
+              }
+
+              .save__hover {
+                display: flex;
+              }
+            }
           }
 
           .edit {
@@ -474,13 +507,22 @@
               }
             }
           }
+
+          // &--active {
+          //   display: flex;
+          // }
         }
+
         &:hover {
           background: all.$color-gray;
 
           .item__options {
             display: flex;
           }
+        }
+
+        &--active {
+          border: 1px solid all.$color-dark-blue;
         }
       }
     }
