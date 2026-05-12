@@ -8,6 +8,7 @@ import { Contact } from '../../models/contact';
 import { ContactsService } from '../../services/contacts';
 import { Task } from '../task/task';
 import { Subtask } from '../../models/subtask';
+import { SubtasksService } from '../../services/subtasks';
 
 @Component({
   selector: 'app-task-details-modal',
@@ -19,6 +20,7 @@ import { Subtask } from '../../models/subtask';
 export class TaskDetailsModal implements OnInit {
   tasksService = inject(TasksService);
   contactsService = inject(ContactsService);
+  subtasksService = inject(SubtasksService);
 
   private dialogRef = inject(DialogRef);
 
@@ -34,9 +36,11 @@ export class TaskDetailsModal implements OnInit {
   subtasks = signal<Subtask[]>([]);
   newSubtask = new FormControl('');
 
-  saveNewSubtask() {
-    //   this.subtasks.set()
-    console.log('from saveNewSubtask()');
+  async saveNewSubtask(title:string) { 
+    const newSubtask: Subtask[] = await this.subtasksService.insertSubtask(this.task.id, title);
+
+    this.subtasks.update((subtasks) => newSubtask.concat(subtasks));
+    this.newSubtask.setValue('');
   }
 
   async ngOnInit(): Promise<void> {
