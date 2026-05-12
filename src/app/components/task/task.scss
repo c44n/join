@@ -50,11 +50,15 @@
   }
 
   &__menu-button {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     width: 28px;
     height: 28px;
+
+    @include all.mobile {
+      display: flex;
+    }
 
     &:disabled {
       cursor: default;
