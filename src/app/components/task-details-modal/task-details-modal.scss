@@ -36,7 +36,7 @@
   .category-badge {
     background-color: #0038ff;
     color: #fff;
-    font-size: 16px;
+    font-size: 20px;
     padding: 4px 12px;
     border-radius: 8px;
   }
@@ -90,7 +90,7 @@
 }
 
 .modal-title {
-  font-size: 28px;
+  font-size: 30px;
   font-family: 'Inter-bold';
   color: black;
   margin: 16px 0 8px;
@@ -107,6 +107,7 @@
   flex-direction: column;
   gap: 25px;
   margin-bottom: 24px;
+  font-size: 20px;
 
   .option-row {
     display: flex;
@@ -143,6 +144,7 @@
     background: #fff;
     padding-bottom: 4px;
     z-index: 1;
+    font-size: 20px;
   }
 }
 
