@@ -106,3 +106,13 @@ button {
   transition: 0.125s;
   cursor: pointer;
 }
+
+.cdk-drag-preview {
+  box-shadow: none;
+}
+
+.cdk-drag-preview .task-card {
+  transform: rotate(3deg);
+  transform-origin: center center;
+  box-shadow: 0 18px 38px rgba(42, 54, 71, 0.22);
+}
