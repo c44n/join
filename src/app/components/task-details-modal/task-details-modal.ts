@@ -1,132 +1,157 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { TaskCategory, TaskDetails, TaskPriority, TaskStatus } from '../../models/task';
+import { TaskDetails, TaskPriority } from '../../models/task';
 import { TitleCasePipe, DatePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TasksService } from '../../services/tasks';
 import { Contact } from '../../models/contact';
 import { ContactsService } from '../../services/contacts';
-import { Task } from '../task/task';
 import { Subtask } from '../../models/subtask';
 import { SubtasksService } from '../../services/subtasks';
 
 @Component({
-  selector: 'app-task-details-modal',
-  standalone: true,
-  imports: [TitleCasePipe, DatePipe, ReactiveFormsModule],
-  templateUrl: './task-details-modal.html',
-  styleUrl: './task-details-modal.scss',
+	selector: 'app-task-details-modal',
+	standalone: true,
+	imports: [TitleCasePipe, DatePipe, ReactiveFormsModule],
+	templateUrl: './task-details-modal.html',
+	styleUrl: './task-details-modal.scss',
 })
 export class TaskDetailsModal implements OnInit {
-  tasksService = inject(TasksService);
-  contactsService = inject(ContactsService);
-  subtasksService = inject(SubtasksService);
+	tasksService = inject(TasksService);
+	contactsService = inject(ContactsService);
+	subtasksService = inject(SubtasksService);
 
-  private dialogRef = inject(DialogRef);
+	private dialogRef = inject(DialogRef);
 
-  data = inject<{ taskDetails: TaskDetails; asignedContacts: Contact[] }>(DIALOG_DATA);
-  task: TaskDetails = this.data.taskDetails;
+	data = inject<{ taskDetails: TaskDetails; asignedContacts: Contact[] }>(DIALOG_DATA);
+	task: TaskDetails = this.data.taskDetails;
 
-  openEdit = signal(false);
-  assignedContacts = signal<Contact[] | []>(this.data.asignedContacts);
-  contacts = signal<Contact[] | []>([]);
+	openEdit = signal(false);
+	assignedContacts = signal<Contact[] | []>(this.data.asignedContacts);
+	contacts = signal<Contact[] | []>([]);
 
-  contactList: boolean = false;
+	contactList: boolean = false;
 
-  subtasks = signal<Subtask[]>([]);
-  newSubtask = new FormControl('');
+	subtasks = signal<Subtask[]>([]);
 
-  async saveNewSubtask(title:string) { 
-    const newSubtask: Subtask[] = await this.subtasksService.insertSubtask(this.task.id, title);
+	newSubtask = new FormControl('');
+	editSubtask = new FormControl<string | null>(null);
 
-    this.subtasks.update((subtasks) => newSubtask.concat(subtasks));
-    this.newSubtask.setValue('');
-  }
+	editSubtaskSignal = signal<string>('');
 
-  async ngOnInit(): Promise<void> {
-    this.contacts.set(await this.getContacts());
-    this.subtasks.set(this.task.subtasks);
+	async updateSubtask(taskId: string, subtaskId: string) {
+		if (this.editSubtask.value) {
+			await this.subtasksService.updateSubtask(subtaskId, this.editSubtask.value);
+			const subtasks: Subtask[] = await this.subtasksService.getSubtasks(taskId);
+			this.subtasks.set(subtasks);
 
-    console.log(this.subtasks());
-  }
+			this.editSubtask.setValue(null);
+			this.editSubtaskSignal.set('');
+		}
 
-  private getContacts(): Promise<Contact[] | []> {
-    return this.contactsService.getContacts();
-  }
+	}
 
-  isContactSelected(contact_id: string) {
-    return this.assignedContacts().find((contact) => contact.id == contact_id);
-  }
+	editeSubtask(subtaskId: string, title: string) {
+		this.editSubtaskSignal.set(subtaskId);
+		this.editSubtask.setValue(title);
+	}
 
-  toggleContactAssignee(contact: Contact) {
-    this.assignedContacts.update((contacts) =>
-      this.assignedContacts().find((cont) => cont.id == contact.id)
-        ? contacts.filter(({ id }) => id !== contact.id)
-        : [...contacts, contact],
-    );
-  }
+	async deleteSubtask(taskId: string, subtaskId: string) {
+		await this.subtasksService.deleteSubtask(subtaskId);
 
-  editForm = new FormGroup({
-    title: new FormControl(this.task.title, { validators: [Validators.required] }),
-    description: new FormControl(this.task.description),
-    due_date: new FormControl(this.task.due_date),
-  });
+		const subtasks: Subtask[] = await this.subtasksService.getSubtasks(taskId);
+		this.subtasks.set(subtasks);
+	}
 
-  toggleContactList() {
-    if (this.contactList) this.contactList = false;
-    else this.contactList = true;
-  }
+	async saveNewSubtask(title: string) {
+		const newSubtask: Subtask[] = await this.subtasksService.insertSubtask(this.task.id, title);
 
-  changePriority(priority: TaskPriority) {
-    this.task.priority = priority;
-  }
+		this.subtasks.update((subtasks) => newSubtask.concat(subtasks));
+		this.newSubtask.setValue('');
+	}
 
-  todayIso(): string {
-    return new Date().toISOString().split('T')[0];
-  }
+	async ngOnInit(): Promise<void> {
+		this.contacts.set(await this.getContacts());
+		this.subtasks.set(this.task.subtasks);
+	}
 
-  protected async updateTask() {
-    let title: string | undefined;
-    let description: string | undefined;
-    let dueDate: string | undefined;
+	private getContacts(): Promise<Contact[] | []> {
+		return this.contactsService.getContacts();
+	}
 
-    if (this.editForm.value.title) title = this.editForm.value.title;
-    if (this.editForm.value.description) description = this.editForm.value.description;
-    if (this.editForm.value.due_date) dueDate = this.editForm.value.due_date;
+	isContactSelected(contact_id: string) {
+		return this.assignedContacts().find((contact) => contact.id == contact_id);
+	}
 
-    this.task = await this.tasksService.updateTask(this.task.id, {
-      title,
-      description,
-      dueDate,
-      priority: this.task.priority,
-      category: this.task.category,
-      status: this.task.status,
-      assigneeIds: this.getAssignedIds(),
-      subtasks: this.task.subtasks,
-    });
+	toggleContactAssignee(contact: Contact) {
+		this.assignedContacts.update((contacts) =>
+			this.assignedContacts().find((cont) => cont.id == contact.id)
+				? contacts.filter(({ id }) => id !== contact.id)
+				: [...contacts, contact],
+		);
+	}
 
-    this.openEdit.set(false);
-  }
+	editForm = new FormGroup({
+		title: new FormControl(this.task.title, { validators: [Validators.required] }),
+		description: new FormControl(this.task.description),
+		due_date: new FormControl(this.task.due_date),
+	});
 
-  getAssignedIds() {
-    return this.assignedContacts().map((contact) => contact.id);
-  }
+	toggleContactList() {
+		if (this.contactList) this.contactList = false;
+		else this.contactList = true;
+	}
 
-  closeModal() {
-    this.dialogRef.close();
-  }
+	changePriority(priority: TaskPriority) {
+		this.task.priority = priority;
+	}
 
-  deleteTask() {
-    this.dialogRef.close('deleted');
-  }
+	todayIso(): string {
+		return new Date().toISOString().split('T')[0];
+	}
 
-  editTask() {
-    this.openEdit.set(true);
-  }
+	protected async updateTask() {
+		let title: string | undefined;
+		let description: string | undefined;
+		let dueDate: string | undefined;
 
-  priorityIcon(): string {
-    if (this.task.priority === 'urgent') return 'assets/icons/priority-urgent.png';
-    if (this.task.priority === 'low') return 'assets/icons/priority-low.png';
-    return 'assets/icons/priority-medium.png';
-  }
+		if (this.editForm.value.title) title = this.editForm.value.title;
+		if (this.editForm.value.description) description = this.editForm.value.description;
+		if (this.editForm.value.due_date) dueDate = this.editForm.value.due_date;
+
+		this.task = await this.tasksService.updateTask(this.task.id, {
+			title,
+			description,
+			dueDate,
+			priority: this.task.priority,
+			category: this.task.category,
+			status: this.task.status,
+			assigneeIds: this.getAssignedIds(),
+			subtasks: this.task.subtasks,
+		});
+
+		this.openEdit.set(false);
+	}
+
+	getAssignedIds() {
+		return this.assignedContacts().map((contact) => contact.id);
+	}
+
+	closeModal() {
+		this.dialogRef.close();
+	}
+
+	deleteTask() {
+		this.dialogRef.close('deleted');
+	}
+
+	editTask() {
+		this.openEdit.set(true);
+	}
+
+	priorityIcon(): string {
+		if (this.task.priority === 'urgent') return 'assets/icons/priority-urgent.png';
+		if (this.task.priority === 'low') return 'assets/icons/priority-low.png';
+		return 'assets/icons/priority-medium.png';
+	}
 }
