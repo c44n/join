@@ -40,7 +40,7 @@
 
       <div class="subtasks-section">
         <p class="option-title">Subtasks</p>
-        @for (sub of task.subtasks; track sub.title) {
+        @for (sub of task.subtasks; track sub.id) {
           <div class="subtask-item">
             <input type="checkbox" [checked]="sub.completed" />
             <span>{{ sub.title }}</span>
@@ -214,7 +214,7 @@
           @if (newSubtask.value && newSubtask.value.length > 1) {
             <div class="options">
               <button><img src="assets/icons/close.png" alt="close" (click)="newSubtask.setValue('')" /></button>
-              <button><img src="assets/icons/check.png" alt="check" (click)="saveNewSubtask()"/></button>
+              <button><img src="assets/icons/check.png" alt="check" (click)="saveNewSubtask(newSubtask.value)"/></button>
             </div>
           }
         </div>
