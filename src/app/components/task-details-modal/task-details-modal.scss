@@ -171,6 +171,7 @@
 
 .article-edit {
   padding: 36px 24px;
+  font-size: 16px;
 
   form {
     display: flex;
@@ -414,17 +415,73 @@
           }
         }
       }
-
-      
     }
 
     ul {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-left: 20px;
-      li {
-        list-style-type: disc;
+      gap: 1px;
+      margin-left: 12px;
+      margin-top: 12px;
+
+      .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 18px 16px 12px;
+        margin: 3px 12px 3px 0px;
+        border-radius: 6px;
+        height: 26px;
+
+        &__options {
+          display: none;
+          align-items: center;
+          gap: 6px;
+
+          button {
+            display: flex;
+            align-items: center;
+          }
+
+          .edit {
+            &__hover {
+              display: none;
+            }
+
+            &:hover {
+              img {
+                display: none;
+              }
+
+              .edit__hover {
+                display: flex;
+              }
+            }
+          }
+
+          .delete {
+            &__hover {
+              display: none;
+            }
+
+            &:hover {
+              img {
+                display: none;
+              }
+
+              .delete__hover {
+                display: flex;
+              }
+            }
+          }
+        }
+        &:hover {
+          background: all.$color-gray;
+
+          .item__options {
+            display: flex;
+          }
+        }
       }
     }
   }

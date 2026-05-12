@@ -213,15 +213,35 @@
 
           @if (newSubtask.value && newSubtask.value.length > 1) {
             <div class="options">
-              <button><img src="assets/icons/close.png" alt="close" (click)="newSubtask.setValue('')" /></button>
-              <button><img src="assets/icons/check.png" alt="check" (click)="saveNewSubtask(newSubtask.value)"/></button>
+              <button>
+                <img src="assets/icons/close.png" alt="close" (click)="newSubtask.setValue('')" />
+              </button>
+              <button>
+                <img
+                  src="assets/icons/check.png"
+                  alt="check"
+                  (click)="saveNewSubtask(newSubtask.value)"
+                />
+              </button>
             </div>
           }
         </div>
 
         <ul>
           @for (subtask of subtasks(); track subtask.id) {
-          <li>{{ subtask.title }}</li>
+            <div class="item">
+              <li>• {{ subtask.title }}</li>
+              <div class="item__options">
+                <button class="edit">
+                  <img src="assets/icons/edit.png" alt="edit" />
+                  <img src="assets/icons/edit-hover.png" alt="edit" class="edit__hover" />
+                </button>
+                <button class="delete" (click)="deleteSubtask(subtask.task_id, subtask.id)">
+                  <img src="assets/icons/delete.png" alt="delete" />
+                  <img src="assets/icons/delete-hover.png" alt="delete" class="delete__hover" />
+                </button>
+              </div>
+            </div>
           }
         </ul>
       </div>
