@@ -63,9 +63,9 @@
 }
 
 @if (this.openEdit()) {
-  <article class="article-edit">
+  <article class="article-edit scroll-frame-1">
+    <button class="btn-close" (click)="closeModal()">X</button>
     <form [formGroup]="editForm">
-      <button class="btn-close" (click)="closeModal()">X</button>
       <label for="title">
         <span>Title</span>
         <input type="text" id="title" name="title" formControlName="title" />
@@ -82,7 +82,7 @@
       </label>
 
       <div class="priority">
-        <h3>Priority {{ task.priority }}</h3>
+        <h3>Priority</h3>
         <div>
           <button
             [class]="
@@ -159,7 +159,7 @@
           />
         </button>
 
-        <div [class]="contactList ? 'contact-list' : 'd-none'">
+        <div [class]="contactList ? 'contact-list scroll-frame' : 'd-none'">
           @for (contact of contacts(); track contact) {
             <div
               [class]="isContactSelected(contact.id) ? 'contact contact--selected' : 'contact'"
@@ -222,7 +222,7 @@
           }
         </div>
 
-        <ul>
+        <ul class="scroll-frame">
           @for (subtask of subtasks(); track subtask.id) {
             <div [class]="editSubtaskSignal() == subtask.id ? 'item item--active' : 'item'">
               <li [class.d-none]="editSubtaskSignal() == subtask.id">• {{ subtask.title }}</li>
