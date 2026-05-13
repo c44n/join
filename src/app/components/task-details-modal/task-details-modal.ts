@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, computed } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { TaskDetails, TaskPriority } from '../../models/task';
 import { TitleCasePipe, DatePipe } from '@angular/common';
@@ -26,8 +26,10 @@ export class TaskDetailsModal implements OnInit {
 	data = inject<{ taskDetails: TaskDetails; asignedContacts: Contact[] }>(DIALOG_DATA);
 	task: TaskDetails = this.data.taskDetails;
 
+	maxVisibleAssignedContacts: number = 3;
 	openEdit = signal(false);
 	assignedContacts = signal<Contact[] | []>(this.data.asignedContacts);
+	visibleContacts = computed<Contact[]>(() => this.assignedContacts().slice(0,this.maxVisibleAssignedContacts));
 	contacts = signal<Contact[] | []>([]);
 
 	contactList: boolean = false;

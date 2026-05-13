@@ -7,7 +7,7 @@
       <button class="close-btn" (click)="closeModal()">✕</button>
     </div>
 
-    <div class="modal-scroll">
+    <div class="modal-scroll scroll-frame-1">
       <h1 class="modal-title">{{ task.title }}</h1>
       <p class="modal-description">{{ task.description }}</p>
 
@@ -28,6 +28,7 @@
 
       <div class="assigned-section">
         <p class="option-title">Assigned To:</p>
+		<div class="assigned-content scroll-frame">
         @for (contact of assignedContacts(); track contact) {
           <div class="assigned-person">
             <span class="circle" [style.background]="contact.color">
@@ -36,16 +37,19 @@
             <span>{{ contact.first_name }} {{ contact.last_name }}</span>
           </div>
         }
+		</div>
       </div>
 
       <div class="subtasks-section">
         <p class="option-title">Subtasks</p>
+		<div class="subtask-content scroll-frame">
         @for (sub of task.subtasks; track sub.id) {
           <div class="subtask-item">
             <input type="checkbox" [checked]="sub.completed" />
             <span>{{ sub.title }}</span>
           </div>
         }
+		</div>
       </div>
     </div>
 
@@ -63,9 +67,9 @@
 }
 
 @if (this.openEdit()) {
-  <article class="article-edit">
+  <article class="article-edit scroll-frame-1">
+    <button class="btn-close" (click)="closeModal()">X</button>
     <form [formGroup]="editForm">
-      <button class="btn-close" (click)="closeModal()">X</button>
       <label for="title">
         <span>Title</span>
         <input type="text" id="title" name="title" formControlName="title" />
@@ -82,7 +86,7 @@
       </label>
 
       <div class="priority">
-        <h3>Priority {{ task.priority }}</h3>
+        <h3>Priority</h3>
         <div>
           <button
             [class]="
@@ -159,7 +163,7 @@
           />
         </button>
 
-        <div [class]="contactList ? 'contact-list' : 'd-none'">
+        <div [class]="contactList ? 'contact-list scroll-frame' : 'd-none'">
           @for (contact of contacts(); track contact) {
             <div
               [class]="isContactSelected(contact.id) ? 'contact contact--selected' : 'contact'"
@@ -189,10 +193,14 @@
         </div>
 
         <div class="assigned-contacts">
-          @for (contact of assignedContacts(); track contact.id) {
+          @for (contact of visibleContacts(); track contact.id) {
             <span [style.background]="contact.color">
               {{ contact.first_name.charAt(0) + contact.last_name.charAt(0) }}
             </span>
+          }
+
+          @if (assignedContacts().length > maxVisibleAssignedContacts) {
+            <span>+{{ assignedContacts().length - maxVisibleAssignedContacts }}</span>
           }
         </div>
       </div>
@@ -218,7 +226,7 @@
           }
         </div>
 
-        <ul>
+        <ul class="scroll-frame">
           @for (subtask of subtasks(); track subtask.id) {
             <div [class]="editSubtaskSignal() == subtask.id ? 'item item--active' : 'item'">
               <li [class.d-none]="editSubtaskSignal() == subtask.id">• {{ subtask.title }}</li>
