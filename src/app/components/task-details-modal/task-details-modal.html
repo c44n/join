@@ -189,10 +189,14 @@
         </div>
 
         <div class="assigned-contacts">
-          @for (contact of assignedContacts(); track contact.id) {
+          @for (contact of visibleContacts(); track contact.id) {
             <span [style.background]="contact.color">
               {{ contact.first_name.charAt(0) + contact.last_name.charAt(0) }}
             </span>
+          }
+
+          @if (assignedContacts().length > maxVisibleAssignedContacts) {
+            <span>+{{ assignedContacts().length - maxVisibleAssignedContacts }}</span>
           }
         </div>
       </div>
