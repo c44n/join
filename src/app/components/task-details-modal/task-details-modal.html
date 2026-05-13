@@ -7,7 +7,7 @@
       <button class="close-btn" (click)="closeModal()">✕</button>
     </div>
 
-    <div class="modal-scroll">
+    <div class="modal-scroll scroll-frame-1">
       <h1 class="modal-title">{{ task.title }}</h1>
       <p class="modal-description">{{ task.description }}</p>
 
@@ -28,6 +28,7 @@
 
       <div class="assigned-section">
         <p class="option-title">Assigned To:</p>
+		<div class="assigned-content scroll-frame">
         @for (contact of assignedContacts(); track contact) {
           <div class="assigned-person">
             <span class="circle" [style.background]="contact.color">
@@ -36,16 +37,19 @@
             <span>{{ contact.first_name }} {{ contact.last_name }}</span>
           </div>
         }
+		</div>
       </div>
 
       <div class="subtasks-section">
         <p class="option-title">Subtasks</p>
+		<div class="subtask-content scroll-frame">
         @for (sub of task.subtasks; track sub.id) {
           <div class="subtask-item">
             <input type="checkbox" [checked]="sub.completed" />
             <span>{{ sub.title }}</span>
           </div>
         }
+		</div>
       </div>
     </div>
 
