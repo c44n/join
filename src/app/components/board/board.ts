@@ -6,20 +6,15 @@ import { TasksService } from '../../services/tasks';
 import { ToastService } from '../../services/toast';
 import { Task } from '../task/task';
 import { Dialog } from '@angular/cdk/dialog';
-import {
-    CdkDrag,
-    CdkDragDrop,
-    CdkDropList,
-    CdkDropListGroup,
-} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
 import { AddTaskDialog } from '../add-task-dialog/add-task-dialog';
 
 @Component({
     selector: 'app-board',
-    imports: [RouterLink, Task, CdkDropList, CdkDrag, CdkDropListGroup, AsyncPipe],
+    imports: [Task, CdkDropList, CdkDrag, CdkDropListGroup, AsyncPipe],
     templateUrl: './board.html',
     styleUrl: './board.scss',
 })
@@ -42,17 +37,23 @@ export class Board implements OnInit {
     );
     protected readonly doneTasks = computed(() => this.tasksByStatus('done'));
 
-    isMobile$ = this.breakpointObserver.observe(['(max-width: 1024px)']).pipe(map(result => result.matches));
+    isMobile$ = this.breakpointObserver
+        .observe(['(max-width: 1024px)'])
+        .pipe(map((result) => result.matches));
 
     async ngOnInit(): Promise<void> {
         await this.loadTasks();
+    }
+
+    async reloadTasks() {
+        this.loadTasks();
     }
 
     protected onSearch(term: string): void {
         this.searchTerm.set(term.trim().toLowerCase());
     }
 
-    protected openAddTaskDialog(columnType: string){
+    protected openAddTaskDialog(columnType: string) {
         if (window.matchMedia('(max-width: 768px)').matches) {
             void this.router.navigate(['/add-task']);
             return;
@@ -62,19 +63,18 @@ export class Board implements OnInit {
             hasBackdrop: true,
             backdropClass: 'contact-dialog-backdrop',
             data: {
-                status: columnType 
-            }
+                status: columnType,
+            },
         });
-        
+
         // closed-Event abonnieren
         ref.closed.subscribe((newTask: BoardTask | undefined) => {
-            if(newTask) {
+            if (newTask) {
                 // signal aktualisieren
-                this.tasks.update(currentTasks => [...currentTasks, newTask]);
+                this.tasks.update((currentTasks) => [...currentTasks, newTask]);
             }
         });
     }
-
 
     protected isMovingTask(taskId: string): boolean {
         return this.movingTaskIds().includes(taskId);

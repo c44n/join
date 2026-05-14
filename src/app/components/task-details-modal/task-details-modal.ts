@@ -8,6 +8,7 @@ import { Contact } from '../../models/contact';
 import { ContactsService } from '../../services/contacts';
 import { Subtask } from '../../models/subtask';
 import { SubtasksService } from '../../services/subtasks';
+import { ToastService } from '../../services/toast';
 
 @Component({
 	selector: 'app-task-details-modal',
@@ -20,6 +21,7 @@ export class TaskDetailsModal implements OnInit {
 	tasksService = inject(TasksService);
 	contactsService = inject(ContactsService);
 	subtasksService = inject(SubtasksService);
+	toastsService = inject(ToastService);
 
 	private dialogRef = inject(DialogRef);
 
@@ -29,7 +31,9 @@ export class TaskDetailsModal implements OnInit {
 	maxVisibleAssignedContacts: number = 3;
 	openEdit = signal(false);
 	assignedContacts = signal<Contact[] | []>(this.data.asignedContacts);
-	visibleContacts = computed<Contact[]>(() => this.assignedContacts().slice(0,this.maxVisibleAssignedContacts));
+	visibleContacts = computed<Contact[]>(() =>
+		this.assignedContacts().slice(0, this.maxVisibleAssignedContacts),
+	);
 	contacts = signal<Contact[] | []>([]);
 
 	contactList: boolean = false;
@@ -41,6 +45,26 @@ export class TaskDetailsModal implements OnInit {
 
 	editSubtaskSignal = signal<string>('');
 
+	markSubtaskCompleted(id: string, completed: boolean) {
+		if (completed) completed = false;
+		else completed = true;
+
+		this.subtasksService.updateSubtaskCompleted(id, completed);
+
+		this.subtasks.update((subtasks) => {
+			const subtask = subtasks.find((s) => s.id === id);
+			if (subtask) subtask.completed = completed;
+			return subtasks; // same array reference, mutated
+		});
+	}
+
+	isSubtaskCompleted(id: string) {
+		const subtask = this.subtasks().find((s) => s.id === id);
+
+		if (subtask?.completed) return true;
+		else return false;
+	}
+
 	async updateSubtask(taskId: string, subtaskId: string) {
 		if (this.editSubtask.value) {
 			await this.subtasksService.updateSubtask(subtaskId, this.editSubtask.value);
@@ -50,7 +74,6 @@ export class TaskDetailsModal implements OnInit {
 			this.editSubtask.setValue(null);
 			this.editSubtaskSignal.set('');
 		}
-
 	}
 
 	editeSubtask(subtaskId: string, title: string) {
@@ -143,8 +166,11 @@ export class TaskDetailsModal implements OnInit {
 		this.dialogRef.close();
 	}
 
-	deleteTask() {
-		this.dialogRef.close('deleted');
+	async deleteTask(taskId: string) {
+		await this.tasksService.deleteTask(taskId);
+
+		this.toastsService.show('Task successfully deleted', 2500);
+		this.dialogRef.close();
 	}
 
 	editTask() {
