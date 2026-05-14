@@ -28,33 +28,44 @@
 
       <div class="assigned-section">
         <p class="option-title">Assigned To:</p>
-		<div class="assigned-content scroll-frame">
-        @for (contact of assignedContacts(); track contact) {
-          <div class="assigned-person">
-            <span class="circle" [style.background]="contact.color">
-              {{ contact.first_name[0] }}{{ contact.last_name[0] }}
-            </span>
-            <span>{{ contact.first_name }} {{ contact.last_name }}</span>
-          </div>
-        }
-		</div>
+        <div class="assigned-content scroll-frame">
+          @for (contact of assignedContacts(); track contact) {
+            <div class="assigned-person">
+              <span class="circle" [style.background]="contact.color">
+                {{ contact.first_name[0] }}{{ contact.last_name[0] }}
+              </span>
+              <span>{{ contact.first_name }} {{ contact.last_name }}</span>
+            </div>
+          }
+        </div>
       </div>
 
       <div class="subtasks-section">
         <p class="option-title">Subtasks</p>
-		<div class="subtask-content scroll-frame">
-        @for (sub of task.subtasks; track sub.id) {
-          <div class="subtask-item">
-            <input type="checkbox" [checked]="sub.completed" />
-            <span>{{ sub.title }}</span>
-          </div>
-        }
-		</div>
+        <div class="subtask-content scroll-frame">
+          @for (sub of subtasks(); track sub.id) {
+            <div class="subtask-item">
+              <button (click)="markSubtaskCompleted(sub.id, sub.completed)">
+                <img
+                  src="assets/icons/check-button.png"
+                  alt="check"
+                  [class]="isSubtaskCompleted(sub.id) ? 'd-none' : ''"
+                />
+                <img
+                  src="assets/icons/check-button-checked-gray.png"
+                  alt="check-checked"
+                  [class]="isSubtaskCompleted(sub.id) ? '' : 'd-none'"
+                />
+              </button>
+              <span>{{ sub.title }}</span>
+            </div>
+          }
+        </div>
       </div>
     </div>
 
     <div class="modal-actions fixed-actions">
-      <button class="delete-btn" (click)="deleteTask()">
+      <button class="delete-btn" (click)="deleteTask(task.id)">
         <img src="assets/icons/delete.png" alt="delete" width="16" />
         Delete
       </button>

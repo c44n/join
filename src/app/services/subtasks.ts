@@ -3,98 +3,109 @@ import { NewSubtaskInput, Subtask } from '../models/subtask';
 import { SupabaseService } from './supabase';
 
 @Injectable({
-	providedIn: 'root',
+  providedIn: 'root',
 })
 export class SubtasksService {
-	constructor(private supabaseService: SupabaseService) { }
+  constructor(private supabaseService: SupabaseService) {}
 
-	async getSubtasks(taskId: string): Promise<Subtask[]> {
-		const query = this.supabaseService.supabase
-			.from('subtasks')
-			.select('*')
-			.eq('task_id', taskId)
-			.order('position', { ascending: true });
-		const { data, error } = await query;
+  async getSubtasks(taskId: string): Promise<Subtask[]> {
+    const query = this.supabaseService.supabase
+      .from('subtasks')
+      .select('*')
+      .eq('task_id', taskId)
+      .order('position', { ascending: true });
+    const { data, error } = await query;
 
-		if (error) {
-			console.error('Error fetching subtasks:', error);
-			throw new Error(error.message || 'Unknown Supabase error');
-		}
+    if (error) {
+      console.error('Error fetching subtasks:', error);
+      throw new Error(error.message || 'Unknown Supabase error');
+    }
 
-		return (data ?? []) as Subtask[];
-	}
+    return (data ?? []) as Subtask[];
+  }
 
-	async replaceSubtasks(taskId: string, subtasks: NewSubtaskInput[]): Promise<void> {
-		await this.deleteSubtasks(taskId);
+  async replaceSubtasks(taskId: string, subtasks: NewSubtaskInput[]): Promise<void> {
+    await this.deleteSubtasks(taskId);
 
-		if (!subtasks.length) {
-			return;
-		}
+    if (!subtasks.length) {
+      return;
+    }
 
-		const rows = subtasks.map((subtask, index) => ({
-			task_id: taskId,
-			title: subtask.title.trim(),
-			completed: subtask.completed ?? false,
-			position: subtask.position ?? index,
-		}));
-		const { error } = await this.supabaseService.supabase.from('subtasks').insert(rows);
+    const rows = subtasks.map((subtask, index) => ({
+      task_id: taskId,
+      title: subtask.title.trim(),
+      completed: subtask.completed ?? false,
+      position: subtask.position ?? index,
+    }));
+    const { error } = await this.supabaseService.supabase.from('subtasks').insert(rows);
 
-		if (error) {
-			console.error('Error saving subtasks:', error);
-			throw new Error(error.message || 'Unknown Supabase error');
-		}
-	}
+    if (error) {
+      console.error('Error saving subtasks:', error);
+      throw new Error(error.message || 'Unknown Supabase error');
+    }
+  }
 
-	async insertSubtask(taskId: string, title: string) {
-		const { data, error } = await this.supabaseService.supabase
-			.from('subtasks')
-			.insert([{ task_id: taskId, title: title }])
-			.select();
+  async insertSubtask(taskId: string, title: string) {
+    const { data, error } = await this.supabaseService.supabase
+      .from('subtasks')
+      .insert([{ task_id: taskId, title: title }])
+      .select();
 
-		if (error) {
-			console.error('Error fetching subtasks:', error);
-			throw new Error(error.message || 'Unknown Supabase error');
-		}
+    if (error) {
+      console.error('Error fetching subtasks:', error);
+      throw new Error(error.message || 'Unknown Supabase error');
+    }
 
-		return (data ?? []) as Subtask[];
-	}
+    return (data ?? []) as Subtask[];
+  }
 
-	async updateSubtask(subtaskId: string, title: string) {
+  async updateSubtask(subtaskId: string, title: string) {
+    const { error } = await this.supabaseService.supabase
+      .from('subtasks')
+      .update({ title: title })
+      .eq('id', subtaskId)
+      .select();
 
-		const { error } = await this.supabaseService.supabase
-			.from('subtasks')
-			.update({ title: title })
-			.eq('id', subtaskId)
-			.select()
+    if (error) {
+      console.error('Error fetching subtasks:', error);
+      throw new Error(error.message || 'Unknown Supabase error');
+    }
+  }
 
-		if (error) {
-			console.error('Error fetching subtasks:', error);
-			throw new Error(error.message || 'Unknown Supabase error');
-		}
+  async updateSubtaskCompleted(subtaskId: string, completed: boolean) {
+    const { error } = await this.supabaseService.supabase
+      .from('subtasks')
+      .update({ completed: completed })
+      .eq('id', subtaskId)
+      .select();
 
-	}
+    if (error) {
+      console.error('Error fetching subtasks:', error);
+      throw new Error(error.message || 'Unknown Supabase error');
+    }
+  }
 
-	async deleteSubtask(subtaskId: string): Promise<void> {
-		const { error } = await this.supabaseService.supabase
-			.from('subtasks')
-			.delete()
-			.eq('id', subtaskId);
+  async deleteSubtask(subtaskId: string): Promise<void> {
+    const { error } = await this.supabaseService.supabase
+      .from('subtasks')
+      .delete()
+      .eq('id', subtaskId);
 
-		if (error) {
-			console.error('Error fetching subtasks:', error);
-			throw new Error(error.message || 'Unknown Supabase error');
-		}
-	}
+    if (error) {
+      console.error('Error fetching subtasks:', error);
+      throw new Error(error.message || 'Unknown Supabase error');
+    }
+  }
 
-	private async deleteSubtasks(taskId: string): Promise<void> {
-		const { error } = await this.supabaseService.supabase
-			.from('subtasks')
-			.delete()
-			.eq('task_id', taskId);
+  private async deleteSubtasks(taskId: string): Promise<void> {
+    const { error } = await this.supabaseService.supabase
+      .from('subtasks')
+      .delete()
+      .eq('task_id', taskId);
 
-		if (error) {
-			console.error('Error deleting subtasks:', error);
-			throw new Error(error.message || 'Unknown Supabase error');
-		}
-	}
+    if (error) {
+      console.error('Error deleting subtasks:', error);
+      throw new Error(error.message || 'Unknown Supabase error');
+    }
+  }
 }

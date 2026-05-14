@@ -13,6 +13,7 @@
   overflow: hidden;
 
   @extend %slide-from-right;
+
   max-height: 860px;
   height: auto;
 
@@ -26,6 +27,10 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+:host.dialog-closing {
+	@extend %slide-to-right;
 }
 
 .fixed-header {
@@ -183,6 +188,10 @@
     input {
       cursor: pointer;
     }
+
+    .d-none {
+      display: none;
+    }
   }
 }
 
@@ -211,6 +220,7 @@
 
     position: fixed;
     top: 12px;
+    z-index: 1;
 
     &:hover {
       background: all.$color-gray;

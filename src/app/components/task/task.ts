@@ -1,5 +1,5 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, output } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BoardTask, TaskDetails, TaskStatus } from '../../models/task';
 import { Contact } from '../../models/contact';
@@ -17,6 +17,8 @@ export class Task {
   @Input({ required: true }) task!: BoardTask;
   @Input() isMoving = false;
   @Output() statusChange = new EventEmitter<TaskStatus>();
+
+  @Output() taskChange = new EventEmitter<string|null>();
 
   protected readonly maxAssigneeAvatars = 3;
   protected readonly moveTargets: TaskStatus[] = [
@@ -40,11 +42,16 @@ export class Task {
     this.taskDetails = await this.tasksService.getTaskById(this.task.id);
   }
 
-  protected openDetailDialog(): void {
+  protected openDetailDialog():void {
     const dialogRef = this.dialog.open<TaskDetailsModal>(TaskDetailsModal, {
       hasBackdrop: true,
       backdropClass: 'contact-dialog-backdrop',
       data: { taskDetails: this.taskDetails, asignedContacts: this.task.assignees },
+      disableClose: true,
+    });
+
+    dialogRef.closed.subscribe(() => {
+      this.taskChange.emit();
     });
   }
 
