@@ -24,8 +24,8 @@
 <ng-template #avatarMenu>
   <div class="dropdown-menu" cdkMenu>
     <button class="help-mobile" cdkMenuItem>Help</button>
-    <button cdkMenuItem>Legal Notice</button>
-    <button cdkMenuItem>Privacy Policy</button>
+    <button cdkMenuItem [routerLink]="'/legal-notice'">Legal Notice</button>
+    <button cdkMenuItem [routerLink]="'/privacy-policy'">Privacy Policy</button>
     <button cdkMenuItem>Log out</button>
   </div>
 </ng-template>
