@@ -1,0 +1,52 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+
+.legal-notice-container {
+  padding: 48px 64px;
+  overflow-y: auto;
+  background-color: #fff;
+  color: #000;
+  font-family: 'Inter', sans-serif;
+
+  h1 {
+    font-size: 48px;
+    margin-bottom: 32px;
+  }
+
+  h2, h3 {
+    margin-top: 32px;
+    margin-bottom: 8px;
+  }
+
+  ul {
+    margin-left: 20px;
+  }
+
+  p {
+    margin-bottom: 16px;
+  }
+
+  strong {
+    color: all.$color-light-blue;
+  }
+
+  .date {
+    margin-top: 24px;
+    font-style: italic;
+    color: #555;
+  }
+
+  // Scrollbar styling
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #2a3647;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+}

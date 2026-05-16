@@ -1,0 +1,26 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+.privacy-policy {
+  padding: 48px 64px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: white;
+  font-family: 'Inter', sans-serif;
+
+  h1 {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 24px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}

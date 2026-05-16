@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { ConnectedPosition } from '@angular/cdk/overlay';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [CdkMenuModule],
+  imports: [CdkMenuModule, RouterModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
