@@ -1,11 +1,13 @@
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component, Input, Output, EventEmitter, inject, output } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, output, input, signal } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BoardTask, TaskDetails, TaskStatus } from '../../models/task';
 import { Contact } from '../../models/contact';
 import { TasksService } from '../../services/tasks';
-import { Dialog } from '@angular/cdk/dialog';
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { TaskDetailsModal } from '../task-details-modal/task-details-modal';
+import { SubtasksService } from '../../services/subtasks';
+import { Subtask } from '../../models/subtask';
 
 @Component({
   selector: 'app-task',
@@ -18,7 +20,8 @@ export class Task {
   @Input() isMoving = false;
   @Output() statusChange = new EventEmitter<TaskStatus>();
 
-  @Output() taskChange = new EventEmitter<string|null>();
+  @Output() taskChange = new EventEmitter<string | null>();
+  @Output() subtaskChange = new EventEmitter<string | null>();
 
   protected readonly maxAssigneeAvatars = 3;
   protected readonly moveTargets: TaskStatus[] = [
@@ -30,33 +33,49 @@ export class Task {
 
   dialog = inject(Dialog);
   tasksService = inject(TasksService);
+  subtasksService = inject(SubtasksService);
 
   taskDetails!: TaskDetails;
+  subtasks = signal<Subtask[]>([]);
 
   async ngOnInit(): Promise<void> {
     // for task Edit we need task in modal TaskDetails
     await this.getTaskDetails();
+    this.subtasks.set(this.task.subtasks);
   }
 
   protected async getTaskDetails() {
     this.taskDetails = await this.tasksService.getTaskById(this.task.id);
   }
 
-  protected openDetailDialog():void {
-    const dialogRef = this.dialog.open<TaskDetailsModal>(TaskDetailsModal, {
+  protected openDetailDialog(): void {
+    const dialogRef = this.dialog.open(TaskDetailsModal, {
       hasBackdrop: true,
       backdropClass: 'contact-dialog-backdrop',
       data: { taskDetails: this.taskDetails, asignedContacts: this.task.assignees },
       disableClose: true,
     });
 
+    const dialogInstance = dialogRef.componentInstance;
+
+    if (dialogInstance?.subtaskChange) {
+      dialogInstance?.subtaskChange.subscribe(() => {
+        this.reloadSubtaks();
+      });
+    }
+
     dialogRef.closed.subscribe(() => {
       this.taskChange.emit();
     });
   }
 
+  async reloadSubtaks() {
+    const subtasks: Subtask[] = await this.subtasksService.getSubtasks(this.task.id);
+    this.subtasks.set(subtasks);
+  }
+
   protected completedSubtasks(): number {
-    return this.task.subtasks.filter((subtask) => subtask.completed).length;
+    return this.subtasks().filter((subtask) => subtask.completed).length;
   }
 
   protected extraAssigneeCount(): number {
@@ -92,15 +111,15 @@ export class Task {
   }
 
   protected progressValue(): number {
-    if (!this.task.subtasks.length) {
+    if (!this.subtasks().length) {
       return 0;
     }
 
-    return (this.completedSubtasks() / this.task.subtasks.length) * 100;
+    return (this.completedSubtasks() / this.subtasks().length) * 100;
   }
 
   protected showSubtaskProgress(): boolean {
-    return this.task.subtasks.length > 0;
+    return this.subtasks().length > 0;
   }
 
   protected moveTask(status: TaskStatus): void {

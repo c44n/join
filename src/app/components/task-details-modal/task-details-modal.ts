@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit, computed } from '@angular/core';
+import { Component, inject, signal, OnInit, computed, Output, EventEmitter } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { TaskDetails, TaskPriority } from '../../models/task';
 import { TitleCasePipe, DatePipe } from '@angular/common';
@@ -39,23 +39,26 @@ export class TaskDetailsModal implements OnInit {
 	contactList: boolean = false;
 
 	subtasks = signal<Subtask[]>([]);
+	@Output() subtaskChange = new EventEmitter<string | null>();
 
 	newSubtask = new FormControl('');
 	editSubtask = new FormControl<string | null>(null);
 
 	editSubtaskSignal = signal<string>('');
 
-	markSubtaskCompleted(id: string, completed: boolean) {
+	async markSubtaskCompleted(id: string, completed: boolean) {
 		if (completed) completed = false;
 		else completed = true;
-
-		this.subtasksService.updateSubtaskCompleted(id, completed);
 
 		this.subtasks.update((subtasks) => {
 			const subtask = subtasks.find((s) => s.id === id);
 			if (subtask) subtask.completed = completed;
-			return subtasks; // same array reference, mutated
+			return subtasks;
 		});
+
+		await this.subtasksService.updateSubtaskCompleted(id, completed);
+
+		this.subtaskChange.emit();
 	}
 
 	isSubtaskCompleted(id: string) {
