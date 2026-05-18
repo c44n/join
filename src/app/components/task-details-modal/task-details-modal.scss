@@ -62,6 +62,10 @@
     &:hover {
       color: black;
     }
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 
