@@ -16,14 +16,29 @@ import { ToastService } from '../../services/toast';
 	imports: [TitleCasePipe, DatePipe, ReactiveFormsModule],
 	templateUrl: './task-details-modal.html',
 	styleUrl: './task-details-modal.scss',
+	host: {
+		'[class.dialog-closing]': 'closing()',
+	},
 })
 export class TaskDetailsModal implements OnInit {
+	private static readonly CLOSE_ANIMATION_MS = 300;
 	tasksService = inject(TasksService);
 	contactsService = inject(ContactsService);
 	subtasksService = inject(SubtasksService);
 	toastsService = inject(ToastService);
 
 	private dialogRef = inject(DialogRef);
+	protected closing = signal(false);
+
+	protected closeModal() {
+		if (this.closing()) return;		
+
+		this.closing.set(true);
+
+		window.setTimeout(() => {
+			this.dialogRef?.close();
+		}, TaskDetailsModal.CLOSE_ANIMATION_MS);
+	}
 
 	data = inject<{ taskDetails: TaskDetails; asignedContacts: Contact[] }>(DIALOG_DATA);
 	task: TaskDetails = this.data.taskDetails;
@@ -163,10 +178,6 @@ export class TaskDetailsModal implements OnInit {
 
 	getAssignedIds() {
 		return this.assignedContacts().map((contact) => contact.id);
-	}
-
-	closeModal() {
-		this.dialogRef.close();
 	}
 
 	async deleteTask(taskId: string) {

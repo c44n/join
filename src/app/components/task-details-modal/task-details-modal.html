@@ -1,297 +1,226 @@
 @if (!this.openEdit()) {
-  <article>
-    <div class="modal-header fixed-header">
-      <span class="category-badge">
-        {{ task.category.replace('_', ' ') | titlecase }}
-      </span>
-      <button class="close-btn" (click)="closeModal()">✕</button>
-    </div>
+<article>
+	<div class="modal-header fixed-header">
+		<span class="category-badge">
+			{{ task.category.replace('_', ' ') | titlecase }}
+		</span>
+		<button class="close-btn" (click)="closeModal()">✕</button>
+	</div>
 
-    <div class="modal-scroll scroll-frame-1">
-      <h1 class="modal-title">{{ task.title }}</h1>
-      <p class="modal-description">{{ task.description }}</p>
+	<div class="modal-scroll scroll-frame-1">
+		<h1 class="modal-title">{{ task.title }}</h1>
+		<p class="modal-description">{{ task.description }}</p>
 
-      <div class="taskoptions">
-        <div class="option-row">
-          <span class="option-title">Due date:</span>
-          <span class="date">{{ task.due_date | date: 'dd/MM/yyyy' }}</span>
-        </div>
+		<div class="taskoptions">
+			<div class="option-row">
+				<span class="option-title">Due date:</span>
+				<span class="date">{{ task.due_date | date: 'dd/MM/yyyy' }}</span>
+			</div>
 
-        <div class="option-row">
-          <span class="option-title">Priority:</span>
-          <div class="priority-wrapper">
-            <span class="priority-text">{{ task.priority | titlecase }}</span>
-            <img [src]="priorityIcon()" alt="priority" width="20" />
-          </div>
-        </div>
-      </div>
+			<div class="option-row">
+				<span class="option-title">Priority:</span>
+				<div class="priority-wrapper">
+					<span class="priority-text">{{ task.priority | titlecase }}</span>
+					<img [src]="priorityIcon()" alt="priority" width="20" />
+				</div>
+			</div>
+		</div>
 
-      <div class="assigned-section">
-        <p class="option-title">Assigned To:</p>
-        <div class="assigned-content scroll-frame">
-          @for (contact of assignedContacts(); track contact) {
-            <div class="assigned-person">
-              <span class="circle" [style.background]="contact.color">
-                {{ contact.first_name[0] }}{{ contact.last_name[0] }}
-              </span>
-              <span>{{ contact.first_name }} {{ contact.last_name }}</span>
-            </div>
-          }
-        </div>
-      </div>
+		<div class="assigned-section">
+			<p class="option-title">Assigned To:</p>
+			<div class="assigned-content scroll-frame">
+				@for (contact of assignedContacts(); track contact) {
+				<div class="assigned-person">
+					<span class="circle" [style.background]="contact.color">
+						{{ contact.first_name[0] }}{{ contact.last_name[0] }}
+					</span>
+					<span>{{ contact.first_name }} {{ contact.last_name }}</span>
+				</div>
+				}
+			</div>
+		</div>
 
-      <div class="subtasks-section">
-        <p class="option-title">Subtasks</p>
-        <div class="subtask-content scroll-frame">
-          @for (sub of subtasks(); track sub.id) {
-            <div class="subtask-item">
-              <button (click)="markSubtaskCompleted(sub.id, sub.completed)">
-                <img
-                  src="assets/icons/check-button.png"
-                  alt="check"
-                  [class]="isSubtaskCompleted(sub.id) ? 'd-none' : ''"
-                />
-                <img
-                  src="assets/icons/check-button-checked-gray.png"
-                  alt="check-checked"
-                  [class]="isSubtaskCompleted(sub.id) ? '' : 'd-none'"
-                />
-              </button>
-              <span>{{ sub.title }}</span>
-            </div>
-          }
-        </div>
-      </div>
-    </div>
+		<div class="subtasks-section">
+			<p class="option-title">Subtasks</p>
+			<div class="subtask-content scroll-frame">
+				@for (sub of subtasks(); track sub.id) {
+				<div class="subtask-item">
+					<button (click)="markSubtaskCompleted(sub.id, sub.completed)">
+						<img src="assets/icons/check-button.png" alt="check"
+							[class]="isSubtaskCompleted(sub.id) ? 'd-none' : ''" />
+						<img src="assets/icons/check-button-checked-gray.png" alt="check-checked"
+							[class]="isSubtaskCompleted(sub.id) ? '' : 'd-none'" />
+					</button>
+					<span>{{ sub.title }}</span>
+				</div>
+				}
+			</div>
+		</div>
+	</div>
 
-    <div class="modal-actions fixed-actions">
-      <button class="delete-btn" (click)="deleteTask(task.id)">
-        <img src="assets/icons/delete.png" alt="delete" width="16" />
-        Delete
-      </button>
-      <button class="edit-btn" (click)="editTask()">
-        <img src="assets/icons/edit.png" alt="edit" width="16" />
-        Edit
-      </button>
-    </div>
-  </article>
+	<div class="modal-actions fixed-actions">
+		<button class="delete-btn" (click)="deleteTask(task.id)">
+			<img src="assets/icons/delete.png" alt="delete" width="16" />
+			Delete
+		</button>
+		<button class="edit-btn" (click)="editTask()">
+			<img src="assets/icons/edit.png" alt="edit" width="16" />
+			Edit
+		</button>
+	</div>
+</article>
 }
 
 @if (this.openEdit()) {
-  <article class="article-edit scroll-frame-1">
-    <button class="btn-close" (click)="closeModal()">X</button>
-    <form [formGroup]="editForm">
-      <label for="title">
-        <span>Title</span>
-        <input type="text" id="title" name="title" formControlName="title" />
-      </label>
+<article class="article-edit scroll-frame-1">
+	<button class="btn-close" (click)="closeModal()">✕</button>
+	<form [formGroup]="editForm">
+		<label for="title">
+			<span>Title</span>
+			<input type="text" id="title" name="title" formControlName="title" />
+		</label>
 
-      <label for="description">
-        <span>Description</span>
-        <textarea name="description" id="description" formControlName="description"></textarea>
-      </label>
+		<label for="description">
+			<span>Description</span>
+			<textarea name="description" id="description" formControlName="description"></textarea>
+		</label>
 
-      <label for="due-date">
-        <span>Due Date</span>
-        <input type="date" id="due-date" formControlName="due_date" [min]="todayIso()" />
-      </label>
+		<label for="due-date">
+			<span>Due Date</span>
+			<input type="date" id="due-date" formControlName="due_date" [min]="todayIso()" />
+		</label>
 
-      <div class="priority">
-        <h3>Priority</h3>
-        <div>
-          <button
-            [class]="
+		<div class="priority">
+			<h3>Priority</h3>
+			<div>
+				<button [class]="
               task.priority === 'urgent'
                 ? 'btn-priority btn-priority--selected btn-priority--urgent'
                 : 'btn-priority'
-            "
-            (click)="changePriority('urgent')"
-          >
-            Urgent
-            <img
-              src="assets/icons/priority-urgent.png"
-              alt="priority-urgent"
-              class="img-priority"
-            />
-            <img
-              src="assets/icons/priority-urgent-hover.png"
-              alt="priority-urgent"
-              class="img-priority--selected"
-            />
-          </button>
-          <button
-            [class]="
+            " (click)="changePriority('urgent')">
+					Urgent
+					<img src="assets/icons/priority-urgent.png" alt="priority-urgent" class="img-priority" />
+					<img src="assets/icons/priority-urgent-hover.png" alt="priority-urgent"
+						class="img-priority--selected" />
+				</button>
+				<button [class]="
               task.priority === 'medium'
                 ? 'btn-priority btn-priority--selected btn-priority--medium'
                 : 'btn-priority'
-            "
-            (click)="changePriority('medium')"
-          >
-            Medium
-            <img
-              src="assets/icons/priority-medium.png"
-              alt="priority-medium"
-              class="img-priority"
-            />
-            <img
-              src="assets/icons/priority-medium-hover.png"
-              alt="priority-medium"
-              class="img-priority--selected"
-            />
-          </button>
-          <button
-            [class]="
+            " (click)="changePriority('medium')">
+					Medium
+					<img src="assets/icons/priority-medium.png" alt="priority-medium" class="img-priority" />
+					<img src="assets/icons/priority-medium-hover.png" alt="priority-medium"
+						class="img-priority--selected" />
+				</button>
+				<button [class]="
               task.priority === 'low'
                 ? 'btn-priority btn-priority--selected btn-priority--low'
                 : 'btn-priority'
-            "
-            (click)="changePriority('low')"
-          >
-            Low
-            <img src="assets/icons/priority-low.png" alt="priority-low" class="img-priority" />
-            <img
-              src="assets/icons/priority-low-hover.png"
-              alt="priority-low"
-              class="img-priority--selected"
-            />
-          </button>
-        </div>
-      </div>
+            " (click)="changePriority('low')">
+					Low
+					<img src="assets/icons/priority-low.png" alt="priority-low" class="img-priority" />
+					<img src="assets/icons/priority-low-hover.png" alt="priority-low" class="img-priority--selected" />
+				</button>
+			</div>
+		</div>
 
-      <div class="assigned-to">
-        <h3>Assigned to</h3>
-        <button class="btn-select" (click)="toggleContactList()">
-          <span>Select contacts to assign</span>
-          <img
-            src="assets/icons/select-icon.png"
-            alt="select icon"
-            [class]="contactList ? 'd-none' : ''"
-          />
-          <img
-            src="assets/icons/select-icon-selected.png"
-            alt="select icon"
-            [class]="contactList ? '' : 'd-none'"
-          />
-        </button>
+		<div class="assigned-to">
+			<h3>Assigned to</h3>
+			<button class="btn-select" (click)="toggleContactList()">
+				<span>Select contacts to assign</span>
+				<img src="assets/icons/select-icon.png" alt="select icon" [class]="contactList ? 'd-none' : ''" />
+				<img src="assets/icons/select-icon-selected.png" alt="select icon"
+					[class]="contactList ? '' : 'd-none'" />
+			</button>
 
-        <div [class]="contactList ? 'contact-list scroll-frame' : 'd-none'">
-          @for (contact of contacts(); track contact) {
-            <div
-              [class]="isContactSelected(contact.id) ? 'contact contact--selected' : 'contact'"
-              (click)="toggleContactAssignee(contact)"
-            >
-              <div class="contact__profile-name">
-                <span class="profile" [style.background]="contact.color">
-                  {{
-                    contact.first_name.charAt(0).toUpperCase() +
-                      contact.last_name.charAt(0).toUpperCase()
-                  }}
-                </span>
-                <span>{{ contact.first_name }} {{ contact.last_name }}</span>
-              </div>
-              <img
-                src="assets/icons/check-button.png"
-                alt="check-button"
-                [class]="isContactSelected(contact.id) ? 'd-none' : 'checkbox'"
-              />
-              <img
-                src="assets/icons/check-button-checked.png"
-                alt="button-checkd"
-                [class]="isContactSelected(contact.id) ? 'checkbox--selected' : 'd-none'"
-              />
-            </div>
-          }
-        </div>
+			<div [class]="contactList ? 'contact-list scroll-frame' : 'd-none'">
+				@for (contact of contacts(); track contact) {
+				<div [class]="isContactSelected(contact.id) ? 'contact contact--selected' : 'contact'"
+					(click)="toggleContactAssignee(contact)">
+					<div class="contact__profile-name">
+						<span class="profile" [style.background]="contact.color">
+							{{
+							contact.first_name.charAt(0).toUpperCase() +
+							contact.last_name.charAt(0).toUpperCase()
+							}}
+						</span>
+						<span>{{ contact.first_name }} {{ contact.last_name }}</span>
+					</div>
+					<img src="assets/icons/check-button.png" alt="check-button"
+						[class]="isContactSelected(contact.id) ? 'd-none' : 'checkbox'" />
+					<img src="assets/icons/check-button-checked.png" alt="button-checkd"
+						[class]="isContactSelected(contact.id) ? 'checkbox--selected' : 'd-none'" />
+				</div>
+				}
+			</div>
 
-        <div class="assigned-contacts">
-          @for (contact of visibleContacts(); track contact.id) {
-            <span [style.background]="contact.color">
-              {{ contact.first_name.charAt(0) + contact.last_name.charAt(0) }}
-            </span>
-          }
+			<div class="assigned-contacts">
+				@for (contact of visibleContacts(); track contact.id) {
+				<span [style.background]="contact.color">
+					{{ contact.first_name.charAt(0) + contact.last_name.charAt(0) }}
+				</span>
+				}
 
-          @if (assignedContacts().length > maxVisibleAssignedContacts) {
-            <span>+{{ assignedContacts().length - maxVisibleAssignedContacts }}</span>
-          }
-        </div>
-      </div>
+				@if (assignedContacts().length > maxVisibleAssignedContacts) {
+				<span>+{{ assignedContacts().length - maxVisibleAssignedContacts }}</span>
+				}
+			</div>
+		</div>
 
-      <div class="subtask">
-        <h3>Subtasks</h3>
-        <div class="input-content">
-          <input type="text" placeholder="Add new subtask" [formControl]="newSubtask" />
+		<div class="subtask">
+			<h3>Subtasks</h3>
+			<div class="input-content">
+				<input type="text" placeholder="Add new subtask" [formControl]="newSubtask" />
 
-          @if (newSubtask.value && newSubtask.value.length > 1) {
-            <div class="options">
-              <button>
-                <img src="assets/icons/close.png" alt="close" (click)="newSubtask.setValue('')" />
-              </button>
-              <button>
-                <img
-                  src="assets/icons/check.png"
-                  alt="check"
-                  (click)="saveNewSubtask(newSubtask.value)"
-                />
-              </button>
-            </div>
-          }
-        </div>
+				@if (newSubtask.value && newSubtask.value.length > 1) {
+				<div class="options">
+					<button>
+						<img src="assets/icons/close.png" alt="close" (click)="newSubtask.setValue('')" />
+					</button>
+					<button>
+						<img src="assets/icons/check.png" alt="check" (click)="saveNewSubtask(newSubtask.value)" />
+					</button>
+				</div>
+				}
+			</div>
 
-        <ul class="scroll-frame">
-          @for (subtask of subtasks(); track subtask.id) {
-            <div [class]="editSubtaskSignal() == subtask.id ? 'item item--active' : 'item'">
-              <li [class.d-none]="editSubtaskSignal() == subtask.id">• {{ subtask.title }}</li>
-              <input
-                type="text"
-                [formControl]="editSubtask"
-                [class.d-none]="editSubtaskSignal() !== subtask.id && editSubtask != null"
-              />
-              <div class="item__options">
-                <button
-                  [class]="editSubtaskSignal() == subtask.id ? 'save' : 'd-none'"
-                  (click)="updateSubtask(task.id, subtask.id)"
-                >
-                  <img
-                    src="assets/icons/check.png"
-                    alt="save"
-                    [class]="editSubtaskSignal() == subtask.id ? '' : 'd-none'"
-                  />
-                  <img
-                    src="assets/icons/check-blue.png"
-                    alt="edit"
-                    [class]="editSubtaskSignal() == subtask.id ? 'save__hover' : 'd-none'"
-                  />
-                </button>
+			<ul class="scroll-frame">
+				@for (subtask of subtasks(); track subtask.id) {
+				<div [class]="editSubtaskSignal() == subtask.id ? 'item item--active' : 'item'">
+					<li [class.d-none]="editSubtaskSignal() == subtask.id">• {{ subtask.title }}</li>
+					<input type="text" [formControl]="editSubtask"
+						[class.d-none]="editSubtaskSignal() !== subtask.id && editSubtask != null" />
+					<div class="item__options">
+						<button [class]="editSubtaskSignal() == subtask.id ? 'save' : 'd-none'"
+							(click)="updateSubtask(task.id, subtask.id)">
+							<img src="assets/icons/check.png" alt="save"
+								[class]="editSubtaskSignal() == subtask.id ? '' : 'd-none'" />
+							<img src="assets/icons/check-blue.png" alt="edit"
+								[class]="editSubtaskSignal() == subtask.id ? 'save__hover' : 'd-none'" />
+						</button>
 
-                <button
-                  [class]="editSubtaskSignal() == subtask.id ? 'd-none' : 'edit'"
-                  (click)="editeSubtask(subtask.id, subtask.title)"
-                >
-                  <img
-                    src="assets/icons/edit.png"
-                    alt="edit"
-                    [class]="editSubtaskSignal() == subtask.id ? 'd-none' : ''"
-                  />
-                  <img
-                    src="assets/icons/edit-hover.png"
-                    alt="edit"
-                    [class]="editSubtaskSignal() == subtask.id ? 'd-none' : 'edit__hover'"
-                  />
-                </button>
-                <button class="delete" (click)="deleteSubtask(subtask.task_id, subtask.id)">
-                  <img src="assets/icons/delete.png" alt="delete" />
-                  <img src="assets/icons/delete-hover.png" alt="delete" class="delete__hover" />
-                </button>
-              </div>
-            </div>
-          }
-        </ul>
-      </div>
+						<button [class]="editSubtaskSignal() == subtask.id ? 'd-none' : 'edit'"
+							(click)="editeSubtask(subtask.id, subtask.title)">
+							<img src="assets/icons/edit.png" alt="edit"
+								[class]="editSubtaskSignal() == subtask.id ? 'd-none' : ''" />
+							<img src="assets/icons/edit-hover.png" alt="edit"
+								[class]="editSubtaskSignal() == subtask.id ? 'd-none' : 'edit__hover'" />
+						</button>
+						<button class="delete" (click)="deleteSubtask(subtask.task_id, subtask.id)">
+							<img src="assets/icons/delete.png" alt="delete" />
+							<img src="assets/icons/delete-hover.png" alt="delete" class="delete__hover" />
+						</button>
+					</div>
+				</div>
+				}
+			</ul>
+		</div>
 
-      <button type="submit" class="btn-submit" (click)="updateTask()">
-        ok
-        <img src="assets/icons/check-white.png" alt="check-icon" />
-      </button>
-    </form>
-  </article>
+		<button type="submit" class="btn-submit" (click)="updateTask()">
+			ok
+			<img src="assets/icons/check-white.png" alt="check-icon" />
+		</button>
+	</form>
+</article>
 }
