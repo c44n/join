@@ -1,14 +1,22 @@
 @use '../../../../public/assets/styles/all-styles.scss' as all;
 
+:host {
+    display: block;
+    min-height: 100dvh;
+}
+
 .content {
     display: flex;
     width: 100%;
+    min-height: 100dvh;
     background-color: all.$color-gray;
 
     &__header-main {
         display: flex;
         flex-direction: column;
+        flex: 1;
         width: 100%;
+        min-height: 100dvh;
         padding-left: 210px;
 
         @include all.notebook {
