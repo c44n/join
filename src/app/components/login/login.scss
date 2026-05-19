@@ -1,0 +1,207 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+section {
+  display: flex;
+  height: 100dvh;
+  width: 100%;
+  font-family: 'Inter-regular';
+  font-size: 16px;
+  background-color: all.$color-light-gray;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1440px;
+    height: 100%;
+    padding: 36px 46px;
+
+    @include all.mobile {
+      padding: 18px 8px;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  .logo {
+    img {
+      width: 101px;
+      height: 122px;
+    }
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    height: 50px;
+    font-size: 22px;
+
+    @include all.mobile {
+      display: none;
+    }
+
+    a {
+      color: all.$color-white;
+      border-radius: 6px;
+      padding: 12px 16px;
+      background-color: all.$color-light-dark;
+      border: 1px solid all.$color-dark;
+
+      &:hover {
+        color: all.$color-dark;
+        background-color: all.$color-white;
+        border: 1px solid all.$color-dark;
+      }
+    }
+  }
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    width: 550px;
+    padding: 42px 82px;
+    border-radius: 22px;
+    background-color: all.$color-white;
+
+    h2 {
+      font-family: 'Inter-bold';
+      font-size: 54px;
+    }
+
+    .line {
+      width: 112px;
+      height: 3px;
+      margin-top: 4px;
+      background-color: all.$color-light-blue;
+    }
+
+    label {
+      width: 100%;
+
+      input {
+        width: 100%;
+        height: 46px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 2px solid all.$color-light-gray;
+      }
+    }
+
+    .login-option {
+      display: flex;
+      justify-content: center;
+      gap: 33px;
+      width: 100%;
+      margin: 16px 0 0 0;
+      font-size: 22px;
+
+      a {
+        padding: 12px 22px;
+        color: all.$color-white;
+        border-radius: 6px;
+        background-color: all.$color-light-dark;
+        border: 1px solid all.$color-dark;
+
+        &:hover {
+          color: all.$color-dark;
+          background-color: all.$color-white;
+          border: 1px solid all.$color-dark;
+        }
+      }
+    }
+
+    @include all.mobile {
+      gap: 12px;
+      width: 300px;
+      padding: 12px;
+
+      h2 {
+        font-size: 26px;
+        margin-top: 12px;
+      }
+
+      .line {
+        margin-top: 0;
+        width: 62px;
+        height: 2px;
+      }
+
+      label {
+        input {
+          height: 36px;
+          padding: 6px 12px;
+          border-radius: 6px;
+        }
+      }
+
+      .login-option {
+        gap: 13px;
+        width: 100%;
+        margin: 6px 0 0 0;
+        font-size: 16px;
+
+        a {
+          padding: 6px 12px;
+          border-radius: 6px;
+        }
+      }
+    }
+  }
+}
+
+.header-mobile-option {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  height: 50px;
+  font-size: 18px;
+
+  @include all.mobile {
+    display: flex;
+  }
+
+  a {
+    color: all.$color-white;
+    border-radius: 6px;
+    background-color: all.$color-light-dark;
+    padding: 12px 16px;
+    border: 1px solid all.$color-light-dark;
+
+    &:hover {
+      color: all.$color-dark;
+      background-color: all.$color-white;
+      border: 1px solid all.$color-dark;
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  font-size: 22px;
+  color: all.$color-dark-gray;
+
+  a:hover {
+    color: all.$color-dark;
+  }
+
+  @include all.mobile {
+    gap: 12px;
+    font-size: 16px;
+  }
+}
