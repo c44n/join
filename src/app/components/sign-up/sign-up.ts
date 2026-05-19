@@ -2,12 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ToastService } from '../../services/toast';
 import { ValidationError } from '@angular/forms/signals';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
     selector: 'app-sign-up',
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, RouterLink],
     templateUrl: './sign-up.html',
     styleUrl: './sign-up.scss',
 })
