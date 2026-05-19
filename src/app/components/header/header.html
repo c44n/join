@@ -23,7 +23,7 @@
 
 <ng-template #avatarMenu>
   <div class="dropdown-menu" cdkMenu>
-    <button class="help-mobile" cdkMenuItem>Help</button>
+    <button class="help-mobile" cdkMenuItem [routerLink]="'/help'">Help</button>
     <button cdkMenuItem [routerLink]="'/legal-notice'">Legal Notice</button>
     <button cdkMenuItem [routerLink]="'/privacy-policy'">Privacy Policy</button>
     <button cdkMenuItem>Log out</button>
