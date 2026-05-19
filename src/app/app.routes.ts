@@ -6,6 +6,8 @@ import { LegalNoticeComponents } from './components/legal-notice-components/lega
 import { PrivacyPolicyComponents } from './components/privacy-policy-components/privacy-policy-components';
 import { SignUp } from './components/sign-up/sign-up';
 import { MainLayout } from './layouts/main-layout/main-layout';
+import { Help } from './components/help/help';
+import { Header } from './components/header/header';
 
 
 export const routes: Routes = [
@@ -19,6 +21,7 @@ export const routes: Routes = [
       { path: 'board', component: Board },
       { path: 'privacy-policy', component: PrivacyPolicyComponents },
       { path: 'legal-notice', component: LegalNoticeComponents },
+      { path: 'help', component: Help },
     ]
   }
 ];

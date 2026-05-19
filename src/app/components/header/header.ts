@@ -5,11 +5,13 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [CdkMenuModule, RouterModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
+  
   readonly avatarMenuPositions: ConnectedPosition[] = [
     {
       originX: 'end',
