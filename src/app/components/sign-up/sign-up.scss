@@ -1,0 +1,181 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+.logo_wrapper {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+
+    .logo {}
+}
+
+.sign_up {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    .wrapper {
+        width: 598px;
+        height: 630px;
+        border-radius: 30px;
+        padding-top: 48px;
+        padding-right: 88px;
+        padding-bottom: 48px;
+        padding-left: 88px;
+        gap: 32px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 14px 3px #0000000A;
+
+
+        .header {
+            display: flex;
+            justify-content: center;
+
+            .arrow_left {
+                position: absolute;
+                top: 20px;
+                left: -40px;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                transition: .225s ease-in-out;
+
+                &:hover {
+                    background-color: all.$color-gray;
+                }
+            }
+
+            .title {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+
+                h1 {
+                    font-weight: 900;
+                    font-size: 61px;
+                    line-height: 120%;
+                    letter-spacing: 0%;
+                    text-align: center;
+                    font-family: 'Inter-bold', Courier, monospace;
+                }
+
+                .line {
+                    width: 150px;
+                    height: 3px;
+                    background-color: all.$secondary-color;
+
+                }
+            }
+        }
+
+        .body {
+            display: flex;
+            flex-direction: column;
+            margin-top: 70px;
+
+            .input_wrapper {
+                width: 100%;
+
+                .cc_input {
+                    border: 1px solid #D1D1D1;
+                    border-radius: 10px;
+                    padding: 13px 40px 13px 21px;
+                    width: 100%;
+                    font-size: 16px;
+                    background-position: 97% 10px;
+                    background-repeat: no-repeat;
+
+                    @include all.mobile {
+                        width: 100%;
+                        box-sizing: border-box;
+                    }
+
+                    @include all.notebook {
+                        width: 100%;
+                        box-sizing: border-box;
+                    }
+
+                    @include all.tablet {
+                        width: 100%;
+                        box-sizing: border-box;
+                    }
+
+                    &::placeholder {
+                        color: #D1D1D1;
+                    }
+
+                    &:focus-visible {
+                        outline: none;
+                        border: 1px solid #29ABE2;
+                    }
+
+                    &#cc_name {
+                        background-image: url('../../../../public/assets/icons/person.png');
+                    }
+
+                    &#cc_email {
+                        background-image: url('../../../../public/assets/icons/mail.png');
+                    }
+
+                    &#cc_password {
+                        background-image: url('../../../../public/assets/icons/lock.png');
+                    }
+                }
+            }
+
+            .error_message_wrapper {
+                height: 25px;
+                padding: 0 5px;
+
+                .error_message {
+                    color: all.$color-red;
+                }
+            }
+
+            input.ng-invalid.ng-touched {
+                border: 1px solid red !important;
+            }
+        }
+
+        .form-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+            width: 100%;
+            gap: 20px;
+
+            .pp_wrapper {
+                display: flex;
+                color: all.$color-dark-gray;
+
+                input[type="checkbox"] {
+                    margin-right: 10px;
+                }
+
+                a {
+                    color: all.$secondary-color;
+                }
+            }
+
+            button {
+                width: 130px;
+            }
+        }
+    }
+}
+
+.footer {
+    position: absolute;
+    bottom: 30px;
+    width: 300px;
+    left: 50%;
+    transform: translate(-50%);
+
+    .footer-body {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+}

@@ -1,1 +1,125 @@
-<p>sign-up works!</p>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Join</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+</head>
+
+<body>
+    <div class="logo_wrapper">
+        <a routerLink=""> <img src="assets/images/logo_dark.png" alt="logo" class="logo" /></a>
+    </div>
+
+    <section class="sign_up">
+        <div class="wrapper">
+            <div class="header">
+                <div class="arrow_left">
+                    <a href="/login">
+                        <img src="../../../../assets/icons/arrow-left-line.png" alt="">
+                    </a>
+                </div>
+                <div class="title">
+                    <h1>Sign up</h1>
+                    <div class="line"></div>
+                </div>
+            </div>
+
+            <form [formGroup]="registrationForm">
+                <div class="body">
+                    <div class="input_wrapper">
+                        <input class="cc_input" type="text" formControlName="name" id="cc_name"
+                            placeholder="First and Lastname" />
+
+                        <div class="error_message_wrapper">
+                            @if (registrationForm.get("name")?.invalid && (registrationForm.get("name")?.touched ||
+                                registrationForm.get("name")?.dirty)) {
+                                @if (registrationForm.get("name")?.hasError('required')) {
+                                    <div class="error_message">Name is required.</div>
+                                } @else if (registrationForm.get("name")?.hasError('minlength')) {
+                                    <div class="error_message">Name is too short.</div>
+                                } @else if (registrationForm.get("name")?.hasError('pattern')) {
+                                    <div class="error_message">Enter first and last name. Only letters.</div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="input_wrapper">
+                        <input class="cc_input" type="email" formControlName="email" id="cc_email" placeholder="Email" />
+                        <div class="error_message_wrapper">
+                            @if (registrationForm.get("email")?.invalid && (registrationForm.get("email")?.touched || registrationForm.get("email")?.dirty)) {
+                                @if (registrationForm.get("email")?.hasError('required')) {
+                                    <div class="error_message">Email is required.</div>
+                                } @else if (registrationForm.get("email")?.hasError('pattern')) {
+                                    <div class="error_message">Please enter a valid email address.</div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="input_wrapper">
+                        <input class="cc_input" type="password" formControlName="password" id="cc_password" placeholder="Password" />
+                        <div class="error_message_wrapper">
+                            @if (registrationForm.get("password")?.invalid && (registrationForm.get("password")?.touched || registrationForm.get("password")?.dirty)) {
+                                @if (registrationForm.get("password")?.hasError('required')) {
+                                    <div class="error_message">Password is required.</div>
+                                } @else if (registrationForm.get("password")?.hasError('minlength')) {
+                                    <div class="error_message">Min. 8 characters.</div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="input_wrapper">
+                        <input class="cc_input" type="password" formControlName="password_confirm" id="cc_password"
+                            placeholder="Confirm Password" />
+                        <div class="error_message_wrapper">
+                            @if (registrationForm.get("password_confirm")?.invalid && (registrationForm.get("password_confirm")?.touched || registrationForm.get("password_confirm")?.dirty)) {
+                                @if (registrationForm.get("passsword_confirm")?.hasError('required')) {
+                                    <div class="error_message">Confirm password is required.</div>
+                                }
+                            }
+                            
+                            @if (confirmControl?.touched && registrationForm.hasError('passwordMismatch')) {
+                                <div class="error_message">Passwörter stimmen nicht überein.</div>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="form-footer">
+                <div class="pp_wrapper">
+                    <input type="checkbox" name="privacy_policy" id="privacy_policy">
+                    <label for="privacy_policy">I accept the
+                        <a routerLink="/privacy-policy">Privacy policy</a>
+                    </label>
+                </div>
+
+                <button type="button" class="primary-button" (click)="createContact()">
+                    <!--  [disabled]="saving()" -->
+                    <span class="primary-button__label">
+                        Sign up
+                        <!-- {{ saving() ? 'Saving...' : 'Create contact' }} -->
+                    </span>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="footer">
+        <div class="footer-body">
+            <a  routerLink="/privacy-policy">Privacy Policy</a>
+            <a  routerLink="/legal-notice">Legal notice</a>
+        </div>
+    </div>
+</body>
+
+</html>
