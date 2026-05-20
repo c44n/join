@@ -28,52 +28,42 @@
 
   scrollbar-width: none;
   -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  &::-webkit-scrollbar { display: none; }
 
   @include all.notebook {
     left: 150px;
-    padding: 48px 48px 120px 48px;
+    padding: 64px 48px 120px 48px;
   }
 
   @include all.tablet {
     left: 130px;
-    padding: 40px 32px 120px 32px;
+    padding: 64px 32px 120px 32px;
   }
 
   @include all.mobile {
     left: 0;
     top: 56px;
-    padding: 32px 20px 120px 20px;
+    padding: 64px 20px 120px 20px;
   }
 
   h1 {
     font-size: 48px;
     margin-bottom: 16px;
 
-    @include all.tablet {
-      font-size: 36px;
-    }
-    @include all.mobile {
-      font-size: 28px;
-    }
+    @include all.tablet { font-size: 36px; }
+    @include all.mobile { font-size: 28px; }
   }
 
   h2 {
     font-size: 24px;
     margin-top: 24px;
 
-    @include all.mobile {
-      font-size: 20px;
-    }
+    @include all.mobile { font-size: 20px; }
   }
 
   p {
     font-size: 18px;
 
-    @include all.mobile {
-      font-size: 16px;
-    }
+    @include all.mobile { font-size: 16px; }
   }
 }
