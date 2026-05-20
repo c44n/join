@@ -1,0 +1,131 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+:host {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.help-container {
+  position: absolute;
+  top: 64px;
+  left: 210px;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  pointer-events: all;
+  background-color: white;
+  font-family: 'Inter', sans-serif;
+  padding: 64px 64px 120px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include all.notebook {
+    left: 150px;
+    padding: 48px 48px 120px 48px;
+  }
+
+  @include all.tablet {
+    left: 130px;
+    padding: 40px 32px 120px 32px;
+  }
+
+  @include all.mobile {
+    left: 0;
+    top: 56px;
+    padding: 32px 20px 120px 20px;
+  }
+
+  h1 {
+    font-size: 48px;
+    margin-bottom: 16px;
+
+    @include all.tablet {
+      font-size: 36px;
+    }
+    @include all.mobile {
+      font-size: 28px;
+    }
+  }
+
+  h2 {
+    font-size: 24px;
+    margin-top: 24px;
+
+    @include all.mobile {
+      font-size: 20px;
+    }
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 1.6;
+
+    @include all.mobile {
+      font-size: 16px;
+    }
+  }
+
+  ol {
+    margin-left: 24px;
+    font-size: 16px;
+    line-height: 1.6;
+
+    @include all.mobile {
+      font-size: 14px;
+      margin-left: 16px;
+    }
+
+    li {
+      margin-bottom: 16px;
+    }
+  }
+
+  .back-btn {
+    position: absolute;
+    top: 48px;
+    right: 64px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    @include all.notebook {
+      right: 48px;
+    }
+    @include all.tablet {
+      right: 32px;
+      top: 40px;
+    }
+    @include all.mobile {
+      right: 20px;
+      top: 32px;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.2s ease;
+
+      @include all.mobile {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    &:hover img {
+      transform: translateX(-4px);
+    }
+  }
+}
