@@ -1,29 +1,89 @@
 @use '../../../../public/assets/styles/all-styles.scss' as all;
 
+:host {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
 
 .legal-notice-container {
-  padding: 48px 64px;
+  position: absolute;
+  top: 64px;
+  left: 210px;
+  right: 0;
+  bottom: 0;
   overflow-y: auto;
+  pointer-events: all;
   background-color: #fff;
   color: #000;
   font-family: 'Inter', sans-serif;
+  padding: 64px 64px 120px 64px;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include all.notebook {
+    left: 150px;
+    padding: 48px 48px 120px 48px;
+  }
+
+  @include all.tablet {
+    left: 130px;
+    padding: 40px 32px 120px 32px;
+  }
+
+  @include all.mobile {
+    left: 0;
+    top: 56px;
+    padding: 32px 20px 120px 20px;
+  }
 
   h1 {
     font-size: 48px;
     margin-bottom: 32px;
+
+    @include all.tablet {
+      font-size: 36px;
+    }
+    @include all.mobile {
+      font-size: 28px;
+    }
   }
 
-  h2, h3 {
+  h2,
+  h3 {
     margin-top: 32px;
     margin-bottom: 8px;
+
+    @include all.mobile {
+      margin-top: 24px;
+      font-size: 18px;
+    }
   }
 
   ul {
     margin-left: 20px;
+
+    @include all.mobile {
+      margin-left: 12px;
+    }
   }
 
   p {
-    margin-bottom: 16px;
+    margin-bottom: 18px;
+    line-height: 1.6;
+
+    @include all.mobile {
+      font-size: 16px;
+    }
   }
 
   strong {
@@ -34,19 +94,9 @@
     margin-top: 24px;
     font-style: italic;
     color: #555;
-  }
 
-  // Scrollbar styling
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #2a3647;
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
+    @include all.mobile {
+      font-size: 16px;
+    }
   }
 }

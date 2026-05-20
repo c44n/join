@@ -4,7 +4,7 @@
     <span class="app-title">Kanban Project Management Tool</span>
 
     <div class="header-actions">
-      <button class="help-btn" aria-label="Help">
+      <button class="help-btn" aria-label="Help" routerLink="/help">
         <img src="assets/icons/help.png" />
       </button>
       <div class="avatarmenu">
@@ -23,9 +23,9 @@
 
 <ng-template #avatarMenu>
   <div class="dropdown-menu" cdkMenu>
-    <button class="help-mobile" cdkMenuItem [routerLink]="'/help'">Help</button>
-    <button cdkMenuItem [routerLink]="'/legal-notice'">Legal Notice</button>
-    <button cdkMenuItem [routerLink]="'/privacy-policy'">Privacy Policy</button>
+    <button class="help-mobile" cdkMenuItem routerLink="/help">Help</button>
+    <button cdkMenuItem routerLink="/legal-notice">Legal Notice</button>
+    <button cdkMenuItem routerLink="/privacy-policy">Privacy Policy</button>
     <button cdkMenuItem>Log out</button>
   </div>
 </ng-template>
