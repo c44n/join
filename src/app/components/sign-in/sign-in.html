@@ -1,0 +1,75 @@
+<section>
+  <div class="content">
+    <div class="header">
+      <a routerLink="" class="logo">
+        <img src="assets/icons/logo/logo-black.png" alt="logo black" />
+      </a>
+      <div class="option">
+        <span>Not a Join user?</span>
+        <a routerLink="">
+          <button>Sign up</button>
+        </a>
+      </div>
+    </div>
+
+    <div class="form">
+      <form [formGroup]="signInForm" (ngSubmit)="authenticate()">
+        <h2>Log in</h2>
+        <div class="line"></div>
+        <label for="email">
+          <input type="email" name="email" id="email" placeholder="Email" formControlName="email" />
+          <img src="" alt="" />
+
+          @if (email?.touched) {
+            @if (email?.hasError('required')) {
+              <span>your email is required</span>
+            }
+
+            @if (email?.hasError('pattern')) {
+              <span>your email is not valid</span>
+            }
+          }
+        </label>
+        <label for="password">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            formControlName="password"
+          />
+
+          @if (password?.touched) {
+            @if (password?.hasError('required')) {
+              <span>your password is required</span>
+            }
+
+            @if (password?.hasError('minlength') && password?.touched) {
+              <span>your password is min 8 Character</span>
+            }
+          }
+
+          @if(loginError().length > 0){
+            <span class="error-msg">{{loginError()}}</span>
+          }
+        </label>
+        <div class="login-option">
+          <button type="submit" [disabled]="email?.invalid && password?.invalid">Log in</button>
+          <button routerLink="">Guest Log in</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="header-mobile-option">
+      <span>Not a Join user?</span>
+      <a routerLink="">
+        <button>Sign up</button>
+      </a>
+    </div>
+
+    <div class="footer">
+      <a routerLink=""> Privacy Policy</a>
+      <a routerLink=""> Legal notice</a>
+    </div>
+  </div>
+</section>
