@@ -84,7 +84,7 @@
                                 }
                             }
                             
-                            @if (confirmControl?.touched && registrationForm.hasError('passwordMismatch')) {
+                            @if (registrationForm.get("password_confirm")?.touched && registrationForm.hasError('passwordMismatch')) {
                                 <div class="error_message">Passwörter stimmen nicht überein.</div>
                             }
 

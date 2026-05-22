@@ -1,9 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, Validators, ReactiveFormsModule, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ToastService } from '../../services/toast';
-import { ValidationError } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
-
+import { AuthService } from '../../services/auth';
 
 @Component({
     selector: 'app-sign-up',
@@ -12,7 +11,12 @@ import { Router, RouterLink } from '@angular/router';
     styleUrl: './sign-up.scss',
 })
 export class SignUp {
-    router = inject(Router);
+    protected saving = signal(false);
+    protected errorMessage = signal<string | null>(null);
+
+    private authService = inject(AuthService);
+    private toastService = inject(ToastService);
+    private router = inject(Router);
 
     registrationForm = new FormGroup({
         name: new FormControl('', {
@@ -41,10 +45,10 @@ export class SignUp {
         validators: this.passwordMatchCheck
     });
 
-    get nameControl() { return this.registrationForm.get('name'); }
-    get emailControl() { return this.registrationForm.get('email'); }
-    get passwordControl() { return this.registrationForm.get('password'); }
-    get confirmControl() { return this.registrationForm.get('password_confirm'); }
+    first_name = '';
+    last_name = '';
+    email = '';
+    password = '';
 
     private passwordMatchCheck(control: AbstractControl): ValidationErrors | null {
         const password = control.get('password')?.value;
@@ -53,12 +57,44 @@ export class SignUp {
         return password === password_confirm ? null : { passwordMismatch: true };
     }
 
-    createContact() {
-        if (this.registrationForm.valid) {
-            console.log('gut');
+    checkInputValues() {
+        const full = this.registrationForm.value.name?.trim() ?? '';
+        this.email = this.registrationForm.value.email?.trim() ?? '';
+        this.password = this.registrationForm.value.password?.trim() ?? '';
 
-            this.router.navigate(["dashboard"]);
+        if (full) {
+            const space = full.indexOf(' ');
+            this.first_name = space === -1 ? full : full.slice(0, space);
+            this.last_name = space === -1 ? '' : full.slice(space + 1).trim();
         }
     }
 
+    async createContact() {
+        if (this.registrationForm.invalid) {
+            this.registrationForm.markAllAsTouched();
+            return;
+        }
+
+        this.saving.set(true);
+        this.errorMessage.set(null);
+
+        this.checkInputValues();
+
+        const result = await this.authService.signUp({
+            first_name: this.first_name,
+            last_name: this.last_name,
+            email: this.email,
+            password: this.password
+        });
+
+        this.saving.set(false);
+
+        if (result) {
+            this.toastService.show('Registrierung erfolgreich!');
+            this.router.navigate(['/board']); // Pfad anpassen, wohin der User nach dem Login soll
+        } else {
+            this.errorMessage.set('Registrierung fehlgeschlagen. Bitte überprüfe deine Eingaben.');
+            this.toastService.show('Fehler');
+        }
+    }
 }

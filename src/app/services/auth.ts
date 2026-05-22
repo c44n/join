@@ -1,41 +1,57 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from './supabase';
-import { Contact } from '../models/contact';
 
-export type signUpInputs = {
+export type SignUpInputs = {
     first_name: string;
     last_name: string;
     email: string;
     password: string;
-    password_confirm: string;
-    color?: string;
 };
 
 @Injectable({
     providedIn: 'root',
 })
-export class Auth {
-    constructor(private supabaseService: SupabaseService){
-        //
-    }
+export class AuthService {
+    private supabaseService = inject(SupabaseService);
 
-    async createContact(input: signUpInputs): Promise<Contact> {
-        const row = {
-            first_name: input.first_name.trim(),
-            last_name: input.last_name.trim(),
-            email: input.email.trim(),
-            password: input.password.trim(),
-            color: input.color ?? '#29abe2',
-        };
-        const { data, error } = await this.supabaseService.supabase
-            .from('contacts')
-            .insert(row)
-            .select('*')
-            .single();
-        if (error) {
-            console.error('Error creating contact:', error);
-            throw new Error(error.message || 'Unknown Supabase error');
+    async signUp(inputs: SignUpInputs): Promise<boolean> {
+        try {
+            const authResponse = await this.supabaseService.supabase.auth.signUp({
+                email: inputs.email,
+                password: inputs.password
+            });
+
+            if (authResponse.error) {
+                console.error('Fehler bei Auth:', authResponse.error.message);
+                return false;
+            }
+
+            const newUserId = authResponse.data.user?.id;
+
+            if (!newUserId) {
+                console.error('Keine User ID erhalten.');
+                return false;
+            }
+
+            const dbResponse = await this.supabaseService.supabase
+                .from('contacts')
+                .insert({
+                    user_id: newUserId,
+                    first_name: inputs.first_name,
+                    last_name: inputs.last_name,
+                    email: inputs.email
+                });
+
+            if (dbResponse.error) {
+                console.error('Fehler beim Speichern in Contacts:', dbResponse.error.message);
+                return false;
+            }
+
+            return true;
+
+        } catch (err) {
+            console.error('Ein unerwarteter Fehler ist aufgetreten:', err);
+            return false;
         }
-        return data as Contact;
     }
 }
