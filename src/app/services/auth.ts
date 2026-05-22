@@ -11,7 +11,7 @@ export type SignUpInputs = {
 };
 
 export const authGuard: CanActivateFn = async (route, state) => {
-    const auth = inject(Auth);
+    const auth = inject(AuthService);
     const router = inject(Router);
     const isAuthenticated = await auth.isAuthenticated();
 
@@ -27,6 +27,13 @@ export const authGuard: CanActivateFn = async (route, state) => {
 })
 export class AuthService {
     private supabaseService = inject(SupabaseService);
+
+    async isAuthenticated(): Promise<boolean> {
+        const user = await this.supabaseService.supabase.auth.getUser();
+
+        if (user.data.user != null) return true;
+        else return false;
+    }
 
     async signUp(inputs: SignUpInputs): Promise<boolean> {
         try {
@@ -62,16 +69,6 @@ export class AuthService {
             }
 
             return true;
-export class Auth {
-    constructor(private supabaseService: SupabaseService) { }
-
-    async isAuthenticated(): Promise<boolean> {
-        const user = await this.supabaseService.supabase.auth.getUser();
-
-        if (user.data.user != null) return true;
-        else return false;
-    }
-
         } catch (err) {
             console.error('Ein unerwarteter Fehler ist aufgetreten:', err);
             return false;

@@ -5,7 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { validate } from '@angular/forms/signals';
 import { SupabaseService } from '../../services/supabase';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 
 @Component({
 	selector: 'app-login',
@@ -15,7 +15,7 @@ import { Auth } from '../../services/auth';
 })
 export class SignIn {
 	supabaseService = inject(SupabaseService);
-	authService = inject(Auth);
+	authService = inject(AuthService);
 	router = inject(Router);
 
 	signInForm = new FormGroup({
