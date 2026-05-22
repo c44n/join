@@ -7,16 +7,18 @@ import { PrivacyPolicyComponents } from './components/privacy-policy-components/
 import { SignUp } from './components/sign-up/sign-up';
 import { MainLayout } from './layouts/main-layout/main-layout';
 import { Help } from './components/help/help';
-import { Header } from './components/header/header';
+import { SignIn } from './components/sign-in/sign-in';
+import { authGuard } from './services/auth';
 
 
 export const routes: Routes = [
+  { path: 'signin', component: SignIn },
   { path: 'registration', component: SignUp },
   {
     path: '',
     component: MainLayout,
     children: [
-      { path: 'add-task', component: AddTask },
+      { path: 'add-task', component: AddTask, canActivate: [authGuard] },
       { path: 'contacts', component: ContactList },
       { path: 'board', component: Board },
       { path: 'privacy-policy', component: PrivacyPolicyComponents },

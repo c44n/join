@@ -9,6 +9,7 @@
   bottom: 0;
   overflow: hidden;
   pointer-events: none;
+  background-color: white;
 }
 
 .help-container {
@@ -19,12 +20,13 @@
   bottom: 0;
   overflow-y: auto;
   pointer-events: all;
-  background-color: white;
   font-family: 'Inter', sans-serif;
   padding: 64px 64px 120px 64px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-width: 100%;
+  width: 1440px;
 
   scrollbar-width: none;
   -ms-overflow-style: none;
