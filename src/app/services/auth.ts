@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase';
 import { Contact } from '../models/contact';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, CanMatchFn, Route, Router, UrlSegment } from '@angular/router';
 
 export type SignUpInputs = {
     first_name: string;
@@ -10,16 +10,25 @@ export type SignUpInputs = {
     password: string;
 };
 
-export const authGuard: CanActivateFn = async (route, state) => {
+export const authGuard: CanMatchFn = async (route: Route, segments: UrlSegment[]) => {
     const auth = inject(AuthService);
     const router = inject(Router);
     const isAuthenticated = await auth.isAuthenticated();
 
-    if (isAuthenticated) return true;
-    else {
-        router.navigateByUrl('signin');
+    if (isAuthenticated) {
+        return true;
+    } else {
+        router.navigateByUrl('/signin');
         return false;
     }
+};
+
+export const authGuestGuard: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
+    const auth = inject(AuthService);
+
+    if (auth.isGuestSignIn()) return true;
+
+    return false;
 };
 
 @Injectable({
@@ -27,6 +36,8 @@ export const authGuard: CanActivateFn = async (route, state) => {
 })
 export class AuthService {
     private supabaseService = inject(SupabaseService);
+
+    isGuestSignIn = signal<boolean>(false);
 
     async isAuthenticated(): Promise<boolean> {
         const user = await this.supabaseService.supabase.auth.getUser();
@@ -39,7 +50,7 @@ export class AuthService {
         try {
             const authResponse = await this.supabaseService.supabase.auth.signUp({
                 email: inputs.email,
-                password: inputs.password
+                password: inputs.password,
             });
 
             if (authResponse.error) {
@@ -54,14 +65,12 @@ export class AuthService {
                 return false;
             }
 
-            const dbResponse = await this.supabaseService.supabase
-                .from('contacts')
-                .insert({
-                    user_id: newUserId,
-                    first_name: inputs.first_name,
-                    last_name: inputs.last_name,
-                    email: inputs.email
-                });
+            const dbResponse = await this.supabaseService.supabase.from('contacts').insert({
+                user_id: newUserId,
+                first_name: inputs.first_name,
+                last_name: inputs.last_name,
+                email: inputs.email,
+            });
 
             if (dbResponse.error) {
                 console.error('Fehler beim Speichern in Contacts:', dbResponse.error.message);

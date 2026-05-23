@@ -8,8 +8,8 @@ import { SignUp } from './components/sign-up/sign-up';
 import { MainLayout } from './layouts/main-layout/main-layout';
 import { Help } from './components/help/help';
 import { SignIn } from './components/sign-in/sign-in';
-import { authGuard } from './services/auth';
-
+import { authGuard, authGuestGuard } from './services/auth';
+import { single } from 'rxjs';
 
 export const routes: Routes = [
   { path: 'signin', component: SignIn },
@@ -18,12 +18,14 @@ export const routes: Routes = [
     path: '',
     component: MainLayout,
     children: [
-      { path: 'add-task', component: AddTask, canActivate: [authGuard] },
-      { path: 'contacts', component: ContactList },
-      { path: 'board', component: Board },
+      { path: 'add-task', component: AddTask, canMatch: [authGuard] },
+      { path: 'contacts', component: ContactList, canMatch: [authGuestGuard] },
+      { path: 'contacts', component: ContactList, canMatch: [authGuard] },
+      { path: 'board', component: Board, canMatch: [authGuestGuard] },
+      { path: 'board', component: Board, canMatch: [authGuard] },
       { path: 'privacy-policy', component: PrivacyPolicyComponents },
       { path: 'legal-notice', component: LegalNoticeComponents },
       { path: 'help', component: Help },
-    ]
-  }
+    ],
+  },
 ];
