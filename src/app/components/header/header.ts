@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { ConnectedPosition } from '@angular/cdk/overlay';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { SupabaseService } from '../../services/supabase';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.scss',
 })
 export class Header {
-  
+  supabaseService = inject(SupabaseService);
+  router = inject(Router);
+
   readonly avatarMenuPositions: ConnectedPosition[] = [
     {
       originX: 'end',
@@ -28,4 +31,16 @@ export class Header {
       offsetY: -8,
     },
   ];
+
+async logout() {
+  await this.supabaseService.supabase.auth.signOut();
+  this.router.navigateByUrl('signin');
 }
+}
+
+
+
+
+
+
+
