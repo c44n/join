@@ -41,6 +41,9 @@ export class SignUp {
         password_confirm: new FormControl('', {
             validators: [Validators.required]
         }),
+        privacy_policy: new FormControl(false, {
+            validators: [Validators.requiredTrue]
+        }),
     }, {
         validators: this.passwordMatchCheck
     });
@@ -90,10 +93,10 @@ export class SignUp {
         this.saving.set(false);
 
         if (result) {
-            this.toastService.show('Registrierung erfolgreich!');
-            this.router.navigate(['/board']); // Pfad anpassen, wohin der User nach dem Login soll
+            this.toastService.show('You Signed Up successfully!');
+            this.router.navigate(['/signin']); // Pfad anpassen, wohin der User nach dem Login soll
         } else {
-            this.errorMessage.set('Registrierung fehlgeschlagen. Bitte überprüfe deine Eingaben.');
+            this.errorMessage.set('Registration failed. Please check your entries.');
             this.toastService.show('Fehler');
         }
     }

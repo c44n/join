@@ -48,7 +48,7 @@
 
     .wrapper {
         width: 598px;
-        height: 630px;
+        height: auto;
         border-radius: 30px;
         padding-top: 48px;
         padding-right: 88px;
@@ -59,7 +59,6 @@
         box-shadow: 0px 0px 14px 3px #0000000A;
 
         @include all.mobile {
-            height: auto;
             padding: 24px 16px;
         }
 
@@ -179,19 +178,6 @@
                     }
                 }
             }
-
-            .error_message_wrapper {
-                height: 25px;
-                padding: 0 5px;
-
-                .error_message {
-                    color: all.$color-red;
-                }
-            }
-
-            input.ng-invalid.ng-touched {
-                border: 1px solid red !important;
-            }
         }
 
         .form-footer {
@@ -208,6 +194,8 @@
 
             .pp_wrapper {
                 display: flex;
+                justify-content: center;
+                width: 100%;
                 color: all.$color-dark-gray;
 
                 input[type="checkbox"] {
@@ -261,4 +249,17 @@
             color: all.$color-dark-gray;
         }
     }
+}
+
+.error_message_wrapper {
+    height: 25px;
+    padding: 0 5px;
+
+    .error_message {
+        color: all.$color-red;
+    }
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red !important;
 }
