@@ -8,137 +8,81 @@
 @use '../public/assets/styles/cdk-dialog-overlays.scss';
 
 html {
-  height: 100%;
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
+    height: 100%;
+    @include mat.theme((color: (primary: mat.$azure-palette,
+                tertiary: mat.$blue-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-  height: 100%;
-}
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-
-html {
-  height: 100%;
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
-}
-
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-  height: 100%;
-}
-
-
-html,
-body {
-  font-family: 'Inter-regular', sans-serif;
+    // Set a default background, font and text colors for the application using
+    // Angular Material's system-level CSS variables. Learn more about these
+    // variables at https://material.angular.dev/guide/system-variables
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-body-medium);
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  scroll-behavior: smooth;
-  box-sizing: border-box;
-  text-decoration: none;
-  position: relative;
-  list-style: none;
-  font-size: inherit;
-  color: inherit;
-  font-family: inherit;
-  background: initial;
-  border: initial;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+    text-decoration: none;
+    position: relative;
+    list-style: none;
+    font-size: 16px;
+    color: inherit;
+    font-family: inherit;
+    background: initial;
+    border: initial;
 }
 
 a {
-  transition: 0.125s;
-  cursor: pointer;
+    transition: 0.125s;
+    cursor: pointer;
 }
 
 button {
-  transition: 0.125s;
-  cursor: pointer;
+    transition: 0.125s;
+    cursor: pointer;
 }
 
 .cdk-drag-preview {
-  box-sizing: border-box;
-  overflow: hidden !important;
-  box-shadow: none;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  &,
-  * {
+    box-sizing: border-box;
+    overflow: hidden !important;
+    box-shadow: none;
     scrollbar-width: none;
     -ms-overflow-style: none;
-  }
 
-  &::-webkit-scrollbar,
-  *::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
-  }
+    &,
+    * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    &::-webkit-scrollbar,
+    *::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+    }
 }
 
 .cdk-drag-preview app-task {
-  display: block;
-  width: 250px !important;
-  min-width: 250px !important;
-  max-width: 250px !important;
-  overflow: hidden !important;
+    display: block;
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+    overflow: hidden !important;
 }
 
 .cdk-drag-preview .task-card {
-  transform: rotate(3deg);
-  transform-origin: center center;
-  overflow: hidden;
-  box-shadow: 0 18px 38px rgba(42, 54, 71, 0.22);
+    transform: rotate(3deg);
+    transform-origin: center center;
+    overflow: hidden;
+    box-shadow: 0 18px 38px rgba(42, 54, 71, 0.22);
 }
