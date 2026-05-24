@@ -28,4 +28,5 @@ export const routes: Routes = [
       { path: 'help', component: Help },
     ],
   },
+  { path: '**', redirectTo: '/signin'}
 ];
