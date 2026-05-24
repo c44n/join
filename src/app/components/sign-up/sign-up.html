@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Join</title>
-    <base href="/" />
+    <base href="Sign Up" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
 </head>
@@ -18,7 +18,7 @@
         <div class="wrapper">
             <div class="header">
                 <div class="arrow_left">
-                    <a href="/login">
+                    <a href="" routerLink="/signin">
                         <img src="../../../../assets/icons/arrow-left-line.png" alt="">
                     </a>
                 </div>
@@ -102,8 +102,8 @@
                     </label>
                 </div>
 
-                <button type="button" class="primary-button" (click)="createContact()">
-                    <!--  [disabled]="saving()" -->
+                <button type="button" class="primary-button" (click)="createContact()" [disabled]="!registrationForm.valid">
+                    
                     <span class="primary-button__label">
                         Sign up
                         <!-- {{ saving() ? 'Saving...' : 'Create contact' }} -->

@@ -13,7 +13,7 @@ import { single } from 'rxjs';
 
 export const routes: Routes = [
   { path: 'signin', component: SignIn },
-  { path: 'registration', component: SignUp },
+  { path: 'signup', component: SignUp },
   {
     path: '',
     component: MainLayout,

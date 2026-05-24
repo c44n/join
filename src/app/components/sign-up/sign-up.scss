@@ -3,9 +3,35 @@
 .logo_wrapper {
     position: absolute;
     top: 50px;
-    left: 40px;
+    left: 50px;
 
-    .logo {}
+    .logo {
+
+        @include all.tablet {
+            height: 80px;
+        }
+    }
+
+    @include all.notebook {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 160px;
+        padding-left: 60px;
+        margin-bottom: 30px;
+    }
+
+    @include all.tablet {
+        padding-left: 60px;
+    }
+
+    @include all.mobile {
+        padding-left: 20px;
+    }
 }
 
 .sign_up {
@@ -13,6 +39,12 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+
+    @include all.notebook {
+        min-height: auto;
+        width: 90%;
+        margin: auto;
+    }
 
     .wrapper {
         width: 598px;
@@ -25,6 +57,11 @@
         gap: 32px;
         background: #FFFFFF;
         box-shadow: 0px 0px 14px 3px #0000000A;
+
+        @include all.mobile {
+            height: auto;
+            padding: 24px 16px;
+        }
 
 
         .header {
@@ -39,6 +76,17 @@
                 height: 32px;
                 border-radius: 50%;
                 transition: .225s ease-in-out;
+
+                @include all.mobile {
+                    left: 10px;
+                }
+
+                img {
+                    @include all.mobile {
+                        height: 24px;
+                        width: 24px;
+                    }
+                }
 
                 &:hover {
                     background-color: all.$color-gray;
@@ -58,6 +106,10 @@
                     letter-spacing: 0%;
                     text-align: center;
                     font-family: 'Inter-bold', Courier, monospace;
+
+                    @include all.mobile {
+                        font-size: 47px;
+                    }
                 }
 
                 .line {
@@ -73,6 +125,10 @@
             display: flex;
             flex-direction: column;
             margin-top: 70px;
+
+            @include all.mobile {
+                margin-top: 35px;
+            }
 
             .input_wrapper {
                 width: 100%;
@@ -146,6 +202,10 @@
             width: 100%;
             gap: 20px;
 
+            @include all.mobile {
+                margin: 20px 0;
+            }
+
             .pp_wrapper {
                 display: flex;
                 color: all.$color-dark-gray;
@@ -161,6 +221,12 @@
 
             button {
                 width: 130px;
+
+            }
+
+            .primary-button:disabled {
+                opacity: .6;
+                cursor: default;
             }
         }
     }
@@ -173,9 +239,26 @@
     left: 50%;
     transform: translate(-50%);
 
+    @include all.notebook {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        transform: none;
+        height: 50px;
+        margin-top: 50px;
+    }
+
     .footer-body {
         display: flex;
         justify-content: center;
         gap: 20px;
+
+        a {
+            color: all.$color-dark-gray;
+        }
     }
 }
