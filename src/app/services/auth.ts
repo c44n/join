@@ -10,15 +10,27 @@ export type SignUpInputs = {
     password: string;
 };
 
-export const authGuard: CanMatchFn = async (route: Route, segments: UrlSegment[]) => {
+export const signInGuard: CanActivateFn = async (route, state) => {
     const auth = inject(AuthService);
     const router = inject(Router);
-    const isAuthenticated = await auth.isAuthenticated();
+    const isSignedIn: boolean = await auth.isAuthenticated();
 
-    if (isAuthenticated) {
-        return true;
-    } else {
-        router.navigateByUrl('/signin');
+    if (isSignedIn) {
+        router.navigateByUrl('/board');
+        return false;
+    }
+
+    return true;
+};
+
+export const authGuard: CanMatchFn = async (route: Route, segments: UrlSegment[]) => {
+    const auth = inject(AuthService);
+    const router: Router = inject(Router);
+    const isAuthenticated: boolean = await auth.isAuthenticated();
+
+    if (isAuthenticated) return true;
+    else {
+        router.navigateByUrl('');
         return false;
     }
 };

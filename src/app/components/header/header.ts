@@ -3,6 +3,7 @@ import { CdkMenuModule } from '@angular/cdk/menu';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { Router, RouterModule } from '@angular/router';
 import { SupabaseService } from '../../services/supabase';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ import { SupabaseService } from '../../services/supabase';
 export class Header {
   supabaseService = inject(SupabaseService);
   router = inject(Router);
+  auth = inject(AuthService);
 
   readonly avatarMenuPositions: ConnectedPosition[] = [
     {
@@ -34,7 +36,8 @@ export class Header {
 
 async logout() {
   await this.supabaseService.supabase.auth.signOut();
-  this.router.navigateByUrl('signin');
+  this.auth.isGuestSignIn.set(false);
+  this.router.navigateByUrl('');
 }
 }
 
