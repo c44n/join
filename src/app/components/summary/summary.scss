@@ -1,0 +1,395 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+:host {
+  display: block;
+  min-height: calc(100dvh - 96px);
+  background: all.$color-gray;
+
+  @include all.mobile {
+    min-height: calc(100dvh - 50px);
+  }
+}
+
+.summary-page {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 56px 72px 64px;
+  font-family: 'Inter-regular';
+  color: all.$primary-color;
+
+  @include all.notebook {
+    padding: 56px 48px 88px;
+  }
+
+  @include all.tablet {
+    padding: 48px 32px 88px;
+  }
+
+  @include all.mobile {
+    padding: 20px 16px 92px;
+  }
+}
+
+.summary-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 44px;
+
+  h1 {
+    font-family: 'Inter-bold';
+    font-size: clamp(48px, 5vw, 82px);
+    line-height: 0.95;
+    color: #000000;
+  }
+
+  p {
+    font-size: clamp(22px, 2vw, 34px);
+    line-height: 1.15;
+    color: all.$primary-color;
+  }
+
+  @include all.mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 22px;
+
+    h1 {
+      order: 1;
+      font-size: 50px;
+    }
+
+    p {
+      order: 2;
+      font-size: 22px;
+    }
+  }
+}
+
+.summary-hero__divider {
+  width: 4px;
+  height: 70px;
+  border-radius: 999px;
+  background: all.$color-light-blue;
+
+  @include all.mobile {
+    order: 3;
+    width: 120px;
+    height: 4px;
+    align-self: flex-start;
+  }
+}
+
+.summary-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  @include all.mobile {
+    gap: 12px;
+  }
+}
+
+.summary-grid {
+  display: grid;
+  gap: 24px;
+
+  &--top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  &--bottom {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @include all.tablet {
+    &--top,
+    &--bottom {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @include all.mobile {
+    &--top {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    &--bottom {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+  }
+}
+
+.summary-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 1fr);
+  gap: 36px;
+  align-items: stretch;
+
+  @include all.notebook {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  @include all.mobile {
+    gap: 12px;
+  }
+}
+
+.summary-card {
+  background: #ffffff;
+  border-radius: 32px;
+  box-shadow: 0 2px 14px rgba(42, 54, 71, 0.12);
+}
+
+.summary-card--metric {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  min-height: 182px;
+  padding: 24px 28px;
+
+  @include all.mobile {
+    min-height: 124px;
+    padding: 12px 10px;
+    gap: 8px;
+  }
+}
+
+.summary-card--deadline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+  min-height: 182px;
+  padding: 24px 30px;
+
+  @include all.mobile {
+    grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+    gap: 10px;
+    padding: 12px 12px;
+  }
+}
+
+.summary-card--stacked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 182px;
+  padding: 20px 18px;
+  text-align: center;
+
+  strong {
+    font-size: clamp(52px, 5vw, 80px);
+    line-height: 1;
+    color: #000000;
+  }
+
+  span {
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.15;
+    color: all.$primary-color;
+  }
+
+  @include all.mobile {
+    min-height: 120px;
+    padding: 10px 6px;
+    gap: 4px;
+  }
+}
+
+.summary-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+
+  img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+
+  @include all.mobile {
+    width: 42px;
+    height: 42px;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.summary-card__icon--dark {
+  background: all.$primary-color;
+}
+
+.summary-card__icon--urgent {
+  background: all.$color-orange;
+}
+
+.summary-card__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+
+  strong {
+    font-size: clamp(52px, 4.8vw, 76px);
+    line-height: 0.95;
+    color: #000000;
+  }
+
+  span {
+    font-size: clamp(18px, 1.8vw, 24px);
+    line-height: 1.15;
+    color: all.$primary-color;
+  }
+
+  @include all.mobile {
+    gap: 2px;
+
+    strong {
+      font-size: 38px;
+    }
+
+    span {
+      font-size: 13px;
+    }
+  }
+}
+
+.summary-card__deadline-stat {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.summary-card__divider {
+  width: 1px;
+  height: 100%;
+  background: rgba(42, 54, 71, 0.18);
+
+  @include all.mobile {
+    width: 1px;
+    height: 100%;
+  }
+}
+
+.summary-card__deadline-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  strong {
+    font-size: clamp(24px, 2vw, 28px);
+    line-height: 1.15;
+    color: all.$primary-color;
+  }
+
+  span {
+    font-size: 16px;
+    line-height: 1.2;
+    color: all.$primary-color;
+  }
+
+  @include all.mobile {
+    gap: 4px;
+
+    strong {
+      font-size: 16px;
+    }
+
+    span {
+      font-size: 12px;
+    }
+  }
+}
+
+.summary-greeting {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 0 12px 18px;
+
+  p {
+    font-size: clamp(32px, 3.5vw, 54px);
+    line-height: 1.05;
+    color: all.$primary-color;
+  }
+
+  h2 {
+    font-family: 'Inter-bold';
+    font-size: clamp(38px, 4.2vw, 64px);
+    line-height: 1.02;
+    color: all.$color-light-blue;
+    white-space: normal;
+    overflow-wrap: normal;
+  }
+
+  @include all.notebook {
+    padding: 0;
+  }
+
+  @include all.mobile {
+    display: none;
+  }
+}
+
+.summary-feedback {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: all.$primary-color;
+}
+
+.summary-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100dvh - 240px);
+  padding: 32px 20px 72px;
+  text-align: center;
+
+  p {
+    font-size: clamp(42px, 4.2vw, 64px);
+    line-height: 1.05;
+    color: all.$primary-color;
+  }
+
+  h2 {
+    margin-top: 10px;
+    font-family: 'Inter-bold';
+    font-size: clamp(48px, 4.8vw, 72px);
+    line-height: 1.02;
+    color: all.$color-light-blue;
+    white-space: normal;
+  }
+
+  @include all.mobile {
+    min-height: calc(100dvh - 220px);
+    padding: 24px 16px 88px;
+
+    p {
+      font-size: 36px;
+    }
+
+    h2 {
+      font-size: 42px;
+    }
+  }
+}

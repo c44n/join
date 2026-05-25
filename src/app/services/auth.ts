@@ -16,7 +16,7 @@ export const signInGuard: CanActivateFn = async (route, state) => {
     const isSignedIn: boolean = await auth.isAuthenticated();
 
     if (isSignedIn) {
-        router.navigateByUrl('/board');
+        router.navigateByUrl('/summary');
         return false;
     }
 

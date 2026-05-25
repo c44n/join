@@ -1,0 +1,94 @@
+<section class="summary-page">
+  <header class="summary-hero">
+    <h1>Join 360</h1>
+    <span class="summary-hero__divider" aria-hidden="true"></span>
+    <p>Key Metrics at a Glance</p>
+  </header>
+
+  @if (isLoading()) {
+    <p class="summary-feedback">Loading summary...</p>
+  }
+
+  @if (hasOpenTasks()) {
+    <div class="summary-layout">
+      <div class="summary-grid summary-grid--top">
+        <article class="summary-card summary-card--metric">
+          <span class="summary-card__icon summary-card__icon--dark" aria-hidden="true">
+            <img src="assets/icons/edit.png" alt="" />
+          </span>
+          <div class="summary-card__copy">
+            <strong>{{ todoCount() }}</strong>
+            <span>To-do</span>
+          </div>
+        </article>
+
+        <article class="summary-card summary-card--metric">
+          <span class="summary-card__icon summary-card__icon--dark" aria-hidden="true">
+            <img src="assets/icons/check-white.png" alt="" />
+          </span>
+          <div class="summary-card__copy">
+            <strong>{{ doneCount() }}</strong>
+            <span>Done</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="summary-panel">
+        <article class="summary-card summary-card--deadline">
+          <div class="summary-card__deadline-stat">
+            <span class="summary-card__icon summary-card__icon--urgent" aria-hidden="true">
+              <img src="assets/icons/arrow-upward.png" alt="" />
+            </span>
+            <div class="summary-card__copy">
+              <strong>{{ upcomingDeadlineCount() }}</strong>
+              <span>Due next</span>
+            </div>
+          </div>
+
+          <span class="summary-card__divider" aria-hidden="true"></span>
+
+          <div class="summary-card__deadline-copy">
+            @if (upcomingDeadline(); as deadline) {
+              <strong>{{ deadline.due_date | date: 'MMMM d, y' }}</strong>
+              <span>Upcoming Deadline</span>
+            } @else {
+              <strong>No upcoming deadline</strong>
+              <span>Upcoming Deadline</span>
+            }
+          </div>
+        </article>
+
+        <aside class="summary-greeting">
+          <p>{{ greeting() }}</p>
+          @if (!isGuestUser() && displayName()) {
+            <h2>{{ displayName() }}</h2>
+          }
+        </aside>
+      </div>
+
+      <div class="summary-grid summary-grid--bottom">
+        <article class="summary-card summary-card--stacked">
+          <strong>{{ tasksInBoardCount() }}</strong>
+          <span>Tasks in Board</span>
+        </article>
+
+        <article class="summary-card summary-card--stacked">
+          <strong>{{ inProgressCount() }}</strong>
+          <span>Tasks in Progress</span>
+        </article>
+
+        <article class="summary-card summary-card--stacked">
+          <strong>{{ awaitingFeedbackCount() }}</strong>
+          <span>Awaiting Feedback</span>
+        </article>
+      </div>
+    </div>
+  } @else {
+    <section class="summary-empty-state">
+      <p>{{ greeting() }}</p>
+      @if (!isGuestUser() && displayName()) {
+        <h2>{{ displayName() }}</h2>
+      }
+    </section>
+  }
+</section>

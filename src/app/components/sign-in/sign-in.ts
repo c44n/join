@@ -53,8 +53,8 @@ export class SignIn {
     } else if (error) console.error(error);
     else {
       if (data.user?.role == 'authenticated') {
-        // after sign in successfully, redirected to board page
-        this.router.navigateByUrl('board');
+        // after sign in successfully, redirected to summary page
+        this.router.navigateByUrl('/summary');
       }
     }
   }
@@ -62,6 +62,6 @@ export class SignIn {
   guestSignIN() {
     this.authService.isGuestSignIn.set(true);
 
-    this.router.navigateByUrl('board');
+    this.router.navigateByUrl('/summary');
   }
 }
