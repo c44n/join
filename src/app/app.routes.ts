@@ -9,29 +9,23 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { Help } from './components/help/help';
 import { SignIn } from './components/sign-in/sign-in';
 import { Summary } from './components/summary/summary';
-import { authGuard, authGuestGuard, signInGuard } from './services/auth';
+import { authGuard, signInGuard } from './services/auth';
 
 export const routes: Routes = [
-  { path: '', component: SignIn, canActivate: [signInGuard], pathMatch: 'full' },
+  { path: '', component: SignIn, canActivate: [signInGuard]},
   { path: 'signup', component: SignUp },
   {
     path: '',
     component: MainLayout,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'summary' },
-      { path: 'summary', component: Summary, canMatch: [authGuestGuard] },
       { path: 'summary', component: Summary, canMatch: [authGuard] },
       { path: 'add-task', component: AddTask, canMatch: [authGuard] },
-      { path: 'board', component: Board, canMatch: [authGuestGuard] },
       { path: 'board', component: Board, canMatch: [authGuard] },
-      { path: 'contacts', component: ContactList, canMatch: [authGuestGuard] },
       { path: 'contacts', component: ContactList, canMatch: [authGuard] },
-      { path: 'legal-notice', component: LegalNoticeComponents, canMatch: [authGuestGuard] },
-      { path: 'legal-notice', component: LegalNoticeComponents, canMatch: [authGuard] },
-      { path: 'help', component: Help, canMatch: [authGuestGuard] },
-      { path: 'help', component: Help, canMatch: [authGuard] },
-      { path: 'privacy-policy', component: PrivacyPolicyComponents, canMatch: [authGuestGuard] },
-      { path: 'privacy-policy', component: PrivacyPolicyComponents, canMatch: [authGuard] },
+      { path: 'help', component: Help },
+      { path: 'legal-notice', component: LegalNoticeComponents },
+      { path: 'privacy-policy', component: PrivacyPolicyComponents},
     ],
   },
   { path: '**', redirectTo: '/summary' },

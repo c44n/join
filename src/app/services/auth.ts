@@ -15,7 +15,7 @@ export const signInGuard: CanActivateFn = async (route, state) => {
     const router = inject(Router);
     const isSignedIn: boolean = await auth.isAuthenticated();
 
-    if (isSignedIn) {
+    if (isSignedIn || auth.isGuestSignIn()) {
         router.navigateByUrl('/summary');
         return false;
     }
@@ -29,19 +29,13 @@ export const authGuard: CanMatchFn = async (route: Route, segments: UrlSegment[]
     const isAuthenticated: boolean = await auth.isAuthenticated();
 
     if (isAuthenticated) return true;
+    else if (auth.isGuestSignIn()) return true;
     else {
         router.navigateByUrl('');
         return false;
     }
 };
 
-export const authGuestGuard: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
-    const auth = inject(AuthService);
-
-    if (auth.isGuestSignIn()) return true;
-
-    return false;
-};
 
 @Injectable({
     providedIn: 'root',
