@@ -38,8 +38,14 @@ export class SignIn {
     return this.signInForm.get('password');
   }
 
+  isFormValid = signal<boolean>(false);
 
   async authenticate() {
+    if (!this.signInForm.valid) {
+      this.isFormValid.set(true);
+      return;
+    } else this.isFormValid.set(false);
+
     const emailValue = this.email?.value as string;
     const passwordValue = this.password?.value as string;
 
