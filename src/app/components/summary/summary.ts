@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { Contact } from '../../models/contact';
 import { Task, TaskStatus } from '../../models/task';
 import { AuthService } from '../../services/auth';
@@ -18,6 +19,7 @@ export class Summary implements OnInit {
   private readonly contactsService = inject(ContactsService);
   private readonly authService = inject(AuthService);
   private readonly supabaseService = inject(SupabaseService);
+  private readonly router = inject(Router);
 
   protected readonly tasks = signal<Task[]>([]);
   protected readonly isLoading = signal(false);
@@ -34,7 +36,7 @@ export class Summary implements OnInit {
   );
   protected readonly hasOpenTasks = computed(() => this.tasksInBoardCount() > 0);
   protected readonly upcomingDeadline = computed(() => this.findUpcomingDeadline());
-  protected readonly upcomingDeadlineCount = computed(() => this.countTasksForUpcomingDeadline());
+  protected readonly urgentCount = computed(() => this.countUrgentTasks());
 
   async ngOnInit(): Promise<void> {
     this.isLoading.set(true);
@@ -44,6 +46,19 @@ export class Summary implements OnInit {
     } finally {
       this.isLoading.set(false);
     }
+  }
+
+  protected openBoard(): void {
+    void this.router.navigate(['/board']);
+  }
+
+  protected openBoardFromKeyboard(event: KeyboardEvent): void {
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+
+    event.preventDefault();
+    this.openBoard();
   }
 
   private async loadTasks(): Promise<void> {
@@ -103,16 +118,8 @@ export class Summary implements OnInit {
     return new Date(left.due_date).getTime() - new Date(right.due_date).getTime();
   }
 
-  private countTasksForUpcomingDeadline(): number {
-    const deadline = this.upcomingDeadline();
-
-    if (!deadline) {
-      return 0;
-    }
-
-    return this.tasks().filter(
-      (task) => task.status !== 'done' && this.isSameDay(task.due_date, deadline.due_date),
-    ).length;
+  private countUrgentTasks(): number {
+    return this.tasks().filter((task) => task.priority === 'urgent' && task.status !== 'done').length;
   }
 
   private isSameDay(leftDate: string, rightDate: string): boolean {

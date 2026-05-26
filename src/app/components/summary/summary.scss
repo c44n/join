@@ -12,18 +12,18 @@
 
 .summary-page {
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 56px 72px 64px;
+  max-width: 1240px;
+  margin: 0;
+  padding: 48px 48px 64px;
   font-family: 'Inter-regular';
   color: all.$primary-color;
 
   @include all.notebook {
-    padding: 56px 48px 88px;
+    padding: 44px 36px 80px;
   }
 
   @include all.tablet {
-    padding: 48px 32px 88px;
+    padding: 40px 24px 80px;
   }
 
   @include all.mobile {
@@ -35,19 +35,19 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 24px;
+  gap: 18px;
   margin-bottom: 44px;
 
   h1 {
     font-family: 'Inter-bold';
-    font-size: clamp(48px, 5vw, 82px);
-    line-height: 0.95;
+    font-size: clamp(40px, 4.5vw, 60px);
+    line-height: 1;
     color: #000000;
   }
 
   p {
-    font-size: clamp(22px, 2vw, 34px);
-    line-height: 1.15;
+    font-size: clamp(18px, 1.8vw, 28px);
+    line-height: 1.2;
     color: all.$primary-color;
   }
 
@@ -59,19 +59,19 @@
 
     h1 {
       order: 1;
-      font-size: 50px;
+      font-size: 42px;
     }
 
     p {
       order: 2;
-      font-size: 22px;
+      font-size: 20px;
     }
   }
 }
 
 .summary-hero__divider {
   width: 4px;
-  height: 70px;
+  height: 56px;
   border-radius: 999px;
   background: all.$color-light-blue;
 
@@ -85,9 +85,10 @@
 
 .summary-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.65fr) minmax(280px, 1fr);
+  grid-template-columns: minmax(0, 560px) minmax(240px, 320px);
   grid-template-areas: 'left greeting';
-  gap: 44px;
+  justify-content: start;
+  gap: 48px;
   align-items: start;
 
   @media (max-width: 1100px) {
@@ -108,12 +109,13 @@
 .summary-layout__left {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   grid-area: left;
-  padding-inline: 12px 20px;
+  max-width: 560px;
+  padding-inline: 0;
 
   @media (max-width: 1100px) {
-    padding-inline: 8px 12px;
+    max-width: none;
   }
 
   @include all.mobile {
@@ -123,14 +125,16 @@
 
 .summary-grid {
   display: grid;
-  gap: 20px;
+  gap: 24px;
 
   &--top {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 28px;
   }
 
   &--bottom {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 24px;
   }
 
   @include all.tablet {
@@ -143,12 +147,12 @@
   @include all.mobile {
     &--top {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      gap: 14px;
     }
 
     &--bottom {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
+      gap: 12px;
     }
   }
 }
@@ -159,17 +163,67 @@
 
 .summary-card {
   background: #ffffff;
-  border-radius: 32px;
-  box-shadow: 0 2px 14px rgba(42, 54, 71, 0.12);
+  border-radius: 24px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition:
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+
+  &:hover,
+  &:focus-visible {
+    background: all.$primary-color;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(41, 171, 226, 0.35);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover .summary-card__copy strong,
+  &:hover .summary-card__copy span,
+  &:hover .summary-card__deadline-copy strong,
+  &:hover .summary-card__deadline-copy span,
+  &:hover.summary-card--stacked strong,
+  &:hover.summary-card--stacked span,
+  &:focus-visible .summary-card__copy strong,
+  &:focus-visible .summary-card__copy span,
+  &:focus-visible .summary-card__deadline-copy strong,
+  &:focus-visible .summary-card__deadline-copy span,
+  &:focus-visible.summary-card--stacked strong,
+  &:focus-visible.summary-card--stacked span {
+    color: all.$color-white;
+  }
+
+  &:hover .summary-card__divider,
+  &:focus-visible .summary-card__divider {
+    background: rgba(255, 255, 255, 0.32);
+  }
+
+  &:hover .summary-card__icon--dark,
+  &:focus-visible .summary-card__icon--dark {
+    background: all.$color-white;
+  }
+
+  &:hover .summary-card__icon--dark img,
+  &:focus-visible .summary-card__icon--dark img {
+    filter: brightness(0) saturate(100%) invert(16%) sepia(15%) saturate(952%) hue-rotate(176deg)
+      brightness(93%) contrast(89%);
+  }
 }
 
 .summary-card--metric {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 22px;
-  min-height: 168px;
-  padding: 20px 24px;
+  gap: 16px;
+  min-height: 136px;
+  padding: 18px 20px;
 
   @include all.mobile {
     min-height: 114px;
@@ -181,10 +235,10 @@
 .summary-card--deadline {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
-  gap: 22px;
+  gap: 18px;
   align-items: center;
-  min-height: 168px;
-  padding: 20px 24px;
+  min-height: 136px;
+  padding: 18px 20px;
 
   @include all.mobile {
     grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
@@ -198,19 +252,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 168px;
-  padding: 18px 16px;
+  gap: 6px;
+  min-height: 128px;
+  padding: 16px 14px;
   text-align: center;
 
   strong {
-    font-size: clamp(48px, 4.6vw, 72px);
+    font-size: clamp(36px, 3.2vw, 54px);
     line-height: 1;
     color: #000000;
   }
 
   span {
-    font-size: clamp(18px, 1.8vw, 24px);
+    font-size: clamp(16px, 1.2vw, 20px);
     line-height: 1.15;
     color: all.$primary-color;
   }
@@ -227,16 +281,18 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 68px;
-  height: 68px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
+  transition: background-color 180ms ease;
 
   img {
-    width: 28px;
-    height: 28px;
+    width: 22px;
+    height: 22px;
     object-fit: contain;
     display: block;
     filter: brightness(0) invert(1);
+    transition: filter 180ms ease;
   }
 
   @include all.mobile {
@@ -255,25 +311,27 @@
 }
 
 .summary-card__icon--urgent {
-  background: all.$color-orange;
+  background: all.$color-red;
 }
 
 .summary-card__copy {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   min-width: 0;
 
   strong {
-    font-size: clamp(46px, 4.4vw, 68px);
-    line-height: 0.95;
+    font-size: clamp(34px, 3vw, 50px);
+    line-height: 1;
     color: #000000;
+    transition: color 180ms ease;
   }
 
   span {
-    font-size: clamp(16px, 1.6vw, 22px);
-    line-height: 1.15;
+    font-size: clamp(15px, 1.1vw, 18px);
+    line-height: 1.2;
     color: all.$primary-color;
+    transition: color 180ms ease;
   }
 
   @include all.mobile {
@@ -292,7 +350,7 @@
 .summary-card__deadline-stat {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 
   @include all.mobile {
     padding-left: 8px;
@@ -303,6 +361,7 @@
   width: 1px;
   height: 100%;
   background: rgba(42, 54, 71, 0.18);
+  transition: background-color 180ms ease;
 
   @include all.mobile {
     width: 1px;
@@ -313,18 +372,20 @@
 .summary-card__deadline-copy {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 
   strong {
-    font-size: clamp(22px, 1.9vw, 26px);
-    line-height: 1.15;
+    font-size: clamp(18px, 1.35vw, 22px);
+    line-height: 1.2;
     color: all.$primary-color;
+    transition: color 180ms ease;
   }
 
   span {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.2;
     color: all.$primary-color;
+    transition: color 180ms ease;
   }
 
   @include all.mobile {
@@ -347,19 +408,20 @@
   justify-content: center;
   align-self: center;
   min-height: 100%;
-  padding: 0 0 0 18px;
+  max-width: 320px;
+  padding: 8px 0 0;
   grid-area: greeting;
 
   p {
-    font-size: clamp(32px, 3.5vw, 54px);
-    line-height: 1.05;
+    font-size: clamp(28px, 2.4vw, 40px);
+    line-height: 1.1;
     color: all.$primary-color;
   }
 
   h2 {
     font-family: 'Inter-bold';
-    font-size: clamp(38px, 4.2vw, 64px);
-    line-height: 1.02;
+    font-size: clamp(34px, 2.8vw, 48px);
+    line-height: 1.05;
     color: all.$color-light-blue;
     white-space: normal;
     overflow-wrap: normal;
@@ -370,11 +432,11 @@
     padding: 0;
 
     p {
-      font-size: clamp(28px, 3vw, 42px);
+      font-size: clamp(24px, 3vw, 34px);
     }
 
     h2 {
-      font-size: clamp(34px, 3.8vw, 52px);
+      font-size: clamp(30px, 3.8vw, 42px);
     }
   }
 
@@ -415,16 +477,16 @@
   text-align: center;
 
   p {
-    font-size: clamp(42px, 4.2vw, 64px);
-    line-height: 1.05;
+    font-size: clamp(34px, 3.6vw, 52px);
+    line-height: 1.1;
     color: all.$primary-color;
   }
 
   h2 {
     margin-top: 10px;
     font-family: 'Inter-bold';
-    font-size: clamp(48px, 4.8vw, 72px);
-    line-height: 1.02;
+    font-size: clamp(40px, 4vw, 58px);
+    line-height: 1.05;
     color: all.$color-light-blue;
     white-space: normal;
   }

@@ -14,7 +14,13 @@
     <div class="summary-layout">
       <div class="summary-layout__left">
         <div class="summary-grid summary-grid--top">
-          <article class="summary-card summary-card--metric">
+          <article
+            class="summary-card summary-card--metric"
+            role="link"
+            tabindex="0"
+            (click)="openBoard()"
+            (keydown)="openBoardFromKeyboard($event)"
+          >
             <span class="summary-card__icon summary-card__icon--dark" aria-hidden="true">
               <img src="assets/icons/edit.png" alt="" />
             </span>
@@ -24,7 +30,13 @@
             </div>
           </article>
 
-          <article class="summary-card summary-card--metric">
+          <article
+            class="summary-card summary-card--metric"
+            role="link"
+            tabindex="0"
+            (click)="openBoard()"
+            (keydown)="openBoardFromKeyboard($event)"
+          >
             <span class="summary-card__icon summary-card__icon--dark" aria-hidden="true">
               <img src="assets/icons/check-white.png" alt="" />
             </span>
@@ -35,42 +47,68 @@
           </article>
         </div>
 
-        <article class="summary-card summary-card--deadline">
-          <div class="summary-card__deadline-stat">
-            <span class="summary-card__icon summary-card__icon--urgent" aria-hidden="true">
-              <img src="assets/icons/priority-urgent.png" alt="" />
-            </span>
-            <div class="summary-card__copy">
-              <strong>{{ upcomingDeadlineCount() }}</strong>
-              <span>Urgent</span>
+        @if (urgentCount() > 0) {
+          <article
+            class="summary-card summary-card--deadline"
+            role="link"
+            tabindex="0"
+            (click)="openBoard()"
+            (keydown)="openBoardFromKeyboard($event)"
+          >
+            <div class="summary-card__deadline-stat">
+              <span class="summary-card__icon summary-card__icon--urgent" aria-hidden="true">
+                <img src="assets/icons/priority-urgent.png" alt="" />
+              </span>
+              <div class="summary-card__copy">
+                <strong>{{ urgentCount() }}</strong>
+                <span>Urgent</span>
+              </div>
             </div>
-          </div>
 
-          <span class="summary-card__divider" aria-hidden="true"></span>
+            <span class="summary-card__divider" aria-hidden="true"></span>
 
-          <div class="summary-card__deadline-copy">
-            @if (upcomingDeadline(); as deadline) {
-              <strong>{{ deadline.due_date | date: 'MMMM d, y' }}</strong>
-              <span>Upcoming Deadline</span>
-            } @else {
-              <strong>No upcoming deadline</strong>
-              <span>Upcoming Deadline</span>
-            }
-          </div>
-        </article>
+            <div class="summary-card__deadline-copy">
+              @if (upcomingDeadline(); as deadline) {
+                <strong>{{ deadline.due_date | date: 'MMMM d, y' }}</strong>
+                <span>Upcoming Deadline</span>
+              } @else {
+                <strong>No upcoming deadline</strong>
+                <span>Upcoming Deadline</span>
+              }
+            </div>
+          </article>
+        }
 
         <div class="summary-grid summary-grid--bottom">
-          <article class="summary-card summary-card--stacked">
+          <article
+            class="summary-card summary-card--stacked"
+            role="link"
+            tabindex="0"
+            (click)="openBoard()"
+            (keydown)="openBoardFromKeyboard($event)"
+          >
             <strong>{{ tasksInBoardCount() }}</strong>
             <span>Tasks in Board</span>
           </article>
 
-          <article class="summary-card summary-card--stacked">
+          <article
+            class="summary-card summary-card--stacked"
+            role="link"
+            tabindex="0"
+            (click)="openBoard()"
+            (keydown)="openBoardFromKeyboard($event)"
+          >
             <strong>{{ inProgressCount() }}</strong>
             <span>Tasks in Progress</span>
           </article>
 
-          <article class="summary-card summary-card--stacked">
+          <article
+            class="summary-card summary-card--stacked"
+            role="link"
+            tabindex="0"
+            (click)="openBoard()"
+            (keydown)="openBoardFromKeyboard($event)"
+          >
             <strong>{{ awaitingFeedbackCount() }}</strong>
             <span>Awaiting Feedback</span>
           </article>
