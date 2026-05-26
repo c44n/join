@@ -123,14 +123,14 @@ export class Summary implements OnInit {
     const hour = new Date().getHours();
 
     if (hour < 12) {
-      return 'Good morning,';
+      return 'Good morning';
     }
 
     if (hour < 18) {
-      return 'Good afternoon,';
+      return 'Good afternoon';
     }
 
-    return 'Good evening,';
+    return 'Good evening';
   }
 
   private formatFullName(contact: Contact): string {

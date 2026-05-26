@@ -6,42 +6,43 @@
   </header>
 
   @if (isLoading()) {
-    <p class="summary-feedback">Loading summary...</p>
-  }
-
-  @if (hasOpenTasks()) {
+    <div class="summary-loading" aria-label="Loading summary" role="status">
+      <span class="summary-loading__spinner" aria-hidden="true"></span>
+      <span class="sr-only">Loading summary</span>
+    </div>
+  } @else if (hasOpenTasks()) {
     <div class="summary-layout">
-      <div class="summary-grid summary-grid--top">
-        <article class="summary-card summary-card--metric">
-          <span class="summary-card__icon summary-card__icon--dark" aria-hidden="true">
-            <img src="assets/icons/edit.png" alt="" />
-          </span>
-          <div class="summary-card__copy">
-            <strong>{{ todoCount() }}</strong>
-            <span>To-do</span>
-          </div>
-        </article>
+      <div class="summary-layout__left">
+        <div class="summary-grid summary-grid--top">
+          <article class="summary-card summary-card--metric">
+            <span class="summary-card__icon summary-card__icon--dark" aria-hidden="true">
+              <img src="assets/icons/edit.png" alt="" />
+            </span>
+            <div class="summary-card__copy">
+              <strong>{{ todoCount() }}</strong>
+              <span>To-do</span>
+            </div>
+          </article>
 
-        <article class="summary-card summary-card--metric">
-          <span class="summary-card__icon summary-card__icon--dark" aria-hidden="true">
-            <img src="assets/icons/check-white.png" alt="" />
-          </span>
-          <div class="summary-card__copy">
-            <strong>{{ doneCount() }}</strong>
-            <span>Done</span>
-          </div>
-        </article>
-      </div>
+          <article class="summary-card summary-card--metric">
+            <span class="summary-card__icon summary-card__icon--dark" aria-hidden="true">
+              <img src="assets/icons/check-white.png" alt="" />
+            </span>
+            <div class="summary-card__copy">
+              <strong>{{ doneCount() }}</strong>
+              <span>Done</span>
+            </div>
+          </article>
+        </div>
 
-      <div class="summary-panel">
         <article class="summary-card summary-card--deadline">
           <div class="summary-card__deadline-stat">
             <span class="summary-card__icon summary-card__icon--urgent" aria-hidden="true">
-              <img src="assets/icons/arrow-upward.png" alt="" />
+              <img src="assets/icons/priority-urgent.png" alt="" />
             </span>
             <div class="summary-card__copy">
               <strong>{{ upcomingDeadlineCount() }}</strong>
-              <span>Due next</span>
+              <span>Urgent</span>
             </div>
           </div>
 
@@ -58,36 +59,36 @@
           </div>
         </article>
 
-        <aside class="summary-greeting">
-          <p>{{ greeting() }}</p>
-          @if (!isGuestUser() && displayName()) {
-            <h2>{{ displayName() }}</h2>
-          }
-        </aside>
+        <div class="summary-grid summary-grid--bottom">
+          <article class="summary-card summary-card--stacked">
+            <strong>{{ tasksInBoardCount() }}</strong>
+            <span>Tasks in Board</span>
+          </article>
+
+          <article class="summary-card summary-card--stacked">
+            <strong>{{ inProgressCount() }}</strong>
+            <span>Tasks in Progress</span>
+          </article>
+
+          <article class="summary-card summary-card--stacked">
+            <strong>{{ awaitingFeedbackCount() }}</strong>
+            <span>Awaiting Feedback</span>
+          </article>
+        </div>
       </div>
 
-      <div class="summary-grid summary-grid--bottom">
-        <article class="summary-card summary-card--stacked">
-          <strong>{{ tasksInBoardCount() }}</strong>
-          <span>Tasks in Board</span>
-        </article>
-
-        <article class="summary-card summary-card--stacked">
-          <strong>{{ inProgressCount() }}</strong>
-          <span>Tasks in Progress</span>
-        </article>
-
-        <article class="summary-card summary-card--stacked">
-          <strong>{{ awaitingFeedbackCount() }}</strong>
-          <span>Awaiting Feedback</span>
-        </article>
-      </div>
+      <aside class="summary-greeting">
+        <p>{{ greeting() }}{{ isGuestUser() ? '!' : ',' }}</p>
+        @if (!isGuestUser() && displayName()) {
+          <h2>{{ displayName() }}!</h2>
+        }
+      </aside>
     </div>
   } @else {
     <section class="summary-empty-state">
-      <p>{{ greeting() }}</p>
+      <p>{{ greeting() }}{{ isGuestUser() ? '!' : ',' }}</p>
       @if (!isGuestUser() && displayName()) {
-        <h2>{{ displayName() }}</h2>
+        <h2>{{ displayName() }}!</h2>
       }
     </section>
   }
