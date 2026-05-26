@@ -163,7 +163,7 @@
 
 .summary-card {
   background: #ffffff;
-  border-radius: 24px;
+  border-radius: 20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition:
@@ -221,14 +221,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 22px;
   min-height: 136px;
   padding: 18px 20px;
+
+  .summary-card__copy {
+    align-items: center;
+    text-align: center;
+  }
 
   @include all.mobile {
     min-height: 114px;
     padding: 10px 8px;
-    gap: 6px;
+    gap: 12px;
   }
 }
 
@@ -264,8 +269,12 @@
   }
 
   span {
-    font-size: clamp(16px, 1.2vw, 20px);
-    line-height: 1.15;
+    font-family: 'Inter-regular';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-align: center;
     color: all.$primary-color;
   }
 
@@ -342,7 +351,7 @@
     }
 
     span {
-      font-size: 12px;
+      font-size: 16px;
     }
   }
 }
@@ -350,7 +359,12 @@
 .summary-card__deadline-stat {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 18px;
+
+  .summary-card__copy {
+    align-items: center;
+    text-align: center;
+  }
 
   @include all.mobile {
     padding-left: 8px;
@@ -375,8 +389,11 @@
   gap: 4px;
 
   strong {
-    font-size: clamp(18px, 1.35vw, 22px);
+    font-family: 'Inter-bold';
+    font-weight: 700;
+    font-size: 16px;
     line-height: 1.2;
+    letter-spacing: 0;
     color: all.$primary-color;
     transition: color 180ms ease;
   }
@@ -393,11 +410,11 @@
     padding-left: 8px;
 
     strong {
-      font-size: 15px;
+      font-size: 16px;
     }
 
     span {
-      font-size: 11px;
+      font-size: 16px;
     }
   }
 }
