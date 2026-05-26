@@ -8,16 +8,19 @@ import { SignUp } from './components/sign-up/sign-up';
 import { MainLayout } from './layouts/main-layout/main-layout';
 import { Help } from './components/help/help';
 import { SignIn } from './components/sign-in/sign-in';
+import { Summary } from './components/summary/summary';
 import { authGuard, authGuestGuard, signInGuard } from './services/auth';
-import { single } from 'rxjs';
 
 export const routes: Routes = [
-  { path: '', component: SignIn, canActivate: [signInGuard]},
+  { path: '', component: SignIn, canActivate: [signInGuard], pathMatch: 'full' },
   { path: 'signup', component: SignUp },
   {
     path: '',
     component: MainLayout,
     children: [
+      { path: '', pathMatch: 'full', redirectTo: 'summary' },
+      { path: 'summary', component: Summary, canMatch: [authGuestGuard] },
+      { path: 'summary', component: Summary, canMatch: [authGuard] },
       { path: 'add-task', component: AddTask, canMatch: [authGuard] },
       { path: 'board', component: Board, canMatch: [authGuestGuard] },
       { path: 'board', component: Board, canMatch: [authGuard] },
@@ -31,5 +34,5 @@ export const routes: Routes = [
       { path: 'privacy-policy', component: PrivacyPolicyComponents, canMatch: [authGuard] },
     ],
   },
-  { path: '**', redirectTo: '/board' },
+  { path: '**', redirectTo: '/summary' },
 ];
