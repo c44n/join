@@ -125,7 +125,6 @@
 /* Responsive */
 @media (max-width: 640px) {
     .board-header {
-        padding: 16px 20px;
         flex-wrap: wrap;
     }
 
@@ -134,10 +133,12 @@
     }
 
     .board-title {
+        font-size: 47px;
         flex-shrink: 0;
     }
 
     .search-wrapper {
+        margin-top: 25px;
         width: 100%;
         order: 3;
     }
@@ -164,9 +165,9 @@
     padding: 60px 70px;
     max-width: 1440px;
 
-    @include all.mobile {
+    @include all.notebook {
         flex-direction: column;
-        padding: 12px;
+        padding: 30px;
     }
 
     @include all.tablet {
@@ -174,9 +175,9 @@
         padding: 20px;
     }
 
-    @include all.notebook {
+    @include all.mobile {
         flex-direction: column;
-        padding: 30px;
+        padding: 12px 12px 90px 12px;
     }
 
     .column_wrapper {
@@ -221,7 +222,7 @@
                 justify-content: space-between;
                 padding: 10px 6px;
 
-                @include all.mobile {
+                @include all.notebook {
                     margin-bottom: 14px;
                 }
 
@@ -229,10 +230,9 @@
                     margin-bottom: 14px;
                 }
 
-                @include all.notebook {
-                    margin-bottom: 14px;
+                @include all.mobile {
+                    margin-bottom: 0;
                 }
-
 
                 h2 {
                     font-weight: 700;
