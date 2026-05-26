@@ -27,11 +27,20 @@ section {
 .header {
   display: flex;
   justify-content: space-between;
+  max-height: 127px;
 
   .logo {
     img {
       width: 101px;
       height: 122px;
+      animation-name: logoAnimation;
+      animation-duration: 1s;
+
+      @include all.mobile {
+        width: 55px;
+        height: 68px;
+        animation-name: logoAnimationMobile;
+      }
     }
   }
 
@@ -41,6 +50,9 @@ section {
     gap: 50px;
     height: 50px;
     font-size: 22px;
+
+    animation-name: signinAnimation;
+    animation-duration: 500ms;
 
     @include all.mobile {
       display: none;
@@ -66,6 +78,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation-name: signinAnimation;
+  animation-duration: 500ms;
 
   form {
     display: flex;
@@ -76,7 +90,7 @@ section {
     padding: 42px 82px;
     border-radius: 22px;
     background-color: all.$color-white;
-
+    box-shadow: 0px 0px 14px 3px #0000000a;
     h2 {
       font-family: 'Inter-bold';
       font-size: 54px;
@@ -85,7 +99,7 @@ section {
     .line {
       width: 112px;
       height: 2px;
-      margin: 18px 0 18px  0;
+      margin: 18px 0 18px 0;
       background-color: all.$color-light-blue;
     }
 
@@ -102,7 +116,7 @@ section {
       }
 
       span {
-        margin:0 0 0 6px;
+        margin: 0 0 0 6px;
         color: all.$color-red;
       }
     }
@@ -117,15 +131,30 @@ section {
 
       button {
         padding: 12px 22px;
-        color: all.$color-white;
-        border-radius: 6px;
-        background-color: all.$color-light-dark;
-        border: 1px solid all.$color-dark;
+        border-radius: 8px;
+        font-weight: bold;
 
         &:hover {
-          color: all.$color-dark;
-          background-color: all.$color-white;
-          border: 1px solid all.$color-dark;
+          box-shadow: 0px 3px 4px 2px #00000030;
+        }
+      }
+
+      .btn-signin {
+        background-color: all.$color-dark;
+        color: all.$color-white;
+
+        &:hover {
+          background-color: all.$color-light-blue;
+        }
+      }
+
+      .btn-guest-signin {
+        color: all.$color-dark;
+        border: 2px solid all.$color-dark;
+
+        &:hover {
+          color: all.$color-light-blue;
+          border: 2px solid all.$color-light-blue;
         }
       }
     }
@@ -202,6 +231,8 @@ section {
   gap: 22px;
   font-size: 22px;
   color: all.$color-dark-gray;
+  animation-name: signinAnimation;
+  animation-duration: 500ms;
 
   a:hover {
     color: all.$color-dark;
@@ -210,5 +241,53 @@ section {
   @include all.mobile {
     gap: 12px;
     font-size: 16px;
+  }
+}
+
+@keyframes logoAnimation {
+  from {
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 202px;
+    height: 244px;
+  }
+
+  to {
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 101px;
+    height: 122px;
+  }
+}
+
+@keyframes logoAnimationMobile {
+  from {
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 101px;
+    height: 122px;
+  }
+
+  to {
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 55px;
+    height: 68px;
+  }
+}
+
+@keyframes signinAnimation {
+  from {
+    z-index: -10;
+  }
+
+  to {
+    z-index: 1;
   }
 }
