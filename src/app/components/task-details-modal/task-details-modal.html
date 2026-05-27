@@ -171,7 +171,7 @@
 		<div class="subtask">
 			<h3>Subtasks</h3>
 			<div class="input-content">
-				<input type="text" placeholder="Add new subtask" [formControl]="newSubtask" />
+				<input class="subtask_input" type="text" placeholder="Add new subtask" [formControl]="newSubtask" />
 
 				@if (newSubtask.value && newSubtask.value.length > 1) {
 				<div class="options">

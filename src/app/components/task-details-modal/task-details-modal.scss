@@ -30,7 +30,7 @@
 }
 
 :host.dialog-closing {
-	@extend %slide-to-right;
+  @extend %slide-to-right;
 }
 
 .fixed-header {
@@ -269,7 +269,7 @@
 
     .btn-submit {
       align-self: flex-end;
-      background-color: all.$color-dark-blue;
+      background-color: all.$primary-color;
       padding: 12px 16px;
       border-radius: 6px;
       color: all.$color-white;
@@ -366,6 +366,7 @@
       padding: 6px 12px;
       border: 1px solid all.$color-dark-gray;
       border-radius: 6px;
+      color: all.$color-white;
     }
 
     .contact-list {
@@ -378,7 +379,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 12px;
+        padding: 2px 12px;
         cursor: pointer;
 
         &__profile-name {
@@ -396,6 +397,7 @@
             border-radius: 50%;
             padding: 8px;
             border: 2px solid all.$color-white;
+            color: all.$color-white;
           }
         }
 
@@ -413,8 +415,10 @@
         }
 
         &--selected {
-          background-color: all.$color-dark-blue;
+          background-color: all.$primary-color;
           color: white;
+          border-radius: 8px;
+          margin-bottom: 4px;
         }
       }
     }
@@ -431,6 +435,7 @@
         border-radius: 50%;
         padding: 8px;
         border: 2px solid all.$color-white;
+        color: all.$color-white;
       }
     }
   }
@@ -449,12 +454,16 @@
       border-radius: 6px;
       padding: 0 3px;
 
-      input {
-        flex-grow: 1;
+      .subtask_input {
+        flex: 1 1 auto;
+        min-width: 0;
+        height: 48px;
+        padding: 0 16px;
+        padding-right: 88px;
         border: none;
-        padding: 3px;
-        padding-block: 0;
-        padding-inline: 0;
+        border-radius: 10px;
+        box-shadow: none;
+        background: all.$color-white;
 
         &:focus {
           outline: none;
@@ -464,7 +473,8 @@
       .options {
         display: flex;
         align-items: center;
-        gap: 3px;
+        gap: 8px;
+        padding: 0 4px;
 
         button {
           display: flex;
@@ -496,6 +506,7 @@
         margin: 3px 12px 3px 0px;
         border-radius: 6px;
         height: 26px;
+        transition: .225s ease-in-out;
 
         input {
           width: 60%;
@@ -585,6 +596,7 @@
 }
 
 .scroll-frame-1 {
+
   /* width */
   &::-webkit-scrollbar {
     width: 8px;
@@ -607,6 +619,7 @@
 }
 
 .scroll-frame {
+
   /* width */
   &::-webkit-scrollbar {
     width: 6px;
