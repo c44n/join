@@ -4,15 +4,15 @@
             [class.task-card__category--technical]="task.category === 'technical_task'">
             {{ taskCategoryLabel() }}
         </span>
-        <button type="button" class="task-card__menu-button" [disabled]="isMoving" [cdkMenuTriggerFor]="menu">
+        <button type="button" class="task-card__menu-button" [disabled]="isMoving" [cdkMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
             <img src="assets/icons/move-option.png" alt="move-option" />
         </button>
         <ng-template #menu>
             <div class="move-menu" cdkMenu>
-                <span>Move to</span>
+                <span>Move to:</span>
                 @for (status of moveTargets; track status) {
                     @if (showMoveTarget(status)) {
-                    <button type="button" cdkMenuItem (click)="moveTask(status)">
+                    <button type="button" cdkMenuItem (click)="$event.stopPropagation(); moveTask(status)">
                         {{ moveTargetLabel(status) }}
                     </button>
                     }

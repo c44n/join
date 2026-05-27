@@ -91,7 +91,10 @@ export class Board implements OnInit {
         await this.moveTask(task.id, newStatus);
     }
 
-    protected async moveTask(taskId: string, status: TaskStatus): Promise<void> {
+    protected async moveTask(taskId: string, status: TaskStatus, event?: MouseEvent): Promise<void> {
+        if (event) {
+            event.stopPropagation();
+        }
         const previousTask = this.tasks().find((task) => task.id === taskId);
 
         if (!previousTask || previousTask.status === status || this.isMovingTask(taskId)) {
