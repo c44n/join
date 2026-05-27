@@ -231,5 +231,28 @@
         }
       }
     }
+
+    .mobile-not-login {
+      align-items: center;
+      gap: 8px;
+      
+      .privacy-legal {
+        display: flex;
+        align-items: center;
+
+        li {
+          height: 74px;
+        }
+
+        a {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: fit-content;
+          height: 74px;
+          padding: 4px;
+        }
+      }
+    }
   }
 }
