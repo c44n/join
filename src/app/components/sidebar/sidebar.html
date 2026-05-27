@@ -2,23 +2,99 @@
   <section class="sidebar">
     <div class="sidebar__header">
       <a routerLink="/summary"> <img src="assets/icons/logo/logo.png" alt="logo" class="logo" /></a>
+
       <ul class="navigation">
+        @if (isSignedin()) {
+          <li>
+            <a
+              routerLink="/summary"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <img src="assets/icons/summary.png" alt="summary" class="icon-normal" />
+              <img src="assets/icons/summary-hover.png" alt="summary" class="icon-hover" />
+              Summary
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/add-task"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <img src="assets/icons/add-task.png" alt="add-task" class="icon-normal" />
+              <img src="assets/icons/add-task-hover.png" alt="add-task" class="icon-hover" />
+              Add Task
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/board"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <img src="assets/icons/board.png" alt="board" class="icon-normal" />
+              <img src="assets/icons/board-hover.png" alt="board" class="icon-hover" />
+              Board
+            </a>
+          </li>
+          <li>
+            <a routerLink="/contacts" routerLinkActive="active">
+              <img src="assets/icons/contacts.png" alt="contact" class="icon-normal" />
+              <img src="assets/icons/contacts-hover.png" alt="contact" class="icon-hover" />
+              Contacts
+            </a>
+          </li>
+        } @else {
+          <li>
+            <a routerLink="">
+              <img src="assets/icons/not-login.png" alt="login" class="icon-normal" />
+              <img src="assets/icons/not-login-hover.png" alt="login" class="icon-hover" />
+              Log In
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <ul class="sidebar__footer">
+      <button cdkMenuItem [routerLink]="'/legal-notice'">Legal Notice</button>
+      <button cdkMenuItem [routerLink]="'/privacy-policy'">Privacy Policy</button>
+    </ul>
+  </section>
+
+  <section class="navigation-mobile">
+    @if (isSignedin()) {
+      <ul>
         <li>
-          <a routerLink="/summary" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a
+            routerLink="/summary"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
             <img src="assets/icons/summary.png" alt="summary" class="icon-normal" />
             <img src="assets/icons/summary-hover.png" alt="summary" class="icon-hover" />
             Summary
           </a>
         </li>
         <li>
-          <a routerLink="/add-task" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a
+            routerLink="/add-task"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
             <img src="assets/icons/add-task.png" alt="add-task" class="icon-normal" />
             <img src="assets/icons/add-task-hover.png" alt="add-task" class="icon-hover" />
             Add Task
           </a>
         </li>
         <li>
-          <a routerLink="/board" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a
+            routerLink="/board"
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
             <img src="assets/icons/board.png" alt="board" class="icon-normal" />
             <img src="assets/icons/board-hover.png" alt="board" class="icon-hover" />
             Board
@@ -32,44 +108,20 @@
           </a>
         </li>
       </ul>
-    </div>
-
-    <ul class="sidebar__footer">
-    <button cdkMenuItem [routerLink]="'/legal-notice'">Legal Notice</button>
-    <button cdkMenuItem [routerLink]="'/privacy-policy'">Privacy Policy</button>
-    </ul>
-  </section>
-
-  <section class="navigation-mobile">
-    <ul>
-      <li>
-        <a routerLink="/summary" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <img src="assets/icons/summary.png" alt="summary" class="icon-normal" />
-          <img src="assets/icons/summary-hover.png" alt="summary" class="icon-hover" />
-          Summary
-        </a>
-      </li>
-      <li>
-        <a routerLink="/add-task" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <img src="assets/icons/add-task.png" alt="add-task" class="icon-normal" />
-          <img src="assets/icons/add-task-hover.png" alt="add-task" class="icon-hover" />
-          Add Task
-        </a>
-      </li>
-      <li>
-        <a routerLink="/board" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <img src="assets/icons/board.png" alt="board" class="icon-normal" />
-          <img src="assets/icons/board-hover.png" alt="board" class="icon-hover" />
-          Board
-        </a>
-      </li>
-      <li>
-        <a routerLink="/contacts" routerLinkActive="active">
-          <img src="assets/icons/contacts.png" alt="contact" class="icon-normal" />
-          <img src="assets/icons/contacts-hover.png" alt="contact" class="icon-hover" />
-          Contacts
-        </a>
-      </li>
-    </ul>
+    } @else {
+      <ul class="mobile-not-login">
+        <li>
+          <a routerLink="">
+            <img src="assets/icons/not-login.png" alt="not-login" class="icon-normal" />
+            <img src="assets/icons/not-login-hover.png" alt="not-login" class="icon-hover" />
+            Log In
+          </a>
+        </li>
+        <div class="privacy-legal">
+          <li><a routerLink="/privacy-policy">Privacy Policy</a></li>
+          <li><a routerLink="/legal-notice">Legal Notice </a></li>
+        </div>
+      </ul>
+    }
   </section>
 </div>
