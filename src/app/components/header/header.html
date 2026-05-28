@@ -4,19 +4,21 @@
     <span class="app-title">Kanban Project Management Tool</span>
 
     <div class="header-actions">
-      <button class="help-btn" aria-label="Help" routerLink="/help">
-        <img src="assets/icons/help.png" />
-      </button>
-      <div class="avatarmenu">
-        <button
-          type="button"
-          class="user-avatar"
-          [cdkMenuTriggerFor]="avatarMenu"
-          [cdkMenuPosition]="avatarMenuPositions"
-        >
-          VL
+      @if (auth.isUserSignIn() || auth.isGuestSignIn() === 'signIn') {
+        <button class="help-btn" aria-label="Help" routerLink="/help">
+          <img src="assets/icons/help.png" />
         </button>
-      </div>
+        <div class="avatarmenu">
+          <button
+            type="button"
+            class="user-avatar"
+            [cdkMenuTriggerFor]="avatarMenu"
+            [cdkMenuPosition]="avatarMenuPositions"
+          >
+            VL
+          </button>
+        </div>
+      }
     </div>
   </div>
 </header>
