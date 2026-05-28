@@ -9,7 +9,7 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { Help } from './components/help/help';
 import { SignIn } from './components/sign-in/sign-in';
 import { Summary } from './components/summary/summary';
-import { authGuard, signInGuard } from './services/auth';
+import { authGuard, checkAuthGuard, signInGuard } from './services/auth';
 
 export const routes: Routes = [
   { path: '', component: SignIn, canActivate: [signInGuard]},
@@ -23,9 +23,9 @@ export const routes: Routes = [
       { path: 'add-task', component: AddTask, canMatch: [authGuard] },
       { path: 'board', component: Board, canMatch: [authGuard] },
       { path: 'contacts', component: ContactList, canMatch: [authGuard] },
-      { path: 'help', component: Help },
-      { path: 'legal-notice', component: LegalNoticeComponents },
-      { path: 'privacy-policy', component: PrivacyPolicyComponents},
+      { path: 'help', component: Help, canMatch: [checkAuthGuard] },
+      { path: 'legal-notice', component: LegalNoticeComponents, canMatch: [checkAuthGuard] },
+      { path: 'privacy-policy', component: PrivacyPolicyComponents, canMatch: [checkAuthGuard]},
     ],
   },
   { path: '**', redirectTo: '/summary' },

@@ -66,7 +66,7 @@ export class SignIn {
   }
 
   guestSignIN() {
-    this.authService.isGuestSignIn.set(true);
+    localStorage.setItem("guestUser", "signIn");
 
     this.router.navigateByUrl('/summary');
   }

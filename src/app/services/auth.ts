@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase';
 import { Contact } from '../models/contact';
 import { CanActivateFn, CanMatchFn, Route, Router, UrlSegment } from '@angular/router';
@@ -15,7 +15,7 @@ export const signInGuard: CanActivateFn = async (route, state) => {
     const router = inject(Router);
     const isSignedIn: boolean = await auth.isAuthenticated();
 
-    if (isSignedIn || auth.isGuestSignIn()) {
+    if (isSignedIn || auth.isGuestSignIn() == "signIn") {
         router.navigateByUrl('/summary');
         return false;
     }
@@ -23,19 +23,24 @@ export const signInGuard: CanActivateFn = async (route, state) => {
     return true;
 };
 
+export const checkAuthGuard: CanMatchFn = async (route: Route, segments: UrlSegment[]) => {
+    const auth = inject(AuthService);
+    await auth.isAuthenticated();
+    return true;
+};
+
 export const authGuard: CanMatchFn = async (route: Route, segments: UrlSegment[]) => {
     const auth = inject(AuthService);
     const router: Router = inject(Router);
     const isAuthenticated: boolean = await auth.isAuthenticated();
-
+    
     if (isAuthenticated) return true;
-    else if (auth.isGuestSignIn()) return true;
+    else if (auth.isGuestSignIn() == "signIn") return true;
     else {
         router.navigateByUrl('');
         return false;
     }
 };
-
 
 @Injectable({
     providedIn: 'root',
@@ -43,13 +48,23 @@ export const authGuard: CanMatchFn = async (route: Route, segments: UrlSegment[]
 export class AuthService {
     private supabaseService = inject(SupabaseService);
 
-    isGuestSignIn = signal<boolean>(false);
+    isGuestSignIn = signal<'signIn' | 'signOut'>('signOut');
+    isUserSignIn = signal<boolean>(false);
 
     async isAuthenticated(): Promise<boolean> {
         const user = await this.supabaseService.supabase.auth.getUser();
+        const guestUser = localStorage.getItem('guestUser');
 
-        if (user.data.user != null) return true;
-        else return false;
+        if (user.data.user != null) {
+            this.isUserSignIn.set(true);
+            return true;
+        } else if (guestUser == 'signIn') {
+            this.isGuestSignIn.set('signIn');
+            return true;
+        } else {
+            this.isUserSignIn.set(false);
+            return false;
+        }
     }
 
     async signUp(inputs: SignUpInputs): Promise<boolean> {

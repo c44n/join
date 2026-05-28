@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthSessionMissingError } from '@supabase/supabase-js';
 import { AuthService } from '../../services/auth';
@@ -11,19 +11,8 @@ import { AuthService } from '../../services/auth';
 })
 export class Sidebar {
   auth = inject(AuthService);
-  isSignedin = signal<boolean>(false);
-
-  constructor(){
-    this.checkSignedIn();
-    
-  }
-
-  async checkSignedIn() {
-    const signin = await this.auth.isAuthenticated();
-    const guestSignin = this.auth.isGuestSignIn();
-
-    if (signin) this.isSignedin.set(true);
-    else if(guestSignin) this.isSignedin.set(true);
-    else this.isSignedin.set(false);
-  }
+  isSignedin = computed(() => {
+    if (this.auth.isUserSignIn() || this.auth.isGuestSignIn() == "signIn") return true;
+    else return false;
+  });
 }

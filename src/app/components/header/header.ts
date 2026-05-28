@@ -36,7 +36,10 @@ export class Header {
 
 async logout() {
   await this.supabaseService.supabase.auth.signOut();
-  this.auth.isGuestSignIn.set(false);
+
+  localStorage.setItem("guestUser", "signOut");
+  this.auth.isGuestSignIn.set("signOut");
+  
   this.router.navigateByUrl('');
 }
 }
