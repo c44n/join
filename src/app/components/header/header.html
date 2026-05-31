@@ -15,7 +15,7 @@
             [cdkMenuTriggerFor]="avatarMenu"
             [cdkMenuPosition]="avatarMenuPositions"
           >
-            VL
+            {{ auth.userInitials() }}
           </button>
         </div>
       }
@@ -31,3 +31,7 @@
     <button cdkMenuItem (click)="logout()">Log out</button>
   </div>
 </ng-template>
+
+
+
+
