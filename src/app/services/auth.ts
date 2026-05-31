@@ -33,7 +33,7 @@ export const authGuard: CanMatchFn = async (route: Route, segments: UrlSegment[]
     const auth = inject(AuthService);
     const router: Router = inject(Router);
     const isAuthenticated: boolean = await auth.isAuthenticated();
-    
+
     if (isAuthenticated) return true;
     else if (auth.isGuestSignIn() == "signIn") return true;
     else {
@@ -50,6 +50,7 @@ export class AuthService {
 
     isGuestSignIn = signal<'signIn' | 'signOut'>('signOut');
     isUserSignIn = signal<boolean>(false);
+    userInitials = signal<string>('');
 
     async isAuthenticated(): Promise<boolean> {
         const user = await this.supabaseService.supabase.auth.getUser();
@@ -57,13 +58,30 @@ export class AuthService {
 
         if (user.data.user != null) {
             this.isUserSignIn.set(true);
+            await this.loadUserInitials(user.data.user.id);
             return true;
         } else if (guestUser == 'signIn') {
             this.isGuestSignIn.set('signIn');
+            this.userInitials.set('G');
             return true;
         } else {
             this.isUserSignIn.set(false);
+            this.userInitials.set('');
             return false;
+        }
+    }
+
+    private async loadUserInitials(userId: string): Promise<void> {
+        const { data, error } = await this.supabaseService.supabase
+            .from('contacts')
+            .select('first_name, last_name')
+            .eq('user_id', userId)
+            .single();
+
+        if (data && !error) {
+            const first = data.first_name?.charAt(0).toUpperCase() ?? '';
+            const last = data.last_name?.charAt(0).toUpperCase() ?? '';
+            this.userInitials.set(first + last);
         }
     }
 

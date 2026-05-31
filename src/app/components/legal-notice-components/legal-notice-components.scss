@@ -2,29 +2,20 @@
 
 :host {
   display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  height: calc(100dvh - 64px);
   overflow: hidden;
-  pointer-events: none;
-  background-color: white;
+
+  @include all.mobile {
+    height: calc(100dvh - 56px);
+  }
 }
 
 .legal-notice-container {
-  position: absolute;
-  top: 64px;
-  left: 210px;
-  right: 0;
-  bottom: 0;
+  height: 100%;
   overflow-y: auto;
-  pointer-events: all;
   color: #000;
   font-family: 'Inter', sans-serif;
   padding: 64px 64px 120px 64px;
-  width: 1440px;
-  max-width: 100%;
 
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -33,19 +24,15 @@
   }
 
   @include all.notebook {
-    left: 150px;
     padding: 64px 48px 120px 48px;
   }
 
   @include all.tablet {
-    left: 130px;
-    padding: 64px 32px 120px 32px;
+    padding: 48px 32px 120px 32px;
   }
 
   @include all.mobile {
-    left: 0;
-    top: 56px;
-    padding: 64px 20px 120px 20px;
+    padding: 32px 20px 120px 20px;
   }
 
   h1 {
